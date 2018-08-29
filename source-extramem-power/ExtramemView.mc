@@ -2,35 +2,35 @@ class ExtramemView extends DatarunpremiumView {
 	var mfillColour 						= Graphics.COLOR_LT_GRAY;
 	hidden var mETA							= 0;
 	hidden var uETAfromLap 					= true;
+	var mZone 								= [1, 2, 3, 4, 5, 6, 7, 8];
+	var uHrZones                     		= [ 93, 111, 130, 148, 167, 185 ];
+	var counterPace 							= 0;
+	var counterPower 							= 0;
+	var rollingPaceValue = new [303];
+	var rollingPwrValue = new [303];
+	var totalRPa = 0;
+	var totalRPw = 0;
+	var rolavPacmaxsecs = 30;
+	var rolavPowmaxsecs = 30;
+	var Averagespeedinmpersec = 0;
+	var Averagepowerpersec = 0;
 
     function initialize() {
         DatarunpremiumView.initialize();
 		var mApp 		 = Application.getApp();
 		uETAfromLap		 = mApp.getProperty("pETAfromLap");
 		uShowlaps		 = mApp.getProperty("pShowlaps");
+		rolavPowmaxsecs	 = mApp.getProperty("prolavPowmaxsecs");
+		rolavPacmaxsecs  = mApp.getProperty("prolavPacmaxsecs");
+		uHrZones = UserProfile.getHeartRateZones(UserProfile.getCurrentSport());
     }
 
 	function onUpdate(dc) {
 		//! call the parent onUpdate to do the base logic
 		DatarunpremiumView.onUpdate(dc);
-		
-    	//! Setup back- and foregroundcolours
-		if (uBlackBackground == true ){
-			mColourFont = Graphics.COLOR_WHITE;
-			mColourFont1 = Graphics.COLOR_WHITE;
-			mColourLine = Graphics.COLOR_GREEN;
-			mColourBackGround = Graphics.COLOR_BLACK;
-		} else {
-			mColourFont = Graphics.COLOR_BLACK;
-			mColourFont1 = Graphics.COLOR_BLACK;
-			mColourLine = Graphics.COLOR_BLUE;
-			mColourBackGround = Graphics.COLOR_WHITE;
-		}
-		dc.setColor(mColourBackGround, Graphics.COLOR_TRANSPARENT);
-        dc.fillRectangle (0, 0, 240, 240);
 
 		var info = Activity.getActivityInfo();
-		var CurrentEfficiencyIndex   	= (info.currentPower != null && info.currentPower != 0) ? Averagespeedinmpersec*60/info.currentPower : 0;
+		var CurrentEfficiencyIndex   	= (info.currentPower != null && info.currentPower != 0) ? Averagespeedinmper3sec*60/info.currentPower : 0;
 		var AverageEfficiencyIndex   	= (info.averageSpeed != null && AveragePower != 0) ? info.averageSpeed*60/AveragePower : 0;
 		var LapEfficiencyIndex   		= (LapPower != 0) ? mLapSpeed*60/LapPower : 0;  
 		var LastLapEfficiencyIndex   	= (LastLapPower != 0) ? mLastLapSpeed*60/LastLapPower : 0;  
@@ -83,13 +83,67 @@ class ExtramemView extends DatarunpremiumView {
         mRacemin = mRacemin.toNumber();
         mRacesec = mRacesec.toNumber();
         mRacetime = mRacehour*3600 + mRacemin*60 + mRacesec;
+        
+		//! Calculation of rolling average of pace
+		var zeroValueSecs = 0;
+		if (counterPace < 1) {
+			for (var i = 1; i < rolavPacmaxsecs+2; ++i) {
+				rollingPaceValue [i] = 0; 
+			}
+		}
+		counterPace = counterPace + 1;
+		rollingPaceValue [rolavPacmaxsecs+1] = (info.currentSpeed != null) ? info.currentSpeed : 0;
+		for (var i = 1; i < rolavPacmaxsecs+1; ++i) {
+			rollingPaceValue [i] = rollingPaceValue [i+1];
+		}
+		for (var i = 1; i < rolavPacmaxsecs+1; ++i) {
+			totalRPa = rollingPaceValue [i] + totalRPa;
+			if (mHeartrateTime < rolavPacmaxsecs) {
+				zeroValueSecs = (rollingPaceValue[i] != 0) ? zeroValueSecs : zeroValueSecs + 1;
+			}
+		}
+		if (rolavPacmaxsecs-zeroValueSecs == 0) {
+			Averagespeedinmpersec = 0;
+		} else {
+			Averagespeedinmpersec = (mHeartrateTime < rolavPacmaxsecs) ? totalRPa/(rolavPacmaxsecs-zeroValueSecs) : totalRPa/rolavPacmaxsecs;
+		}
+		totalRPa = 0;
+
+		//! Calculation of rolling average of power 
+		zeroValueSecs = 0;
+		if (counterPower < 1) {
+			for (var i = 1; i < rolavPowmaxsecs+2; ++i) {
+				rollingPwrValue [i] = 0; 
+			}
+		}
+		counterPower = counterPower + 1;
+		rollingPwrValue [rolavPowmaxsecs+1] = (info.currentPower != null) ? info.currentPower : 0;
+		for (var i = 1; i < rolavPowmaxsecs+1; ++i) {
+			rollingPwrValue [i] = rollingPwrValue [i+1];
+		}
+		for (var i = 1; i < rolavPowmaxsecs+1; ++i) {
+			totalRPw = rollingPwrValue[i] + totalRPw;
+			if (mPowerTime < rolavPowmaxsecs) {
+				zeroValueSecs = (rollingPwrValue[i] != 0) ? zeroValueSecs : zeroValueSecs + 1;
+			}
+		}
+		if (rolavPowmaxsecs-zeroValueSecs == 0) {
+			Averagepowerpersec = 0;
+		} else {
+			Averagepowerpersec = (mPowerTime < rolavPowmaxsecs) ? totalRPw/(rolavPowmaxsecs-zeroValueSecs) : totalRPw/rolavPowmaxsecs;
+		}
+		totalRPw = 0;       
       
         var i = 0; 
-	    for (i = 1; i < 8; ++i) {
-	        if (metric[i] == 37) {
-    	        fieldValue[i] = 0; //! becomes Power zone later
+	    for (i = 1; i < 6; ++i) {
+	        if (metric[i] == 38) {
+    	        fieldValue[i] = (info.currentPower != null) ? info.currentPower : 0;
         	    fieldLabel[i] = "P zone";
             	fieldFormat[i] = "0decimal";
+			} else if (metric[i] == 17) {
+	            fieldValue[i] = Averagespeedinmpersec;
+    	        fieldLabel[i] = "Pc ..sec";
+        	    fieldFormat[i] = "pace";            	
 			} else if (metric[i] == 25) {
     	        fieldValue[i] = LapEfficiencyIndex;
         	    fieldLabel[i] = "Lap EI";
@@ -138,6 +192,10 @@ class ExtramemView extends DatarunpremiumView {
 	            fieldValue[i] = CurrentPower2HRRatio;
     	        fieldLabel[i] = "C P2HR";
         	    fieldFormat[i] = "2decimal";
+			} else if (metric[i] == 37) {
+	            fieldValue[i] = Averagepowerpersec;
+    	        fieldLabel[i] = "Pw ..sec";
+        	    fieldFormat[i] = "power";
         	}  else if (metric[i] == 52) {
            		fieldValue[i] = mElevationGain;
             	fieldLabel[i] = "EL gain";
@@ -159,11 +217,12 @@ class ExtramemView extends DatarunpremiumView {
         			fieldValue[i] = Math.round(mRacetime - mETA).toNumber() ;
 	        	}
     	    	if (fieldValue[i] < 0) {
-        			fieldValue[i] = - fieldValue;
+        			fieldValue[i] = - fieldValue[i];
         		}            	
 			}
 		}
-				//! Conditions for showing the demoscreen       
+
+		//! Conditions for showing the demoscreen       
         if (uShowDemo == false) {
         	if (umyNumber != mtest && jTimertime > 900)  {
         		uShowDemo = true;        		
@@ -173,26 +232,23 @@ class ExtramemView extends DatarunpremiumView {
 	   //! Check whether demoscreen is showed or the metrics 
 	   if (uShowDemo == false ) {
 
-		for (var i = 1; i < 8; ++i) {
-
+		//! Display colored labels on screen
+		for (var i = 1; i < 6; ++i) {
 		   	if ( i == 1 ) {			//!upper row, left    	
 	    		Coloring(dc,i,fieldValue[i],"018,029,100,019");
 		   	} else if ( i == 2 ) {	//!upper row, right
 		   		Coloring(dc,i,fieldValue[i],"120,029,100,019");
-	       	} else if ( i == 3 ) {  //!middle row, left
-	    		Coloring(dc,i,fieldValue[i],"000,093,072,019");
-		   	} else if ( i == 4 ) {	//!middle row, middle
-		 		Coloring(dc,i,fieldValue[i],"074,093,089,019");
-	      	} else if ( i == 5 ) {  //!middle row, right
-	    		Coloring(dc,i,fieldValue[i],"165,093,077,019");
-		   	} else if ( i == 6 ) {	//!lower row, left
-		   		Coloring(dc,i,fieldValue[i],"018,199,100,019");
-	      	} else if ( i == 7 ) {	//!lower row, right
-	    		Coloring(dc,i,fieldValue[i],"120,199,100,019");
+	       	} else if ( i == 3 ) {  //!lower row, left
+	    		Coloring(dc,i,fieldValue[i],"000,093,119,019");
+	      	} else if ( i == 4 ) {  //!middle row, right
+	    		Coloring(dc,i,fieldValue[i],"120,093,120,019");
+		   	} else if ( i == 5 ) {	//!lower row, middle
+		 		Coloring(dc,i,fieldValue[i],"010,175,100,043");		 		
 	    	}       	
 		}
 		
 		//! Show number of laps or clock with current time in top
+		dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
 		if (uShowlaps == true) {
 			 dc.drawText(103, -4, Graphics.FONT_MEDIUM, mLaps, Graphics.TEXT_JUSTIFY_CENTER);
 			 dc.drawText(140, -1, Graphics.FONT_XTINY, "lap", Graphics.TEXT_JUSTIFY_CENTER);
@@ -219,12 +275,12 @@ class ExtramemView extends DatarunpremiumView {
         var mZ5upper = 0; 
         var avgSpeed = (info.averageSpeed != null) ? info.averageSpeed : 0;
 		if (metric[counter] == 45 or metric[counter] == 46 or metric[counter] == 47 or metric[counter] == 48 or metric[counter] == 49) {  //! HR=45, HR-zone=46, Lap HR=47, L-1 HR=48, Avg HR=49
-            mZ1under = uHrZones[1];
-            mZ2under = uHrZones[2];
-            mZ3under = uHrZones[3];
-            mZ4under = uHrZones[4];
-            mZ5under = uHrZones[5];
-            mZ5upper = 200; 
+            mZ1under = uHrZones[0];
+            mZ2under = uHrZones[1];
+            mZ3under = uHrZones[2];
+            mZ4under = uHrZones[3];
+            mZ5under = uHrZones[4];
+            mZ5upper = uHrZones[5]; 
         } else if (metric[counter] == 50) {  //! Cadence
             mZ1under = 120;
             mZ2under = 153;
@@ -232,7 +288,7 @@ class ExtramemView extends DatarunpremiumView {
             mZ4under = 174;
             mZ5under = 183;
             mZ5upper = 300; 
-        } else if (metric[counter] == 20 or metric[counter] == 21 or metric[counter] == 22 or metric[counter] == 23 or metric[counter] == 24) {  //! Power=20, Pwr 5s=21, L Power=22, L-1 Pwr=23, A Power=24
+        } else if (metric[counter] == 20 or metric[counter] == 21 or metric[counter] == 22 or metric[counter] == 23 or metric[counter] == 24 or metric[counter] == 37) {  //! Power=20, Pwr 5s=21, L Power=22, L-1 Pwr=23, A Power=24
         	mZ1under = uPowerZones.substring(0, 3);
         	mZ2under = uPowerZones.substring(7, 10);
         	mZ3under = uPowerZones.substring(14, 17);
@@ -245,7 +301,7 @@ class ExtramemView extends DatarunpremiumView {
 	        mZ4under = mZ4under.toNumber();        
     	    mZ5under = mZ5under.toNumber();
         	mZ5upper = mZ5upper.toNumber();
-        } else if (metric[counter] == 8 or metric[counter] == 9 or metric[counter] == 10 or metric[counter] == 11 or metric[counter] == 12 or metric[counter] == 40 or metric[counter] == 41 or metric[counter] == 42 or metric[counter] == 43 or metric[counter] == 44) {  //! Pace=8, Pace 5s=9, L Pace=10, L-1 Pace=11, AvgPace=12, Speed=40, Spd 5s=41, L Spd=42, LL Spd=43, Avg Spd=44
+        } else if (metric[counter] == 8 or metric[counter] == 9 or metric[counter] == 10 or metric[counter] == 16 or metric[counter] == 17 or metric[counter] == 11 or metric[counter] == 12 or metric[counter] == 40 or metric[counter] == 41 or metric[counter] == 42 or metric[counter] == 43 or metric[counter] == 44) {  //! Pace=8, Pace 5s=9, L Pace=10, L-1 Pace=11, AvgPace=12, Speed=40, Spd 5s=41, L Spd=42, LL Spd=43, Avg Spd=44
             mZ1under = avgSpeed*0.9;
             mZ2under = avgSpeed*0.95;
             mZ3under = avgSpeed;
@@ -260,6 +316,7 @@ class ExtramemView extends DatarunpremiumView {
             mZ5under = 99999999;
             mZ5upper = 99999999; 
         }
+
         mZone[counter] = 0;
         if (testvalue >= mZ5upper) {
             mfillColour = Graphics.COLOR_PURPLE;
@@ -289,11 +346,11 @@ class ExtramemView extends DatarunpremiumView {
         	} else {
         		mfillColour = Graphics.COLOR_RED;
         	}
-        }	
+        }
+
 		dc.setColor(mfillColour, Graphics.COLOR_TRANSPARENT);
         dc.fillRectangle(x, y, w, h);
 	}
 		
-	
 
 }

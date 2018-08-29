@@ -1,22 +1,13 @@
+using Toybox.WatchUi as Ui;
 using Toybox.Graphics as Gfx;
 
 //! inherit from the view that contains the commonlogic
 class PowerView extends CiqView {
     var mlastaltitude = 0;
-	var mElevationGain = 0;
-    var mElevationLoss = 0;
     var mElevationDiff = 0;
     var mrealElevationGain = 0;
     var mrealElevationLoss = 0;
     var mrealElevationDiff = 0;
-    hidden var mElapsedHeartrate   			= 0;
-	hidden var mLastLapHeartrateMarker      = 0;    
-    hidden var mCurrentHeartrate    		= 0; 
-    hidden var mLastLapElapsedHeartrate		= 0;
-    hidden var mHeartrateTime				= 0;
-    hidden var mLapTimerTimeHR				= 0;    
-	hidden var mLastLapTimeHRMarker			= 0;
-	hidden var mLastLapTimerTimeHR			= 0;
 	
 	//! it's good practice to always have an initialize, make sure to call your parent class here!
     function initialize() {
@@ -32,44 +23,26 @@ class PowerView extends CiqView {
 
 		//! We only do some calculations if the timer is running
 		if (mTimerRunning) {  
-            mCurrentHeartrate    = (info.currentHeartRate != null) ? info.currentHeartRate : 0;
-            mHeartrateTime		 = (info.currentHeartRate != null) ? mHeartrateTime+1 : 0;
-			if (mHeartrateTime == 0) {
-				var mElapsedHeartrate = 0;
-			} if (mHeartrateTime == 1) {
-				mElapsedHeartrate = mCurrentHeartrate;
-			} if (mHeartrateTime > 1) {				
-            	mElapsedHeartrate    = mElapsedHeartrate + mCurrentHeartrate;
-            }
-        }
-        
-        //! Calculate elevation differences and rounding altitude
-        if (info.altitude != null) {        
-          aaltitude = Math.round(info.altitude).toNumber();
-          mrealElevationDiff = aaltitude - mlastaltitude;
-          if (mrealElevationDiff > 0 ) {
-          	mrealElevationGain = mrealElevationDiff + mrealElevationGain;
-          } else {
-          	mrealElevationLoss =  mrealElevationLoss - mrealElevationDiff;
-          }  
-          mlastaltitude = aaltitude;
-          mElevationLoss = Math.round(mrealElevationLoss).toNumber();
-          mElevationGain = Math.round(mrealElevationGain).toNumber();
+			jTimertime = jTimertime + 1;
+			//!Calculate lapheartrate
+            mHeartrateTime		 = (info.currentHeartRate != null) ? mHeartrateTime+1 : mHeartrateTime;				
+           	mElapsedHeartrate    = (info.currentHeartRate != null) ? mElapsedHeartrate + info.currentHeartRate : mElapsedHeartrate;
         }
     }
 
     //! Store last lap quantities and set lap markers
     function onTimerLap() {
         var info = Activity.getActivityInfo();
-        mLastLapElapsedHeartrate = (info.currentHeartRate != null) ? mElapsedHeartrate - mLastLapHeartrateMarker : 0;
-        mLastLapTimerTime        = (info.timerTime - mLastLapTimeMarker) / 1000;
-        mLastLapTimerTimeHR		= mHeartrateTime - mLastLapTimeHRMarker;        
-        mLastLapElapsedDistance  = (info.elapsedDistance != null) ? info.elapsedDistance - mLastLapDistMarker : 0;
+        mLastLapTimerTime       	= jTimertime - mLastLapTimeMarker;
+        mLastLapElapsedDistance 	= (info.elapsedDistance != null) ? info.elapsedDistance - mLastLapDistMarker : 0;
+        mLastLapDistMarker      	= (info.elapsedDistance != null) ? info.elapsedDistance : 0;
+        mLastLapTimeMarker      	= jTimertime;
+
+        mLastLapTimerTimeHR			= mHeartrateTime - mLastLapTimeHRMarker;
+        mLastLapElapsedHeartrate 	= (info.currentHeartRate != null) ? mElapsedHeartrate - mLastLapHeartrateMarker : 0;
+        mLastLapHeartrateMarker     = mElapsedHeartrate;
+        mLastLapTimeHRMarker        = mHeartrateTime;
         mLaps++;
-        mLastLapDistMarker           = info.elapsedDistance;
-        mLastLapHeartrateMarker      = mElapsedHeartrate;
-        mLastLapTimeHRMarker         = mHeartrateTime;
-        mLastLapTimeMarker           = info.timerTime;
     }
 
     //! Current activity is ended
@@ -81,15 +54,18 @@ class PowerView extends CiqView {
         mLastLapTimerTime           = 0;
         mLastLapElapsedDistance     = 0;
         mStartStopPushed            = 0;
-        mLastLapHeartrateMarker      = 0;
-        mLastLapElapsedHeartrate     = 0;        
+        mLastLapHeartrateMarker     = 0;
+        mLastLapElapsedHeartrate    = 0;        
+        mLastLapTimerTimeHR     	= 0;     
     }
 
 	function onUpdate(dc) {
 		//! call the parent function in order to execute the logic of the parent
 		CiqView.onUpdate(dc);
-		
 
+ 	    Garminfont_value = Ui.loadResource(Rez.Fonts.Garmin4);
+ 	    
+	   
 	}
 
 }
