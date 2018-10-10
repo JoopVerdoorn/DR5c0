@@ -18,22 +18,17 @@ class PowerView extends CiqView {
 	var Power1 									= 0;
     var Power2 									= 0;
     var Power3 									= 0;
+	var vibrateseconds = 0;  
     hidden var uPowerZones                  = "184:Z1:227:Z2:255:Z3:284:Z4:326:Z5:369";
-	var vibrateseconds = 0;     
-    var mlastaltitude = 0;
-    hidden var aaltitude = 0;
-	hidden var mElevationGain = 0;
-    hidden var mElevationLoss = 0;
-    var mElevationDiff = 0;
-    var mrealElevationGain = 0;
-    var mrealElevationLoss = 0;
-    var mrealElevationDiff = 0;
         
 	//! it's good practice to always have an initialize, make sure to call your parent class here!
     function initialize() {
         CiqView.initialize();
         var mApp = Application.getApp();
-        uPowerZones		 = mApp.getProperty("pPowerZones");        
+         uRequiredPower		 = mApp.getProperty("pRequiredPower");
+         uWarningFreq		 = mApp.getProperty("pWarningFreq");
+         uAlertbeep			 = mApp.getProperty("pAlertbeep");
+         uPowerZones		 = mApp.getProperty("pPowerZones");       
     }
 
     //! Calculations we need to do every second even when the data field is not visible
@@ -54,23 +49,8 @@ class PowerView extends CiqView {
             mPowerTime		 = (info.currentPower != null) ? mPowerTime+1 : mPowerTime;
 			mElapsedPower    = (info.currentPower != null) ? mElapsedPower + info.currentPower : mElapsedPower;              
         }
-        
-        //! Calculate elevation differences and rounding altitude
-        if (info.altitude != null) {        
-          aaltitude = Math.round(info.altitude).toNumber();
-          mrealElevationDiff = aaltitude - mlastaltitude;
-          if (mrealElevationDiff > 0 ) {
-          	mrealElevationGain = mrealElevationDiff + mrealElevationGain;
-          } else {
-          	mrealElevationLoss =  mrealElevationLoss - mrealElevationDiff;
-          }  
-          mlastaltitude = aaltitude;
-          mElevationLoss = Math.round(mrealElevationLoss).toNumber();
-          mElevationGain = Math.round(mrealElevationGain).toNumber();
-        }             
 	}
 
-    //! Store last lap quantities and set lap markers
     //! Store last lap quantities and set lap markers after a lap
     function onTimerLap() {
 		Lapaction ();

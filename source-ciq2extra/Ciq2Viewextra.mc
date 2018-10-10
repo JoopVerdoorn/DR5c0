@@ -12,7 +12,6 @@ class CiqView extends ExtramemView {
 	hidden var LapHeartrate					= 0;
 	hidden var LastLapHeartrate				= 0;
 	hidden var AverageHeartrate 			= 0; 
-    hidden var ID0;
 
     function initialize() {
         ExtramemView.initialize();
@@ -25,26 +24,6 @@ class CiqView extends ExtramemView {
 //! specifieke code hierboven	
 //!====================================================================
 
-    	//! Setup back- and foregroundcolours
-		if (uBlackBackground == true ){
-			mColourFont = Graphics.COLOR_WHITE;
-			mColourFont1 = Graphics.COLOR_WHITE;
-			mColourLine = Graphics.COLOR_GREEN;
-			mColourBackGround = Graphics.COLOR_BLACK;
-		} else {
-			mColourFont = Graphics.COLOR_BLACK;
-			mColourFont1 = Graphics.COLOR_BLACK;
-			mColourLine = Graphics.COLOR_BLUE;
-			mColourBackGround = Graphics.COLOR_WHITE;
-		}
-
-		var mHash = hashfunction(WatchID);
-		mHash = (mHash > 0) ? mHash : -mHash;
-		ID2 = Math.round(mHash / 315127)+329;
-		ID1 = mHash % 315127+1864;
-		mtest = ((ID2-329)*315127 + ID1-1864) % 74539;
-		mtest = (mtest < 1000) ? mtest + 80000 : mtest;
-		
 		//!Calculate HR-metrics
 		var info = Activity.getActivityInfo();
 		
@@ -75,27 +54,19 @@ class CiqView extends ExtramemView {
             	fieldFormat[i] = "2decimal";
 			} else if (metric[i] == 43) {
     	        fieldValue[i] = (mLastLapSpeed != null) ? 3.6*mLastLapSpeed*1000/unitP : 0;
-        	    fieldLabel[i] = "L-1 Spd";
+        	    fieldLabel[i] = "LL Spd";
             	fieldFormat[i] = "2decimal";
 			} else if (metric[i] == 44) {
 	            fieldValue[i] = (info.averageSpeed != null) ? 3.6*info.averageSpeed*1000/unitP : 0;
     	        fieldLabel[i] = "Avg Spd";
         	    fieldFormat[i] = "2decimal";
-        	} else if (metric[i] == 45) {
-    	        fieldValue[i] = (info.currentHeartRate != null) ? info.currentHeartRate : 0;
-        	    fieldLabel[i] = "HR";
-            	fieldFormat[i] = "0decimal";
-			} else if (metric[i] == 46) {
-	            fieldValue[i] = (info.currentHeartRate != null) ? info.currentHeartRate : 0; //! nog HR zone invoegen
-    	        fieldLabel[i] = "HR zone";
-        	    fieldFormat[i] = "0decimal";
 			} else if (metric[i] == 47) {
     	        fieldValue[i] = LapHeartrate;
         	    fieldLabel[i] = "Lap HR";
             	fieldFormat[i] = "0decimal";
 			} else if (metric[i] == 48) {
     	        fieldValue[i] = LastLapHeartrate;
-        	    fieldLabel[i] = "L-1 HR";
+        	    fieldLabel[i] = "LL HR";
             	fieldFormat[i] = "0decimal";
 			} else if (metric[i] == 49) {
 	            fieldValue[i] = AverageHeartrate;
@@ -106,15 +77,14 @@ class CiqView extends ExtramemView {
     	        fieldLabel[i] = "Cadence";
         	    fieldFormat[i] = "0decimal";
 			} else if (metric[i] == 51) {
-		  		fieldValue[i] = (info.altitude != null) ? Math.round(info.altitude).toNumber() : 0;
+		  		fieldValue[i] = (info.altitude != null) ? info.altitude : 0;
+		  		fieldValue[i] = (unitD == 1609.344) ? Math.round(fieldValue[i]*3.2808).toNumber() : Math.round(fieldValue[i]).toNumber();
 		       	fieldLabel[i] = "Altitude";
 		       	fieldFormat[i] = "0decimal";
-            }
-        	//!einde invullen field metrics
+        	}
 		}
-
 	}
-
+	
     function Formatting(dc,counter,fieldvalue,fieldformat,fieldlabel,CorString) {    
         var originalFontcolor = mColourFont;
         var Temp; 
@@ -132,11 +102,7 @@ class CiqView extends ExtramemView {
         yh = yh.toNumber();
         xl = xl.toNumber();
         yl = yl.toNumber();
-
-		if ( metric[counter] == 46 or metric[counter] == 38 ) { 
-			fieldvalue = mZone[counter];
-		}
-
+        			
         if ( fieldformat.equals("0decimal" ) == true ) {
         	fieldvalue = Math.round(fieldvalue);
         } else if ( fieldformat.equals("1decimal" ) == true ) {
@@ -153,7 +119,7 @@ class CiqView extends ExtramemView {
         	Temp = (fieldvalue != 0 ) ? (unitP/fieldvalue).toLong() : 0;
         	fieldvalue = (Temp / 60).format("%0d") + ":" + Math.round(Temp % 60).format("%02d");
         } else if ( fieldformat.equals("power" ) == true ) {     
-        	fieldvalue = Math.round(fieldvalue);
+        	fieldvalue = Math.round(fieldvalue);  	
         	if (PowerWarning == 1) { 
         		mColourFont = Graphics.COLOR_PURPLE;
         	} else if (PowerWarning == 2) { 
@@ -169,7 +135,7 @@ class CiqView extends ExtramemView {
     	dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
     	
         if ( fieldformat.equals("time" ) == true ) {    
-	    	if ( counter == 1 or counter == 2 or counter == 5) { 
+	    	if ( counter == 1 or counter == 2 or counter == 5) {  
 	    		var fTimerSecs = (fieldvalue % 60).format("%02d");
         		var fTimer = (fieldvalue / 60).format("%d") + ":" + fTimerSecs;  //! Format time as m:ss
 	    		var xx = x;
@@ -177,31 +143,20 @@ class CiqView extends ExtramemView {
 	    		if (fieldvalue > 3599) {
             		var fTimerHours = (fieldvalue / 3600).format("%d");
             		xx = xms;
-            		dc.drawText(xh, yh, Garminfont_value_x_small, fTimerHours, Graphics.TEXT_JUSTIFY_LEFT|Graphics.TEXT_JUSTIFY_VCENTER);
+            		dc.drawText(xh, yh, Graphics.FONT_NUMBER_MILD, fTimerHours, Graphics.TEXT_JUSTIFY_LEFT|Graphics.TEXT_JUSTIFY_VCENTER);
             		fTimer = (fieldvalue / 60 % 60).format("%02d") + ":" + fTimerSecs;  
         		}
-        		dc.drawText(xx, y, Garminfont_value_small, fTimer, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);	
+        		dc.drawText(xx, y, Graphics.FONT_NUMBER_MEDIUM, fTimer, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);	
         	}
         } else {
         	if ( counter == 3 or counter == 4 ) {
-        		dc.drawText(x, y, Garminfont_value, fieldvalue, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+        		dc.drawText(x, y, Graphics.FONT_NUMBER_HOT, fieldvalue, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
         	} else {
-        		dc.drawText(x, y, Garminfont_value_small, fieldvalue, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+        		dc.drawText(x, y, Graphics.FONT_NUMBER_MEDIUM, fieldvalue, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
         	}
         }        
-        dc.drawText(xl, yl, Garminfont_label,  fieldlabel, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);               
+        dc.drawText(xl, yl, Graphics.FONT_XTINY,  fieldlabel, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);               
         mColourFont = originalFontcolor;
 		dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
     }
-
-	function hashfunction(string) {
-    	var val = 0;
-    	var bytes = string.toUtf8Array();
-    	for (var i = 0; i < bytes.size(); ++i) {
-        	val = (val * 997) + bytes[i];
-    	}
-    	return val + (val >> 5);
-	}
-
-
 }

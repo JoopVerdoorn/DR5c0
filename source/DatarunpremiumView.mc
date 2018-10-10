@@ -22,14 +22,17 @@ class DatarunpremiumView extends Ui.DataField {
 
 	//!Get device info
 	var mySettings = System.getDeviceSettings();
-	hidden var ID1;
-	hidden var ID2;
-	hidden var WatchID = (mySettings.uniqueIdentifier != null) ? mySettings.uniqueIdentifier : 914;
+	hidden var ID0 = 999;
+	hidden var ID1 = 123;
+	hidden var ID2 = 456;
+	hidden var WatchID = mySettings.uniqueIdentifier;
 	hidden var watchType = mySettings.partNumber;
+	hidden var licenseOK = false;
+	hidden var CCode = 12345678;
 
 	hidden var uShowlaps = false;
 	hidden var uShowDemo = false;
-	hidden var umyNumber = 0;
+	hidden var umyNumber = 23429769;
 	hidden var mtest = 63869733;
 	hidden var jTimertime = 0;
 	hidden var uBlackBackground = false;
@@ -57,6 +60,7 @@ class DatarunpremiumView extends Ui.DataField {
 	hidden var Pace4 								= 0;
     hidden var Pace5 								= 0;
 
+    var aaltitude = 0;
     hidden var CurrentSpeedinmpersec			= 0;
     hidden var uRoundedPace                 = true;
 
@@ -91,11 +95,6 @@ class DatarunpremiumView extends Ui.DataField {
     hidden var mLastLapSpeed 				= 0;
            
 	hidden var metric = [1, 2, 3, 4, 5, 6, 7];
-	hidden var Garminfont_value_x_small = Graphics.FONT_NUMBER_MILD;
-	hidden var Garminfont_value_small = Graphics.FONT_NUMBER_MEDIUM;
-	hidden var Garminfont_value = Graphics.FONT_NUMBER_HOT;
-	hidden var Garminfont_label = Graphics.FONT_XTINY;
-	hidden var VA3VA3M = true;
 
     function initialize() {
          DataField.initialize();
@@ -117,6 +116,7 @@ class DatarunpremiumView extends Ui.DataField {
          uRacedistance		 = mApp.getProperty("pRacedistance");
          uRacetime			 = mApp.getProperty("pRacetime");
          appversion 		 = mApp.getProperty("pAppversion");
+         var uHrZones = UserProfile.getHeartRateZones(UserProfile.getCurrentSport());
 
         if (System.getDeviceSettings().paceUnits == System.UNIT_STATUTE) {
             unitP = 1609.344;
@@ -126,7 +126,21 @@ class DatarunpremiumView extends Ui.DataField {
             unitD = 1609.344;
         }
 
+		//! Setting ID's for licensing and testing license
+		ID0 = watchType.substring(5, 9);
+		ID0 = 511+ID0.toNumber();
+		var mHash = hashfunction(WatchID);	
+		mHash = (mHash > 0) ? mHash : -mHash;
+		ID2 = Math.round(mHash / 315127)+329;
+		ID1 = mHash % 315127+1864;
+		mtest = ((ID2-329)*315127 + ID1-1864) % 74539;
+		mtest = (mtest < 1000) ? mtest + 80000 : mtest;
         
+        licenseOK = (umyNumber == mtest) ? true : false;      
+		CCode = hashfunction(umyNumber.toString())+739576;                
+		CCode = CCode*hashfunction((uHrZones[2]*uHrZones[4]+uHrZones[1]+uHrZones[3]).toString())-7637;
+        CCode = (CCode > 0) ? CCode : -CCode; 
+        CCode = CCode % 452498 + 52478;           
     }
 
     //! Timer transitions from stopped to running state
@@ -168,8 +182,6 @@ class DatarunpremiumView extends Ui.DataField {
         mStartStopPushed = (info.elapsedTime != null) ? info.elapsedTime : 0;
     }
     
-
-
     //!! this is called whenever the screen needs to be updated
     function onUpdate(dc) {
 
@@ -323,4 +335,12 @@ class DatarunpremiumView extends Ui.DataField {
 		
 	  }
     }
+	function hashfunction(string) {
+    	var val = 0;
+    	var bytes = string.toUtf8Array();
+    	for (var i = 0; i < bytes.size(); ++i) {
+        	val = (val * 997) + bytes[i];
+    	}
+    	return val + (val >> 5);
+	} 
 }

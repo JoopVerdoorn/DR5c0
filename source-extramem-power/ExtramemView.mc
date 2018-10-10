@@ -14,6 +14,14 @@ class ExtramemView extends DatarunpremiumView {
 	var rolavPowmaxsecs = 30;
 	var Averagespeedinmpersec = 0;
 	var Averagepowerpersec = 0;
+    var mlastaltitude = 0;
+    hidden var aaltitude = 0;
+	hidden var mElevationGain = 0;
+    hidden var mElevationLoss = 0;
+    var mElevationDiff = 0;
+    var mrealElevationGain = 0;
+    var mrealElevationLoss = 0;
+    var mrealElevationDiff = 0;
 
     function initialize() {
         DatarunpremiumView.initialize();
@@ -24,6 +32,22 @@ class ExtramemView extends DatarunpremiumView {
 		rolavPacmaxsecs  = mApp.getProperty("prolavPacmaxsecs");
 		uHrZones = UserProfile.getHeartRateZones(UserProfile.getCurrentSport());
     }
+
+    function compute(info) {
+        //! Calculate elevation differences and rounding altitude
+        if (info.altitude != null) {        
+          aaltitude = Math.round(info.altitude).toNumber();
+          mrealElevationDiff = aaltitude - mlastaltitude;
+          if (mrealElevationDiff > 0 ) {
+          	mrealElevationGain = mrealElevationDiff + mrealElevationGain;
+          } else {
+          	mrealElevationLoss =  mrealElevationLoss - mrealElevationDiff;
+          }  
+          mlastaltitude = aaltitude;
+          mElevationLoss = Math.round(mrealElevationLoss).toNumber();
+          mElevationGain = Math.round(mrealElevationGain).toNumber();
+        }  
+	}
 
 	function onUpdate(dc) {
 		//! call the parent onUpdate to do the base logic
@@ -55,7 +79,6 @@ class ExtramemView extends DatarunpremiumView {
 		if (LastLapHeartrate != 0) {
 			LastLapPower2HRRatio 		= (0.00001 + LastLapPower) / LastLapHeartrate;
 		}			
-
 
         //! Calculate ETA
         if (info.elapsedDistance != null && info.timerTime != null) {
@@ -224,7 +247,7 @@ class ExtramemView extends DatarunpremiumView {
 
 		//! Conditions for showing the demoscreen       
         if (uShowDemo == false) {
-        	if (umyNumber != mtest && jTimertime > 900)  {
+        	if (licenseOK == false && jTimertime > 900)  {
         		uShowDemo = true;        		
         	}
         }
@@ -316,7 +339,6 @@ class ExtramemView extends DatarunpremiumView {
             mZ5under = 99999999;
             mZ5upper = 99999999; 
         }
-
         mZone[counter] = 0;
         if (testvalue >= mZ5upper) {
             mfillColour = Graphics.COLOR_PURPLE;
@@ -347,7 +369,6 @@ class ExtramemView extends DatarunpremiumView {
         		mfillColour = Graphics.COLOR_RED;
         	}
         }
-
 		dc.setColor(mfillColour, Graphics.COLOR_TRANSPARENT);
         dc.fillRectangle(x, y, w, h);
 	}
