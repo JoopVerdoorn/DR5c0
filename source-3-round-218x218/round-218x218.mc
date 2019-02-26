@@ -37,18 +37,17 @@ class DeviceView extends PowerView {
 
         //! Centre vertical divider
         dc.drawLine(109, 84,  109, 160);
-
-
+        
 		//! Display metrics
 		dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
  		
 		//! Show clock with current time in top
-		if (uShowlaps == false) {
+		if (uMilClockAltern == 0) {	
 			var myTime = Toybox.System.getClockTime(); 
-	    	var strTime = myTime.hour.format("%02d") + ":" + myTime.min.format("%02d");
+	   		var strTime = myTime.hour.format("%02d") + ":" + myTime.min.format("%02d");
 			dc.drawText(108, -4, Graphics.FONT_MEDIUM, strTime, Graphics.TEXT_JUSTIFY_CENTER);
 		}
-		
+	
 		for (var i = 1; i < 6; ++i) {
 	    	if ( i == 1 ) {			//!upper row, left
 	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"062,063,065,015,067,062,036");
@@ -89,7 +88,6 @@ class DeviceView extends PowerView {
 			dc.drawText(164, 145, Graphics.FONT_XTINY, mtest, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
 			dc.drawText(81, 170, Graphics.FONT_XTINY, "C-Code: ", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
 			dc.drawText(140, 170, Graphics.FONT_XTINY, CCode, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
-
 		} else {
       		dc.drawText(109, 30, Graphics.FONT_XTINY, "License needed !!", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
       		dc.drawText(109, 57, Graphics.FONT_XTINY, "Run is recorded though", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
@@ -102,5 +100,7 @@ class DeviceView extends PowerView {
 			dc.drawText(109, 195, Graphics.FONT_XTINY, "Version " + appversion, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
       	}
 	   }
+	   
 	}
+
 }

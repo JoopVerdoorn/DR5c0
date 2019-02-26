@@ -1,9 +1,5 @@
 using Toybox.WatchUi as Ui;
-using Toybox.Graphics as Gfx;
 using Toybox.System as Sys;
-using Toybox.Lang as Lang;
-using Toybox.Activity as info; 
-
 class DatarunPremiumwith5metricsApp extends Toybox.Application.AppBase {
     function initialize() {
         AppBase.initialize();
@@ -29,20 +25,21 @@ class DatarunpremiumView extends Ui.DataField {
 	hidden var watchType = mySettings.partNumber;
 	hidden var licenseOK = false;
 	hidden var CCode = 12345678;
-
-	hidden var uShowlaps = false;
+	
+	hidden var uMilClockAltern = 0;
 	hidden var uShowDemo = false;
-	hidden var umyNumber = 23429769;
+	hidden var umyNumber = 26429769;
+	var uBlackBackground 					= false;
+	
 	hidden var mtest = 63869733;
 	hidden var jTimertime = 0;
-	hidden var uBlackBackground = false;
 	
 	hidden var fieldValue = [1, 2, 3, 4, 5, 6];
 	hidden var fieldLabel = [1, 2, 3, 4, 5, 6];
 	hidden var fieldFormat = [1, 2, 3, 4, 5, 6];	
 
-    hidden var Averagespeedinmper3sec 			= 0;
-    hidden var Averagespeedinmper5sec 			= 0;
+    var Averagespeedinmper3sec 			= 0;
+    var Averagespeedinmper5sec 			= 0;
     hidden var mColour;
     hidden var mColourFont;
 	hidden var mColourFont1;
@@ -54,23 +51,22 @@ class DatarunpremiumView extends Ui.DataField {
     hidden var mTimerRunning                = false;	
     hidden var unitP                        = 1000.0;
     hidden var unitD                        = 1000.0;
-    hidden var Pace1 								= 0;
-    hidden var Pace2 								= 0;
-    hidden var Pace3 								= 0;
-	hidden var Pace4 								= 0;
-    hidden var Pace5 								= 0;
+    var Pace1 								= 0;
+    var Pace2 								= 0;
+    var Pace3 								= 0;
+	var Pace4 								= 0;
+    var Pace5 								= 0;
 
-    var aaltitude = 0;
-    hidden var CurrentSpeedinmpersec			= 0;
-    hidden var uRoundedPace                 = true;
+    var CurrentSpeedinmpersec		= 0;
+    var uRoundedPace                 = true;
 
     hidden var uBacklight                   = false;
 
     hidden var uUpperLeftMetric            = 0;    //! Timer is default
     hidden var uUpperRightMetric           = 4;    //! Distance is default
-    hidden var uMiddleLeftMetric           = 8;    //! Pace is default    
-    hidden var uMiddleRightMetric           = 50;    //! Cadence is default    
-    hidden var uBottomMiddleMetric           = 45;    //! HR is default
+    hidden var uMiddleLeftMetric           = 45;    //! HR is default   
+    hidden var uMiddleRightMetric           = 50;    //! Cadence is default
+    hidden var uBottomRightMetric           = 20;    //! Lap power is default
     hidden var uRequiredPower		 		= "000:999";
     hidden var uWarningFreq		 			= 5;
     hidden var uAlertbeep			 		= false;
@@ -84,7 +80,6 @@ class DatarunpremiumView extends Ui.DataField {
     hidden var uRacetime					= "03:59:48";
 	hidden var mRacetime  					= 0;
 
-    hidden var mLaps                        = 1;
     hidden var mLastLapDistMarker           = 0;
     hidden var mLastLapTimeMarker           = 0;
     hidden var mLastLapStoppedTimeMarker    = 0;
@@ -93,8 +88,22 @@ class DatarunpremiumView extends Ui.DataField {
     hidden var mLastLapTimerTime            = 0;
     hidden var mLapSpeed 					= 0;
     hidden var mLastLapSpeed 				= 0;
-           
-	hidden var metric = [1, 2, 3, 4, 5, 6, 7];
+	hidden var mLaps                        = 1;           
+	hidden var metric 						= [1, 2, 3, 4, 5, 6];
+	hidden var pMilClockAltern				= false;
+	
+    hidden var mElapsedHeartrate   			= 0;
+	hidden var mLastLapHeartrateMarker      = 0;    
+    hidden var mCurrentHeartrate    		= 0; 
+    hidden var mLastLapElapsedHeartrate		= 0;
+    hidden var mHeartrateTime				= 0;
+    hidden var mLapTimerTimeHR				= 0;    
+	hidden var mLastLapTimeHRMarker			= 0;
+	hidden var mLastLapTimerTimeHR			= 0;
+	hidden var LapHeartrate					= 0;
+	hidden var LastLapHeartrate				= 0;
+	hidden var AverageHeartrate 			= 0; 
+	hidden var mLapElapsedDistance 			= 0;
 
     function initialize() {
          DataField.initialize();
@@ -102,22 +111,20 @@ class DatarunpremiumView extends Ui.DataField {
          var mApp = Application.getApp();
          metric[1]    	= mApp.getProperty("pUpperLeftMetric");
          metric[2]   	= mApp.getProperty("pUpperRightMetric");
-    	 metric[3]   	= mApp.getProperty("pMiddleLeftMetric");
+    	 metric[3]   	= mApp.getProperty("pMiddleLeftMetric");    
     	 metric[4]		= mApp.getProperty("pMiddleRightMetric");
-         metric[5]  	= mApp.getProperty("pBottomMetric");
+         metric[5]  	= mApp.getProperty("pBottomRightMetric");
          uRoundedPace        = mApp.getProperty("pRoundedPace");
          uBacklight          = mApp.getProperty("pBacklight");
          umyNumber			 = mApp.getProperty("myNumber");
+         var uCCnumber	     = mApp.getProperty("pCCnumber");
          uShowDemo			 = mApp.getProperty("pShowDemo");
-         uBlackBackground    = mApp.getProperty("pBlackBackground");
-         uRequiredPower		 = mApp.getProperty("pRequiredPower");
-         uWarningFreq		 = mApp.getProperty("pWarningFreq");
-         uAlertbeep			 = mApp.getProperty("pAlertbeep");
+         uMilClockAltern	 = mApp.getProperty("pMilClockAltern");
          uRacedistance		 = mApp.getProperty("pRacedistance");
          uRacetime			 = mApp.getProperty("pRacetime");
          appversion 		 = mApp.getProperty("pAppversion");
          var uHrZones = UserProfile.getHeartRateZones(UserProfile.getCurrentSport());
-
+	 
         if (System.getDeviceSettings().paceUnits == System.UNIT_STATUTE) {
             unitP = 1609.344;
         }
@@ -125,7 +132,8 @@ class DatarunpremiumView extends Ui.DataField {
         if (System.getDeviceSettings().distanceUnits == System.UNIT_STATUTE) {
             unitD = 1609.344;
         }
-
+		uRacedistance = (unitD/1000)*uRacedistance;
+		
 		//! Setting ID's for licensing and testing license
 		ID0 = watchType.substring(5, 9);
 		ID0 = 511+ID0.toNumber();
@@ -136,11 +144,11 @@ class DatarunpremiumView extends Ui.DataField {
 		mtest = ((ID2-329)*315127 + ID1-1864) % 74539;
 		mtest = (mtest < 1000) ? mtest + 80000 : mtest;
         
-        licenseOK = (umyNumber == mtest) ? true : false;      
 		CCode = hashfunction(umyNumber.toString())+739576;                
 		CCode = CCode*hashfunction((uHrZones[2]*uHrZones[4]+uHrZones[1]+uHrZones[3]).toString())-7637;
         CCode = (CCode > 0) ? CCode : -CCode; 
-        CCode = CCode % 452498 + 52478;           
+        CCode = CCode % 452498 + 52478;     
+        licenseOK = (umyNumber == mtest) ? true : false;
     }
 
     //! Timer transitions from stopped to running state
@@ -184,31 +192,21 @@ class DatarunpremiumView extends Ui.DataField {
     
     //!! this is called whenever the screen needs to be updated
     function onUpdate(dc) {
-
-    	//! Setup back- and foregroundcolours
-		if (uBlackBackground == true ){
-			mColourFont = Graphics.COLOR_WHITE;
-			mColourFont1 = Graphics.COLOR_WHITE;
-			mColourLine = Graphics.COLOR_GREEN;
-			mColourBackGround = Graphics.COLOR_BLACK;
-		} else {
-			mColourFont = Graphics.COLOR_BLACK;
-			mColourFont1 = Graphics.COLOR_BLACK;
-			mColourLine = Graphics.COLOR_BLUE;
-			mColourBackGround = Graphics.COLOR_WHITE;
-		}
-		dc.setColor(mColourBackGround, Graphics.COLOR_TRANSPARENT);
-        dc.fillRectangle (0, 0, 240, 240);
-
-        //! Calculate lap (HR) time and convert timers from milliseconds to seconds
+        //! Calculate lap (HR) time
 		var info = Activity.getActivityInfo();
-        mLapTimerTime = jTimertime - mLastLapTimeMarker;
 
-		ID0 = watchType.substring(5, 9);
-		ID0 = 511+ID0.toNumber();
-		
+        mLapTimerTimeHR = mHeartrateTime - mLastLapTimeHRMarker;
+        var mLapElapsedHeartrate = mElapsedHeartrate - mLastLapHeartrateMarker;
+
+		AverageHeartrate = Math.round((mHeartrateTime != 0) ? mElapsedHeartrate/mHeartrateTime : 0);  		
+		LapHeartrate = (mLapTimerTimeHR != 0) ? Math.round(mLapElapsedHeartrate/mLapTimerTimeHR) : 0; 					
+		LastLapHeartrate			= (mLastLapTimerTime != 0) ? Math.round(mLastLapElapsedHeartrate/mLastLapTimerTime) : 0;
+
+        //! Calculate lap time
+        mLapTimerTime = jTimertime - mLastLapTimeMarker;				
+
         //! Calculate lap distance
-        var mLapElapsedDistance = 0.0;
+        mLapElapsedDistance = 0.0;
         if (info.elapsedDistance != null) {
             mLapElapsedDistance = info.elapsedDistance - mLastLapDistMarker;
         }
@@ -222,11 +220,11 @@ class DatarunpremiumView extends Ui.DataField {
         }
 
 		//! Calculate average speed
-        var currentSpeedtest				= 0;
+        CurrentSpeedinmpersec = 0;
         if (info.currentSpeed != null) {
-        	currentSpeedtest = info.currentSpeed; 
+        	CurrentSpeedinmpersec = info.currentSpeed; 
         }
-        if (currentSpeedtest > 0) {
+        if (CurrentSpeedinmpersec > 0) {
             	//! Calculate average pace
 				if (info.currentSpeed != null) {
         		Pace5 								= Pace4;
@@ -243,11 +241,8 @@ class DatarunpremiumView extends Ui.DataField {
 				}
 				Averagespeedinmper5sec= (uRoundedPace) ? unitP/(Math.round( (unitP/(Pace1+Pace2+Pace3+Pace4+Pace5)*5) / 5 ) * 5) : (Pace1+Pace2+Pace3+Pace4+Pace5)/5;
 				Averagespeedinmper3sec= (uRoundedPace) ? unitP/(Math.round( (unitP/(Pace1+Pace2+Pace3)*3) / 5 ) * 5) : (Pace1+Pace2+Pace3)/3;
-				CurrentSpeedinmpersec= (uRoundedPace) ? unitP/(Math.round( unitP/currentSpeedtest / 5 ) * 5) : currentSpeedtest;
-			
+				CurrentSpeedinmpersec= (uRoundedPace) ? unitP/(Math.round( unitP/CurrentSpeedinmpersec / 5 ) * 5) : CurrentSpeedinmpersec;
 		}
-
-
 
 		//! Determine required finish time and calculate required pace 	
 
@@ -259,12 +254,11 @@ class DatarunpremiumView extends Ui.DataField {
         mRacesec = mRacesec.toNumber();
         mRacetime = mRacehour*3600 + mRacemin*60 + mRacesec;
 
-
 		//!Fill field metrics
 		var i = 0; 
 	    for (i = 1; i < 6; ++i) {	    
         	if (metric[i] == 0) {
-            	fieldValue[i] = (info.timerTime != null) ? info.timerTime / 1000 : 0;
+            	fieldValue[i] = jTimertime;
             	fieldLabel[i] = "Timer";
             	fieldFormat[i] = "time";   
 	        } else if (metric[i] == 1) {
@@ -276,7 +270,7 @@ class DatarunpremiumView extends Ui.DataField {
         	    fieldLabel[i] = "L-1LapT";
             	fieldFormat[i] = "time";
 			} else if (metric[i] == 3) {
-        	    fieldValue[i] = (info.timerTime != null) ? info.timerTime / (mLaps * 1000) : 0;
+        	    fieldValue[i] = jTimertime / mLaps;
             	fieldLabel[i] = "AvgLapT";
             	fieldFormat[i] = "time";
 	        } else if (metric[i] == 4) {
@@ -322,14 +316,54 @@ class DatarunpremiumView extends Ui.DataField {
             } else if (metric[i] == 13) {
         		fieldLabel[i]  = "Req pace ";
         		fieldFormat[i] = "pace";
-        		if (info.elapsedDistance != null and info.timerTime != null and mRacetime != info.timerTime/1000 and mRacetime > info.timerTime/1000) {
-        			fieldValue[i] = (uRacedistance - info.elapsedDistance) / (mRacetime - info.timerTime/1000);
+        		if (info.elapsedDistance != null and mRacetime != jTimertime and mRacetime > jTimertime) {
+        			fieldValue[i] = (uRacedistance - info.elapsedDistance) / (mRacetime - jTimertime);
         		} 
+	        } else if (metric[i] == 40) {
+    	        fieldValue[i] = (info.currentSpeed != null) ? 3.6*info.currentSpeed*1000/unitP : 0;
+        	    fieldLabel[i] = "Speed";
+            	fieldFormat[i] = "2decimal";   
+	        } else if (metric[i] == 41) {
+    	        fieldValue[i] = (info.currentSpeed != null) ? 3.6*((Pace1+Pace2+Pace3+Pace4+Pace5)/5)*1000/unitP : 0;
+        	    fieldLabel[i] = "Spd 5s";
+            	fieldFormat[i] = "2decimal";
+	        } else if (metric[i] == 42) {
+    	        fieldValue[i] = (mLapSpeed != null) ? 3.6*mLapSpeed*1000/unitP  : 0;
+        	    fieldLabel[i] = "L Spd";
+            	fieldFormat[i] = "2decimal";
+			} else if (metric[i] == 43) {
+    	        fieldValue[i] = (mLastLapSpeed != null) ? 3.6*mLastLapSpeed*1000/unitP : 0;
+        	    fieldLabel[i] = "LL Spd";
+            	fieldFormat[i] = "2decimal";
+			} else if (metric[i] == 44) {
+	            fieldValue[i] = (info.averageSpeed != null) ? 3.6*info.averageSpeed*1000/unitP : 0;
+    	        fieldLabel[i] = "Avg Spd";
+        	    fieldFormat[i] = "2decimal";
+			} else if (metric[i] == 47) {
+    	        fieldValue[i] = LapHeartrate;
+        	    fieldLabel[i] = "Lap HR";
+            	fieldFormat[i] = "0decimal";
+			} else if (metric[i] == 48) {
+    	        fieldValue[i] = LastLapHeartrate;
+        	    fieldLabel[i] = "LL HR";
+            	fieldFormat[i] = "0decimal";
+			} else if (metric[i] == 49) {
+	            fieldValue[i] = AverageHeartrate;
+    	        fieldLabel[i] = "Avg HR";
+        	    fieldFormat[i] = "0decimal";
+			} else if (metric[i] == 50) {
+				fieldValue[i] = (info.currentCadence != null) ? info.currentCadence : 0; 
+    	        fieldLabel[i] = "Cadence";
+        	    fieldFormat[i] = "0decimal";
+			} else if (metric[i] == 51) {
+		  		fieldValue[i] = (info.altitude != null) ? info.altitude : 0;
+		  		fieldValue[i] = (unitD == 1609.344) ? fieldValue[i]*3.2808 : fieldValue[i]; 
+		       	fieldLabel[i] = "Altitude";
+		       	fieldFormat[i] = "0decimal";        		
         	} else if (metric[i] == 45) {
     	        fieldValue[i] = (info.currentHeartRate != null) ? info.currentHeartRate : 0;
         	    fieldLabel[i] = "HR";
             	fieldFormat[i] = "0decimal";
-
 			}
 		//!einde invullen field metrics
 		
@@ -342,5 +376,6 @@ class DatarunpremiumView extends Ui.DataField {
         	val = (val * 997) + bytes[i];
     	}
     	return val + (val >> 5);
-	} 
+	}    
+
 }

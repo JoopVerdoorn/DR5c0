@@ -11,7 +11,7 @@ class DeviceView extends PowerView {
 	function onUpdate(dc) {
 		//! call the parent function in order to execute the logic of the parent
 		PowerView.onUpdate(dc);
-        
+                
 		//! Conditions for showing the demoscreen       
         if (uShowDemo == false) {
         	if (licenseOK == false && jTimertime > 900)  {
@@ -38,13 +38,13 @@ class DeviceView extends PowerView {
         dc.drawLine(119,  92,  119,  175);
         
         //! Bottom horizontal divider
-        dc.drawLine(53, 219, 187, 219);	
+		dc.drawLine(53, 219, 187, 219); 
 
 		//! Display metrics
-		dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
+        dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
 
 		//! Show number of laps or clock with current time in top
-		if (uShowlaps == false) {
+		if (uMilClockAltern == 0) {		
 			var myTime = Toybox.System.getClockTime(); 
 	    	var strTime = myTime.hour.format("%02d") + ":" + myTime.min.format("%02d");
 			dc.drawText(120, -4, Graphics.FONT_MEDIUM, strTime, Graphics.TEXT_JUSTIFY_CENTER);
@@ -101,6 +101,8 @@ class DeviceView extends PowerView {
 			dc.drawText(161, 178, Graphics.FONT_NUMBER_MEDIUM, ID2, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
 			dc.drawText(120, 215, Graphics.FONT_XTINY, "Version " + appversion, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
       	}
-	   }  
+	   }
+	   
 	}
+
 }
