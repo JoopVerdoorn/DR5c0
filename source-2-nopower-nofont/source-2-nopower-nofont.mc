@@ -103,10 +103,6 @@ class PowerView extends CiqView {
 		 		Coloring(dc,i,fieldValue[i],"074,093,089,019");
 	      	} else if ( i == 5 ) {  //!middle row, right
 	    		Coloring(dc,i,fieldValue[i],"165,093,077,019");
-		   	} else if ( i == 6 ) {	//!lower row, left
-		   		Coloring(dc,i,fieldValue[i],"018,199,100,019");
-	      	} else if ( i == 7 ) {	//!lower row, right
-	    		Coloring(dc,i,fieldValue[i],"120,199,100,019");
 	    	}       	
 		}
 	   
