@@ -21,7 +21,7 @@ class CiqView extends ExtramemView {
 	var lastsrunPower						= 0;
 	var setPowerWarning 					= 0;
 	var Garminfont = Ui.loadResource(Rez.Fonts.Garmin1);
-	var Garminfont2 = Ui.loadResource(Rez.Fonts.Garmin2);	
+	var Garminfontklein = Ui.loadResource(Rez.Fonts.Garmin2);	
 		
     function initialize() {
         ExtramemView.initialize();
@@ -38,8 +38,16 @@ class CiqView extends ExtramemView {
 				rolavPowmaxsecs = (rolavPowmaxsecs < 30) ? 30 : rolavPowmaxsecs;
 			}
 		}	
-		Garminfont = (ID0 == 3624 or ID0 == 3588 or ID0 == 3762 or ID0 == 3761 or ID0 == 3757 or ID0 == 3758 or ID0 == 3759) ? Ui.loadResource(Rez.Fonts.Garmin1) : Graphics.FONT_NUMBER_MEDIUM;
-		Garminfont2 =  (ID0 == 3624 or ID0 == 3588 or ID0 == 3762 or ID0 == 3761 or ID0 == 3757 or ID0 == 3758 or ID0 == 3759) ? Ui.loadResource(Rez.Fonts.Garmin2) : Graphics.FONT_NUMBER_HOT; 		
+		if (ID0 == 3801 or ID0 == 4026 ) {
+			Garminfont = Ui.loadResource(Rez.Fonts.Garmin3);
+			Garminfontklein = Ui.loadResource(Rez.Fonts.Garmin5);
+		} else if (ID0 == 3802 or ID0 == 4027 ) {
+			Garminfont = Ui.loadResource(Rez.Fonts.Garmin4);
+			Garminfontklein = Ui.loadResource(Rez.Fonts.Garmin6);
+		} else {
+			Garminfont = Ui.loadResource(Rez.Fonts.Garmin2);
+			Garminfontklein = Ui.loadResource(Rez.Fonts.Garmin1);		
+		}	
     }
 
     //! Calculations we need to do every second even when the data field is not visible
@@ -312,13 +320,13 @@ class CiqView extends ExtramemView {
             		dc.drawText(xh, yh, Graphics.FONT_LARGE, fTimerHours, Graphics.TEXT_JUSTIFY_LEFT|Graphics.TEXT_JUSTIFY_VCENTER);
             		fTimer = (fieldvalue / 60 % 60).format("%02d") + ":" + fTimerSecs;  
         		}
-       			dc.drawText(xx, y, Garminfont, fTimer, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+       			dc.drawText(xx, y, Garminfontklein, fTimer, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
         	}
         } else {
  			if ( counter == 3 or counter == 4) {
-        		dc.drawText(x, y, Garminfont2, fieldvalue, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
-        	} else {
         		dc.drawText(x, y, Garminfont, fieldvalue, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+        	} else {
+        		dc.drawText(x, y, Garminfontklein, fieldvalue, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
 			}
         }         
        	dc.drawText(xl, yl, Graphics.FONT_XTINY,  fieldlabel, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);

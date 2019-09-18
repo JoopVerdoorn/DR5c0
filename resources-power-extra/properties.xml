@@ -2,9 +2,13 @@
 	<fonts>
     	<font id="Garmin1" filename="fonts/Roadway53-alleencijfers.fnt" antialias="true"/>
     	<font id="Garmin2" filename="fonts/Roadway73-alleencijfers.fnt" antialias="true"/>
+    	<font id="Garmin3" filename="fonts/Roadway79-alleencijfers.fnt" antialias="true"/>
+    	<font id="Garmin4" filename="fonts/Roadway85-alleencijfers.fnt" antialias="true"/>
+    	<font id="Garmin5" filename="fonts/Roadway57-alleencijfers.fnt" antialias="true"/>
+    	<font id="Garmin6" filename="fonts/Roadway62-alleencijfers.fnt" antialias="true"/>  
 	</fonts>
   <properties>
-    <property id="pAppversion" type="string">2.08</property>
+    <property id="pAppversion" type="string">2.09</property>
     <property id="pUpperLeftMetric" type="number">0</property>
     <property id="pUpperRightMetric" type="number">4</property>
     <property id="pMiddleLeftMetric" type="number">45</property>    
@@ -42,8 +46,8 @@
     <!-- Beta name:
     <string id="AppName">Datarun premium with 5 metrics, main version</string>
     -->
-    <string id="AppVersion">2.08</string>
-    <string id="lDummysetting4version">Version 2.08 of Datarun premium with 5 metrics, main version (dummy setting)</string>
+    <string id="AppVersion">2.09</string>
+    <string id="lDummysetting4version">Version 2.09 of Datarun premium with 5 metrics, main version (dummy setting)</string>
 	<string id="lTimeMenu">___Time items___</string>
 	<string id="lDistanceMenu">___Distance items___</string>
 	<string id="lPaceMenu">___Pace items___</string>

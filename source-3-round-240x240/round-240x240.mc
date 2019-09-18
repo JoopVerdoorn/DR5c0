@@ -56,15 +56,15 @@ class DeviceView extends PowerView {
 
 		for (var i = 1; i < 6; ++i) {
 	    	if ( i == 1 ) {			//!upper row, left
-	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"069,069,073,013,074,073,037");
+	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"069,068,073,013,073,073,037");
 	       	} else if ( i == 2 ) {	//!upper row, right
-	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"170,069,180,121,074,167,037");
+	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"170,068,180,121,073,167,037");
 	       	} else if ( i == 3 ) {  //!lower row, left
 	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"062,143,072,012,145,073,102");
 	       	} else if ( i == 4 ) {	//!lower row, right
 	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"173,143,182,123,167,167,102");
 	       	} else if ( i == 5 ) {  //!middle row, right
-	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"150,197,155,094,189,070,207");
+	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"150,196,155,094,188,070,207");
 	       	}     	
 		}
 		
@@ -82,9 +82,6 @@ class DeviceView extends PowerView {
 		dc.setColor(mBattcolor, Graphics.COLOR_TRANSPARENT);
 		dc.fillRectangle(92, 222, 54, 15);
 		dc.fillRectangle(146, 225, 3, 8);
-		
-		dc.setColor(mBattcolor, Graphics.COLOR_TRANSPARENT);
-		dc.fillRectangle(94, 224, 50, 11);
 		
 		dc.setColor(mColourBackGround, Graphics.COLOR_TRANSPARENT);
 		var Startstatuspwrbr = 94 + pwr*0.5  ;
