@@ -8,7 +8,7 @@
     	<font id="Garmin6" filename="fonts/Roadway62-alleencijfers.fnt" antialias="true"/>  
 	</fonts>
   <properties>
-    <property id="pAppversion" type="string">2.09</property>
+    <property id="pAppversion" type="string">2.10</property>
     <property id="pUpperLeftMetric" type="number">0</property>
     <property id="pUpperRightMetric" type="number">4</property>
     <property id="pMiddleLeftMetric" type="number">45</property>    
@@ -26,17 +26,22 @@
     <property id="pRequiredPower" type="string">000:999</property>
     <property id="pWarningFreq" type="number">5</property>
     <property id="pAlertbeep" type="boolean">false</property>
+    <property id="pLapPwr4alerts" type="boolean">false</property>
     <property id="pPowerZones" type="string">184:Z1:227:Z2:255:Z3:284:Z4:326:Z5:369</property>
     <property id="pMilClockAltern" type="number">0</property>
     <property id="prolavPacmaxsecs" type="number">30</property> 
     <property id="prolavPowmaxsecs" type="number">30</property>
-    
     <property id="pClockFieldMetric" type="number">38</property>
     <property id="p10Powerzones" type="boolean">false</property>
     <property id="pPPPowerZones" type="string">180:Z1:210:Z2:240:Z3:270:Z4:300:Z5:330:Z6:360:Z7:390:Z8:420:Z9:450:Z10:480</property>
     <property id="pClockFieldMetric" type="number">46</property>
     <property id="pFTP" type="number">250</property>
     <property id="pCP" type="number">250</property>
+    <property id="pdisablelabel1" type="boolean">false</property>
+    <property id="pdisablelabel2" type="boolean">false</property>
+    <property id="pdisablelabel3" type="boolean">false</property>
+    <property id="pdisablelabel4" type="boolean">false</property>
+    <property id="pdisablelabel5" type="boolean">false</property>    
   </properties>
 
 	
@@ -46,8 +51,8 @@
     <!-- Beta name:
     <string id="AppName">Datarun premium with 5 metrics, main version</string>
     -->
-    <string id="AppVersion">2.09</string>
-    <string id="lDummysetting4version">Version 2.09 of Datarun premium with 5 metrics, main version (dummy setting)</string>
+    <string id="AppVersion">2.10</string>
+    <string id="lDummysetting4version">Version 2.10 of Datarun premium with 5 metrics, main version (dummy setting)</string>
 	<string id="lTimeMenu">___Time items___</string>
 	<string id="lDistanceMenu">___Distance items___</string>
 	<string id="lPaceMenu">___Pace items___</string>
@@ -116,7 +121,8 @@
 	<string id="lRSS">Running Stress Score</string>
     <string id="lRequiredPower">Boundaries for warning signal, a format required like (227:284)</string> 
     <string id="lWarningFreq">Frequency for the warning signal for operating out of powerzone</string>
-    <string id="lAlertbeep">Play sound as warning signal for operating out of powerzone</string>   
+    <string id="lAlertbeep">Play sound as warning signal for operating out of powerzone</string>
+    <string id="lLapPwr4alerts">Use lap power for alerts instead of current power</string>   
 	<string id="lPacefield">Pace field on middle row</string>
 	<string id="lPaceper3km">Pace averaged over the last 3 seconds</string>
 	<string id="lPaceper5km">Pace averaged over the last 5 seconds</string>
@@ -151,6 +157,7 @@
     <string id="lAPower">Average running power</string>
 	<string id="lLPower">Current lap running power</string>
 	<string id="lLLPower">Last lap running power</string>
+	<string id="lMaxPwr">Maximum produced power during activity</string>
     <string id="lPowerZones">Power zones, a format required like 184:Z1:227:Z2:255:Z3:284:Z4:326:Z5:369</string>
     <string id="lWorkoutType">BETA FUNTIONALITY Select workout type, for power alerts during workout</string>
     <string id="lWorkoutTypeNone">No workout</string>
@@ -177,6 +184,11 @@
     <string id="lpercFTP5s">Power averaged over 5 seconds in percentage of FTP</string>
     <string id="lpercFTP10s">Power averaged over 10 seconds in percentage of FTP</string>
     <string id="lpercFTPsec">Power averaged over .. seconds in percentage of FTP (depends on the value of power averaged over the last ... seconds [max is 300 seconds]</string>
+	<string id="ldisablelabel1">Disable colored label for upper left metric</string>
+	<string id="ldisablelabel2">Disable colored label for upper right metric</string>
+	<string id="ldisablelabel3">Disable colored label for middle left metric</string>
+	<string id="ldisablelabel4">Disable colored label for middle right metric</string>
+	<string id="ldisablelabel5">Disable colored label for bottom metric</string>    
  </strings>
 
   <settings>
@@ -223,6 +235,9 @@
       <settingConfig type="numeric" />
     </setting>    
     <setting propertyKey="@Properties.pAlertbeep" title="@Strings.lAlertbeep">
+      <settingConfig type="boolean" required="true" />
+    </setting>
+    <setting propertyKey="@Properties.pLapPwr4alerts" title="@Strings.lLapPwr4alerts">
       <settingConfig type="boolean" required="true" />
     </setting>
     <setting propertyKey="@Properties.pRacedistance" title="@Strings.lRacedistanceTitle">
@@ -304,6 +319,7 @@
         <listEntry value="22">@Strings.lLPower</listEntry>
         <listEntry value="23">@Strings.lLLPower</listEntry>
         <listEntry value="24">@Strings.lAPower</listEntry>
+        <listEntry value="80">@Strings.lMaxPwr</listEntry>
         <listEntry value="71">@Strings.lpercFTP</listEntry>
         <listEntry value="73">@Strings.lLpercFTP</listEntry>
         <listEntry value="74">@Strings.lLLpercFTP</listEntry>
@@ -396,6 +412,7 @@
         <listEntry value="22">@Strings.lLPower</listEntry>
         <listEntry value="23">@Strings.lLLPower</listEntry>
         <listEntry value="24">@Strings.lAPower</listEntry>
+        <listEntry value="80">@Strings.lMaxPwr</listEntry>
         <listEntry value="71">@Strings.lpercFTP</listEntry>
         <listEntry value="73">@Strings.lLpercFTP</listEntry>
         <listEntry value="74">@Strings.lLLpercFTP</listEntry>
@@ -479,6 +496,7 @@
         <listEntry value="22">@Strings.lLPower</listEntry>
         <listEntry value="23">@Strings.lLLPower</listEntry>
         <listEntry value="24">@Strings.lAPower</listEntry>
+        <listEntry value="80">@Strings.lMaxPwr</listEntry>
         <listEntry value="71">@Strings.lpercFTP</listEntry>
         <listEntry value="73">@Strings.lLpercFTP</listEntry>
         <listEntry value="74">@Strings.lLLpercFTP</listEntry>
@@ -563,6 +581,7 @@
         <listEntry value="22">@Strings.lLPower</listEntry>
         <listEntry value="23">@Strings.lLLPower</listEntry>
         <listEntry value="24">@Strings.lAPower</listEntry>
+        <listEntry value="80">@Strings.lMaxPwr</listEntry>
         <listEntry value="71">@Strings.lpercFTP</listEntry>
         <listEntry value="73">@Strings.lLpercFTP</listEntry>
         <listEntry value="74">@Strings.lLLpercFTP</listEntry>
@@ -656,6 +675,7 @@
         <listEntry value="22">@Strings.lLPower</listEntry>
         <listEntry value="23">@Strings.lLLPower</listEntry>
         <listEntry value="24">@Strings.lAPower</listEntry>
+        <listEntry value="80">@Strings.lMaxPwr</listEntry>
         <listEntry value="71">@Strings.lpercFTP</listEntry>
         <listEntry value="73">@Strings.lLpercFTP</listEntry>
         <listEntry value="74">@Strings.lLLpercFTP</listEntry>
@@ -738,8 +758,22 @@
         <listEntry value="29">@Strings.lLLEFactor</listEntry>
         <listEntry value="30">@Strings.lAEFactor</listEntry>
         <listEntry value="54">@Strings.lTEffect</listEntry>
-
       </settingConfig>
+    </setting>
+  	<setting propertyKey="@Properties.pdisablelabel1" title="@Strings.ldisablelabel1">
+      <settingConfig type="boolean" required="true" />
+    </setting>
+  	<setting propertyKey="@Properties.pdisablelabel2" title="@Strings.ldisablelabel2">
+      <settingConfig type="boolean" required="true" />
+    </setting>
+  	<setting propertyKey="@Properties.pdisablelabel3" title="@Strings.ldisablelabel3">
+      <settingConfig type="boolean" required="true" />
+    </setting>
+  	<setting propertyKey="@Properties.pdisablelabel4" title="@Strings.ldisablelabel4">
+      <settingConfig type="boolean" required="true" />
+    </setting>
+  	<setting propertyKey="@Properties.pdisablelabel5" title="@Strings.ldisablelabel5">
+      <settingConfig type="boolean" required="true" />
     </setting>
   </settings>
 

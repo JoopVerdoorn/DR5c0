@@ -18,6 +18,11 @@ class ExtramemView extends DatarunpremiumView {
 	var VertPace3							= 0;
 	var VertPace4							= 0;
 	var VertPace5							= 0;
+	var disablelabel1 						= false;
+	var disablelabel2 						= false;
+	var disablelabel3 						= false;
+	var disablelabel4 						= false;
+	var disablelabel5 						= false;
 	
     function initialize() {
         DatarunpremiumView.initialize();
@@ -26,6 +31,11 @@ class ExtramemView extends DatarunpremiumView {
 		rolavPacmaxsecs  = mApp.getProperty("prolavPacmaxsecs");
 		uBlackBackground    = mApp.getProperty("pBlackBackground");
         uHrZones = UserProfile.getHeartRateZones(UserProfile.getCurrentSport());
+        disablelabel1 						= mApp.getProperty("pdisablelabel1");
+		disablelabel2 						= mApp.getProperty("pdisablelabel2");
+		disablelabel3 						= mApp.getProperty("pdisablelabel3");
+		disablelabel4 						= mApp.getProperty("pdisablelabel4");
+		disablelabel5 						= mApp.getProperty("pdisablelabel5");
     }
 
 	function onUpdate(dc) {
@@ -165,14 +175,14 @@ class ExtramemView extends DatarunpremiumView {
            		fieldValue[i] = (unitD == 1609.344) ? AverageVertspeedinmper5sec*3.2808 : AverageVertspeedinmper5sec;
             	fieldLabel[i] = "V speed";
             	fieldFormat[i] = "1decimal";
-        	}  else if (metric[i] == 63) {
-           		fieldValue[i] = 3.6*Averagespeedinmpersec*1000/unitP ;
-            	fieldLabel[i] = "Spd ..s";
-            	fieldFormat[i] = "2decimal";           	
-        	}  else if (metric[i] == 67) {
-           		fieldValue[i] = (unitD == 1609.344) ? AverageVertspeedinmper5sec*3.2808 : AverageVertspeedinmper5sec;
-            	fieldLabel[i] = "V speed";
-            	fieldFormat[i] = "1decimal";
+//!        	}  else if (metric[i] == 63) {
+//!           		fieldValue[i] = 3.6*Averagespeedinmpersec*1000/unitP ;
+//!            	fieldLabel[i] = "Spd ..s";
+//!            	fieldFormat[i] = "2decimal";           	
+//!        	}  else if (metric[i] == 67) {
+//!           		fieldValue[i] = (unitD == 1609.344) ? AverageVertspeedinmper5sec*3.2808 : AverageVertspeedinmper5sec;
+//!            	fieldLabel[i] = "V speed";
+//!            	fieldFormat[i] = "1decimal";
 			} 
 		}
 
@@ -347,43 +357,73 @@ class ExtramemView extends DatarunpremiumView {
 		if (ID0 == 3801 or ID0 == 4026 ) {  //! Fenix 6 pro labels
 			for (var i = 1; i < 6; ++i) {
 			   	if ( i == 1 ) {			//!upper row, left    	
-	    			Coloring(dc,i,fieldValue[i],"020,031,108,021");
+	    			if (disablelabel1 == false) {
+	    				Coloring(dc,i,fieldValue[i],"020,031,108,021");
+	    			}
 		   		} else if ( i == 2 ) {	//!upper row, right
-			   		Coloring(dc,i,fieldValue[i],"130,031,129,021");
+			   		if (disablelabel2 == false) {
+			   			Coloring(dc,i,fieldValue[i],"130,031,129,021");
+			   		}
 		       	} else if ( i == 3 ) {  //!lower row, left
-	    			Coloring(dc,i,fieldValue[i],"000,101,128,021");
+	    			if (disablelabel3 == false) {
+	    				Coloring(dc,i,fieldValue[i],"000,101,128,021");
+	    			}
 	      		} else if ( i == 4 ) {  //!middle row, right
-		    		Coloring(dc,i,fieldValue[i],"130,101,130,021");
+		    		if (disablelabel4 == false) {
+		    			Coloring(dc,i,fieldValue[i],"130,101,130,021");
+		    		}
 			   	} else if ( i == 5 ) {	//!lower row, middle
-			 		Coloring(dc,i,fieldValue[i],"011,190,108,047");		 		
+			 		if (disablelabel5 == false) {
+			 			Coloring(dc,i,fieldValue[i],"011,190,108,047");
+			 		}		 		
 	    		}       	
 			} 
 		} else if (ID0 == 3802 or ID0 == 4027 ) {     //! Fenix 6x pro labels
 			for (var i = 1; i < 6; ++i) {
 			   	if ( i == 1 ) {			//!upper row, left    	
-	    			Coloring(dc,i,fieldValue[i],"020,034,118,022");
+	    			if (disablelabel1 == false) {
+	    				Coloring(dc,i,fieldValue[i],"020,034,118,022");
+	    			}
 		   		} else if ( i == 2 ) {	//!upper row, right
-			   		Coloring(dc,i,fieldValue[i],"140,034,117,022");
+			   		if (disablelabel2 == false) {
+			   			Coloring(dc,i,fieldValue[i],"140,034,117,022");
+			   		}
 		       	} else if ( i == 3 ) {  //!lower row, left
-	    			Coloring(dc,i,fieldValue[i],"000,109,139,022");
+	    			if (disablelabel3 == false) {
+	    				Coloring(dc,i,fieldValue[i],"000,109,139,022");
+	    			}
 	      		} else if ( i == 4 ) {  //!middle row, right
-		    		Coloring(dc,i,fieldValue[i],"140,109,140,022");
+		    		if (disablelabel4 == false) {
+		    			Coloring(dc,i,fieldValue[i],"140,109,140,022");
+		    		}
 			   	} else if ( i == 5 ) {	//!lower row, middle
-			 		Coloring(dc,i,fieldValue[i],"012,204,117,051");		 		
+			 		if (disablelabel5 == false) {
+			 			Coloring(dc,i,fieldValue[i],"012,204,117,051");
+			 		}		 		
 	    		}       	
 			} 
 		} else {
 			for (var i = 1; i < 6; ++i) {
 			   	if ( i == 1 ) {			//!upper row, left    	
-	    			Coloring(dc,i,fieldValue[i],"018,029,100,019");
+	    			if (disablelabel1 == false) {
+	    				Coloring(dc,i,fieldValue[i],"018,029,100,019");
+	    			}
 		   		} else if ( i == 2 ) {	//!upper row, right
-			   		Coloring(dc,i,fieldValue[i],"120,029,100,019");
+			   		if (disablelabel2 == false) {
+			   			Coloring(dc,i,fieldValue[i],"120,029,100,019");
+			   		}
 		       	} else if ( i == 3 ) {  //!lower row, left
-	    			Coloring(dc,i,fieldValue[i],"000,093,119,019");
+	    			if (disablelabel3 == false) {
+	    				Coloring(dc,i,fieldValue[i],"000,093,119,019");
+	    			}
 	      		} else if ( i == 4 ) {  //!middle row, right
-		    		Coloring(dc,i,fieldValue[i],"120,093,120,019");
+		    		if (disablelabel4 == false) {
+		    			Coloring(dc,i,fieldValue[i],"120,093,120,019");
+		    		}
 			   	} else if ( i == 5 ) {	//!lower row, middle
-			 		Coloring(dc,i,fieldValue[i],"010,175,100,043");		 		
+			 		if (disablelabel5 == false) {
+			 			Coloring(dc,i,fieldValue[i],"010,175,100,043");
+			 		}		 		
 	    		}       	
 			} 
 		}
