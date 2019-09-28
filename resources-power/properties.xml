@@ -104,8 +104,6 @@
     <string id="lAPower">Average running power</string>
 	<string id="lLPower">Current lap running power</string>
 	<string id="lLLPower">Last lap running power</string>
-    <string id="lMilClockAltern">Alternative for default military clock in upper field (dummy value for workaround)</string>
-    <string id="lShowMilClock">Keep clock with military time</string>	
  </strings>
 
   <settings>
@@ -141,11 +139,6 @@
     </setting>    
     <setting propertyKey="@Properties.pAlertbeep" title="@Strings.lAlertbeep">
       <settingConfig type="boolean" required="true" />
-    </setting>
-    <setting propertyKey="@Properties.pMilClockAltern" title="@Strings.lMilClockAltern">
-      <settingConfig type="list" required="true">
-        <listEntry value="0">@Strings.lShowMilClock</listEntry>
-      </settingConfig>   
     </setting>
     <setting propertyKey="@Properties.pUpperLeftMetric" title="@Strings.lUpperLeftMetric">
       <settingConfig type="list" required="true">

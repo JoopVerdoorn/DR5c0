@@ -45,7 +45,7 @@ class ExtramemView extends DatarunpremiumView {
 			mColourBackGround = Graphics.COLOR_WHITE;
 		}
 		dc.setColor(mColourBackGround, Graphics.COLOR_TRANSPARENT);
-        dc.fillRectangle (0, 0, 240, 240);
+        dc.fillRectangle (0, 0, 280, 280);
        
 		//! Calculation of rolling average of pace
 		var info = Activity.getActivityInfo();
@@ -109,6 +109,14 @@ class ExtramemView extends DatarunpremiumView {
 	            fieldValue[i] = Averagespeedinmpersec;
     	        fieldLabel[i] = "Pc ..sec";
         	    fieldFormat[i] = "pace";  
+//!	        } else if (metric[i] == 80) {
+//!    	        fieldValue[i] = (info.distanceToNextPoint != null) ? info.distanceToNextPoint / unitD : 0;
+//!        	    fieldLabel[i] = "DistNext";
+//!            	fieldFormat[i] = "2decimal";
+//!			} else if (metric[i] == 81) {
+//!    	        fieldValue[i] = (info.distanceToDestination != null) ? info.distanceToNextPoint / unitD : 0;
+//!        	    fieldLabel[i] = "DistDest";
+//!            	fieldFormat[i] = "2decimal";
 	        } else if (metric[i] == 28) {
     	        fieldValue[i] = LapEfficiencyFactor;
         	    fieldLabel[i] = "Lap EF";
@@ -149,6 +157,14 @@ class ExtramemView extends DatarunpremiumView {
            		fieldValue[i] = (info.currentSpeed != null) ? 3.6*((Pace1+Pace2+Pace3)/3)*1000/unitP : 0;
             	fieldLabel[i] = "Spd 3s";
             	fieldFormat[i] = "2decimal";           	
+        	}  else if (metric[i] == 63) {
+           		fieldValue[i] = 3.6*Averagespeedinmpersec*1000/unitP ;
+            	fieldLabel[i] = "Spd ..s";
+            	fieldFormat[i] = "2decimal";           	
+        	}  else if (metric[i] == 67) {
+           		fieldValue[i] = (unitD == 1609.344) ? AverageVertspeedinmper5sec*3.2808 : AverageVertspeedinmper5sec;
+            	fieldLabel[i] = "V speed";
+            	fieldFormat[i] = "1decimal";
         	}  else if (metric[i] == 63) {
            		fieldValue[i] = 3.6*Averagespeedinmpersec*1000/unitP ;
             	fieldLabel[i] = "Spd ..s";

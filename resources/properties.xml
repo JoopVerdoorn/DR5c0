@@ -92,8 +92,6 @@
 	<string id="lLLSpeed">Last lap speed in km/mile per hour</string>
 	<string id="lAverageSpeed">Average speed in km/mile per hour</string>
 	<string id="lCadence">Cadence in steps per minute</string>
-    <string id="lMilClockAltern">Alternative for default military clock in upper field (dummy value for workaround)</string>
-    <string id="lShowMilClock">Keep clock with military time</string>
  </strings>
 
   <settings>
@@ -120,11 +118,6 @@
     </setting>
     <setting propertyKey="@Properties.pETAfromLap" title="@Strings.lETAfromLap">
       <settingConfig type="boolean" required="true" />
-    </setting>
-    <setting propertyKey="@Properties.pMilClockAltern" title="@Strings.lMilClockAltern">
-      <settingConfig type="list" required="true">
-        <listEntry value="0">@Strings.lShowMilClock</listEntry>
-      </settingConfig>   
     </setting>
     <setting propertyKey="@Properties.pUpperLeftMetric" title="@Strings.lUpperLeftMetric">
       <settingConfig type="list" required="true">

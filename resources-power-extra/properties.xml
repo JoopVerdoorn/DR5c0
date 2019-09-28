@@ -143,6 +143,8 @@
     <string id="lSPower">Current running power</string>
     <string id="lAsecPower">Power averaged over the last 3 seconds</string>
     <string id="lPowper300km">Power averaged over the last .. seconds</string>
+    <string id="lPowper5sec">Power averaged over the last 5 seconds</string>
+    <string id="lPowper10sec">Power averaged over the last 10 seconds</string>
     <string id="lrolavPowmaxsecs">Power averaged over the last ... seconds (max is 300 seconds)</string>
     <string id="lrolavPowmaxsecsError">This needs to be a number from 2 too 300</string>
     <string id="lNPower">Normalized power</string>
@@ -167,6 +169,14 @@
     <string id="lLLP2HRratio">Last lap power to heartrate ratio</string>
     <string id="lAP2HRratio">Average power to heartrate ratio</string>
 	<string id="lSPowerzone">Current powerzone</string>
+	<string id="lpercFTP">Current power in percentage of FTP</string>
+    <string id="lpercFTP3s">Power averaged over 3 seconds in percentage of FTP</string>
+    <string id="lLpercFTP">Lap power in percentage of FTP</string>
+    <string id="lLLpercFTP">Last lap power in percentage of FTP</string>
+    <string id="lApercFTP">Averaged power in percentage of FTP</string>
+    <string id="lpercFTP5s">Power averaged over 5 seconds in percentage of FTP</string>
+    <string id="lpercFTP10s">Power averaged over 10 seconds in percentage of FTP</string>
+    <string id="lpercFTPsec">Power averaged over .. seconds in percentage of FTP (depends on the value of power averaged over the last ... seconds [max is 300 seconds]</string>
  </strings>
 
   <settings>
@@ -285,21 +295,29 @@
                 
         <listEntry value="996">@Strings.lSPowerMenu</listEntry>
         <listEntry value="20">@Strings.lSPower</listEntry>
-
         <listEntry value="57">@Strings.lNPower</listEntry>
         <listEntry value="38">@Strings.lSPowerzone</listEntry>
         <listEntry value="21">@Strings.lAsecPower</listEntry>
         <listEntry value="37">@Strings.lPowper300km</listEntry>
+        <listEntry value="70">@Strings.lPowper5sec</listEntry>
+        <listEntry value="39">@Strings.lPowper10sec</listEntry>
         <listEntry value="22">@Strings.lLPower</listEntry>
         <listEntry value="23">@Strings.lLLPower</listEntry>
         <listEntry value="24">@Strings.lAPower</listEntry>
-
+        <listEntry value="71">@Strings.lpercFTP</listEntry>
+        <listEntry value="73">@Strings.lLpercFTP</listEntry>
+        <listEntry value="74">@Strings.lLLpercFTP</listEntry>
+        <listEntry value="75">@Strings.lApercFTP</listEntry>
+        <listEntry value="72">@Strings.lpercFTP3s</listEntry>
+        <listEntry value="76">@Strings.lpercFTP5s</listEntry>
+        <listEntry value="77">@Strings.lpercFTP10s</listEntry>
+        <listEntry value="78">@Strings.lpercFTPsec</listEntry>
+   
         <listEntry value="997">@Strings.lPIMenu</listEntry>
         <listEntry value="32">@Strings.lCEFactor</listEntry>
         <listEntry value="25">@Strings.lLEIndex</listEntry>
         <listEntry value="26">@Strings.lLLEIndex</listEntry>
         <listEntry value="27">@Strings.lAEIndex</listEntry>
-        
         <listEntry value="28">@Strings.lLEFactor</listEntry>
         <listEntry value="29">@Strings.lLLEFactor</listEntry>
         <listEntry value="30">@Strings.lAEFactor</listEntry>
@@ -369,21 +387,29 @@
                 
         <listEntry value="996">@Strings.lSPowerMenu</listEntry>
         <listEntry value="20">@Strings.lSPower</listEntry>
-
         <listEntry value="57">@Strings.lNPower</listEntry>
         <listEntry value="38">@Strings.lSPowerzone</listEntry>
         <listEntry value="21">@Strings.lAsecPower</listEntry>
         <listEntry value="37">@Strings.lPowper300km</listEntry>
+        <listEntry value="70">@Strings.lPowper5sec</listEntry>
+        <listEntry value="39">@Strings.lPowper10sec</listEntry>
         <listEntry value="22">@Strings.lLPower</listEntry>
         <listEntry value="23">@Strings.lLLPower</listEntry>
         <listEntry value="24">@Strings.lAPower</listEntry>
-
+        <listEntry value="71">@Strings.lpercFTP</listEntry>
+        <listEntry value="73">@Strings.lLpercFTP</listEntry>
+        <listEntry value="74">@Strings.lLLpercFTP</listEntry>
+        <listEntry value="75">@Strings.lApercFTP</listEntry>
+        <listEntry value="72">@Strings.lpercFTP3s</listEntry>
+        <listEntry value="76">@Strings.lpercFTP5s</listEntry>
+        <listEntry value="77">@Strings.lpercFTP10s</listEntry>
+        <listEntry value="78">@Strings.lpercFTPsec</listEntry>
+        
         <listEntry value="997">@Strings.lPIMenu</listEntry>
         <listEntry value="32">@Strings.lCEFactor</listEntry>
         <listEntry value="25">@Strings.lLEIndex</listEntry>
         <listEntry value="26">@Strings.lLLEIndex</listEntry>
-        <listEntry value="27">@Strings.lAEIndex</listEntry>
-        
+        <listEntry value="27">@Strings.lAEIndex</listEntry>        
         <listEntry value="28">@Strings.lLEFactor</listEntry>
         <listEntry value="29">@Strings.lLLEFactor</listEntry>
         <listEntry value="30">@Strings.lAEFactor</listEntry>
@@ -444,21 +470,29 @@
                 
         <listEntry value="996">@Strings.lSPowerMenu</listEntry>
         <listEntry value="20">@Strings.lSPower</listEntry>
-
         <listEntry value="57">@Strings.lNPower</listEntry>
         <listEntry value="38">@Strings.lSPowerzone</listEntry>
         <listEntry value="21">@Strings.lAsecPower</listEntry>
         <listEntry value="37">@Strings.lPowper300km</listEntry>
+        <listEntry value="70">@Strings.lPowper5sec</listEntry>
+        <listEntry value="39">@Strings.lPowper10sec</listEntry>
         <listEntry value="22">@Strings.lLPower</listEntry>
         <listEntry value="23">@Strings.lLLPower</listEntry>
         <listEntry value="24">@Strings.lAPower</listEntry>
+        <listEntry value="71">@Strings.lpercFTP</listEntry>
+        <listEntry value="73">@Strings.lLpercFTP</listEntry>
+        <listEntry value="74">@Strings.lLLpercFTP</listEntry>
+        <listEntry value="75">@Strings.lApercFTP</listEntry>
+        <listEntry value="72">@Strings.lpercFTP3s</listEntry>
+        <listEntry value="76">@Strings.lpercFTP5s</listEntry>
+        <listEntry value="77">@Strings.lpercFTP10s</listEntry>
+        <listEntry value="78">@Strings.lpercFTPsec</listEntry>
 
         <listEntry value="997">@Strings.lPIMenu</listEntry>
         <listEntry value="32">@Strings.lCEFactor</listEntry>
         <listEntry value="25">@Strings.lLEIndex</listEntry>
         <listEntry value="26">@Strings.lLLEIndex</listEntry>
-        <listEntry value="27">@Strings.lAEIndex</listEntry>
-        
+        <listEntry value="27">@Strings.lAEIndex</listEntry>        
         <listEntry value="28">@Strings.lLEFactor</listEntry>
         <listEntry value="29">@Strings.lLLEFactor</listEntry>
         <listEntry value="30">@Strings.lAEFactor</listEntry>
@@ -520,21 +554,29 @@
                 
         <listEntry value="996">@Strings.lSPowerMenu</listEntry>
         <listEntry value="20">@Strings.lSPower</listEntry>
-
         <listEntry value="57">@Strings.lNPower</listEntry>
         <listEntry value="38">@Strings.lSPowerzone</listEntry>
         <listEntry value="21">@Strings.lAsecPower</listEntry>
         <listEntry value="37">@Strings.lPowper300km</listEntry>
+        <listEntry value="70">@Strings.lPowper5sec</listEntry>
+        <listEntry value="39">@Strings.lPowper10sec</listEntry>
         <listEntry value="22">@Strings.lLPower</listEntry>
         <listEntry value="23">@Strings.lLLPower</listEntry>
         <listEntry value="24">@Strings.lAPower</listEntry>
+        <listEntry value="71">@Strings.lpercFTP</listEntry>
+        <listEntry value="73">@Strings.lLpercFTP</listEntry>
+        <listEntry value="74">@Strings.lLLpercFTP</listEntry>
+        <listEntry value="75">@Strings.lApercFTP</listEntry>
+        <listEntry value="72">@Strings.lpercFTP3s</listEntry>
+        <listEntry value="76">@Strings.lpercFTP5s</listEntry>
+        <listEntry value="77">@Strings.lpercFTP10s</listEntry>
+        <listEntry value="78">@Strings.lpercFTPsec</listEntry>
 
         <listEntry value="997">@Strings.lPIMenu</listEntry>
         <listEntry value="32">@Strings.lCEFactor</listEntry>
         <listEntry value="25">@Strings.lLEIndex</listEntry>
         <listEntry value="26">@Strings.lLLEIndex</listEntry>
-        <listEntry value="27">@Strings.lAEIndex</listEntry>
-        
+        <listEntry value="27">@Strings.lAEIndex</listEntry>        
         <listEntry value="28">@Strings.lLEFactor</listEntry>
         <listEntry value="29">@Strings.lLLEFactor</listEntry>
         <listEntry value="30">@Strings.lAEFactor</listEntry>
@@ -605,21 +647,29 @@
                 
         <listEntry value="996">@Strings.lSPowerMenu</listEntry>
         <listEntry value="20">@Strings.lSPower</listEntry>
-
         <listEntry value="57">@Strings.lNPower</listEntry>
         <listEntry value="38">@Strings.lSPowerzone</listEntry>
         <listEntry value="21">@Strings.lAsecPower</listEntry>
         <listEntry value="37">@Strings.lPowper300km</listEntry>
+        <listEntry value="70">@Strings.lPowper5sec</listEntry>
+        <listEntry value="39">@Strings.lPowper10sec</listEntry>
         <listEntry value="22">@Strings.lLPower</listEntry>
         <listEntry value="23">@Strings.lLLPower</listEntry>
         <listEntry value="24">@Strings.lAPower</listEntry>
+        <listEntry value="71">@Strings.lpercFTP</listEntry>
+        <listEntry value="73">@Strings.lLpercFTP</listEntry>
+        <listEntry value="74">@Strings.lLLpercFTP</listEntry>
+        <listEntry value="75">@Strings.lApercFTP</listEntry>
+        <listEntry value="72">@Strings.lpercFTP3s</listEntry>
+        <listEntry value="76">@Strings.lpercFTP5s</listEntry>
+        <listEntry value="77">@Strings.lpercFTP10s</listEntry>
+        <listEntry value="78">@Strings.lpercFTPsec</listEntry>
 
         <listEntry value="997">@Strings.lPIMenu</listEntry>
         <listEntry value="32">@Strings.lCEFactor</listEntry>
         <listEntry value="25">@Strings.lLEIndex</listEntry>
         <listEntry value="26">@Strings.lLLEIndex</listEntry>
-        <listEntry value="27">@Strings.lAEIndex</listEntry>
-        
+        <listEntry value="27">@Strings.lAEIndex</listEntry>        
         <listEntry value="28">@Strings.lLEFactor</listEntry>
         <listEntry value="29">@Strings.lLLEFactor</listEntry>
         <listEntry value="30">@Strings.lAEFactor</listEntry>
