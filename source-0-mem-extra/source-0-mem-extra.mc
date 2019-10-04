@@ -119,14 +119,18 @@ class ExtramemView extends DatarunpremiumView {
 	            fieldValue[i] = Averagespeedinmpersec;
     	        fieldLabel[i] = "Pc ..sec";
         	    fieldFormat[i] = "pace";  
-//!	        } else if (metric[i] == 80) {
-//!    	        fieldValue[i] = (info.distanceToNextPoint != null) ? info.distanceToNextPoint / unitD : 0;
-//!        	    fieldLabel[i] = "DistNext";
-//!            	fieldFormat[i] = "2decimal";
-//!			} else if (metric[i] == 81) {
-//!    	        fieldValue[i] = (info.distanceToDestination != null) ? info.distanceToNextPoint / unitD : 0;
-//!        	    fieldLabel[i] = "DistDest";
-//!            	fieldFormat[i] = "2decimal";
+	        } else if (metric[i] == 81) {
+	        	if (Toybox.Activity.Info has :distanceToNextPoint) {
+    	        	fieldValue[i] = (info.distanceToNextPoint != null) ? info.distanceToNextPoint / unitD : 0;
+    	        }
+        	    fieldLabel[i] = "DistNext";
+            	fieldFormat[i] = "2decimal";
+			} else if (metric[i] == 82) {
+    	        if (Toybox.Activity.Info has :distanceToDestination) {
+    	        	fieldValue[i] = (info.distanceToDestination != null) ? info.distanceToNextPoint / unitD : 0;
+    	        }
+        	    fieldLabel[i] = "DistDest";
+            	fieldFormat[i] = "2decimal";
 	        } else if (metric[i] == 28) {
     	        fieldValue[i] = LapEfficiencyFactor;
         	    fieldLabel[i] = "Lap EF";

@@ -4,7 +4,7 @@
     	<font id="Garmin2" filename="fonts/Roadway73-alleencijfers.fnt" antialias="true"/>
 	</fonts>
   <properties>
-    <property id="pAppversion" type="string">2.10b</property>
+    <property id="pAppversion" type="string">2.10c</property>
     <property id="pUpperLeftMetric" type="number">0</property>
     <property id="pUpperRightMetric" type="number">4</property>
     <property id="pMiddleLeftMetric" type="number">45</property>    
@@ -38,8 +38,8 @@
     <!-- Beta name:
     <string id="AppName">Datarun premium with 5 metrics, main version</string>
     -->
-    <string id="AppVersion">2.10b</string>
-    <string id="lDummysetting4version">Version 2.10b of Datarun premium with 5 metrics, main version (dummy setting)</string>
+    <string id="AppVersion">2.10c</string>
+    <string id="lDummysetting4version">Version 2.10c of Datarun premium with 5 metrics, main version (dummy setting)</string>
 	<string id="lTimeMenu">___Time items___</string>
 	<string id="lDistanceMenu">___Distance items___</string>
 	<string id="lPaceMenu">___Pace items___</string>
@@ -129,6 +129,8 @@
 	<string id="ldisablelabel3">Disable colored label for middle left metric</string>
 	<string id="ldisablelabel4">Disable colored label for middle right metric</string>
 	<string id="ldisablelabel5">Disable colored label for bottom metric</string>
+	<string id="ldistanceToNextPoint">Distance to next point</string>
+	<string id="ldistanceToDestination">Distance to destination</string>
  </strings>
 
   <settings>
@@ -183,6 +185,8 @@
         <listEntry value="5">@Strings.lDistLap</listEntry>
         <listEntry value="6">@Strings.lDistLastLap</listEntry>
         <listEntry value="7">@Strings.lAvgLapD</listEntry>
+        <listEntry value="81">@Strings.ldistanceToNextPoint</listEntry>
+        <listEntry value="82">@Strings.ldistanceToDestination</listEntry>
         
         <listEntry value="992">@Strings.lPaceMenu</listEntry>
         <listEntry value="8">@Strings.lCurrentPace</listEntry>
@@ -244,6 +248,8 @@
         <listEntry value="5">@Strings.lDistLap</listEntry>
         <listEntry value="6">@Strings.lDistLastLap</listEntry>
         <listEntry value="7">@Strings.lAvgLapD</listEntry>
+        <listEntry value="81">@Strings.ldistanceToNextPoint</listEntry>
+        <listEntry value="82">@Strings.ldistanceToDestination</listEntry>
         
         <listEntry value="992">@Strings.lPaceMenu</listEntry>
         <listEntry value="8">@Strings.lCurrentPace</listEntry>
@@ -300,6 +306,8 @@
         <listEntry value="5">@Strings.lDistLap</listEntry>
         <listEntry value="6">@Strings.lDistLastLap</listEntry>
         <listEntry value="7">@Strings.lAvgLapD</listEntry>
+        <listEntry value="81">@Strings.ldistanceToNextPoint</listEntry>
+        <listEntry value="82">@Strings.ldistanceToDestination</listEntry>
         
         <listEntry value="992">@Strings.lPaceMenu</listEntry>
         <listEntry value="8">@Strings.lCurrentPace</listEntry>
@@ -355,6 +363,8 @@
         <listEntry value="5">@Strings.lDistLap</listEntry>
         <listEntry value="6">@Strings.lDistLastLap</listEntry>
         <listEntry value="7">@Strings.lAvgLapD</listEntry>
+        <listEntry value="81">@Strings.ldistanceToNextPoint</listEntry>
+        <listEntry value="82">@Strings.ldistanceToDestination</listEntry>
         
         <listEntry value="992">@Strings.lPaceMenu</listEntry>
         <listEntry value="8">@Strings.lCurrentPace</listEntry>
@@ -417,6 +427,8 @@
         <listEntry value="5">@Strings.lDistLap</listEntry>
         <listEntry value="6">@Strings.lDistLastLap</listEntry>
         <listEntry value="7">@Strings.lAvgLapD</listEntry>
+        <listEntry value="81">@Strings.ldistanceToNextPoint</listEntry>
+        <listEntry value="82">@Strings.ldistanceToDestination</listEntry>
         
         <listEntry value="992">@Strings.lPaceMenu</listEntry>
         <listEntry value="8">@Strings.lCurrentPace</listEntry>
@@ -472,6 +484,8 @@
         <listEntry value="5">@Strings.lDistLap</listEntry>
         <listEntry value="6">@Strings.lDistLastLap</listEntry>
         <listEntry value="7">@Strings.lAvgLapD</listEntry>
+        <listEntry value="81">@Strings.ldistanceToNextPoint</listEntry>
+        <listEntry value="82">@Strings.ldistanceToDestination</listEntry>
         
         <listEntry value="992">@Strings.lPaceMenu</listEntry>
         <listEntry value="8">@Strings.lCurrentPace</listEntry>
