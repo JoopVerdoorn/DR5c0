@@ -23,6 +23,8 @@ class ExtramemView extends DatarunpremiumView {
 	var disablelabel3 						= false;
 	var disablelabel4 						= false;
 	var disablelabel5 						= false;
+	var maxHR								= 999;
+	var kCalories							= 0;
 	
     function initialize() {
         DatarunpremiumView.initialize();
@@ -112,7 +114,7 @@ class ExtramemView extends DatarunpremiumView {
         VertPace1								= CurrentVertSpeedinmpersec; 
 		var AverageVertspeedinmper5sec= (VertPace1+VertPace2+VertPace3+VertPace4+VertPace5)/5;
 		
-
+		maxHR = uHrZones[5]; 
 		var i = 0; 
 	    for (i = 1; i < 6; ++i) {
 	        if (metric[i] == 17) {
@@ -187,6 +189,34 @@ class ExtramemView extends DatarunpremiumView {
 //!           		fieldValue[i] = (unitD == 1609.344) ? AverageVertspeedinmper5sec*3.2808 : AverageVertspeedinmper5sec;
 //!            	fieldLabel[i] = "V speed";
 //!            	fieldFormat[i] = "1decimal";
+        	} else if (metric[i] == 83) {
+            	fieldValue[i] = (maxHR != 0) ? currentHR*100/maxHR : 0;
+            	fieldLabel[i] = "%MaxHR";
+            	fieldFormat[i] = "0decimal";   
+			} else if (metric[i] == 84) {
+    	        fieldValue[i] = (maxHR != 0) ? LapHeartrate*100/maxHR : 0;
+        	    fieldLabel[i] = "L %MaxHR";
+            	fieldFormat[i] = "0decimal";
+			} else if (metric[i] == 85) {
+        	    fieldValue[i] = (maxHR != 0) ? LastLapHeartrate*100/maxHR : 0;
+            	fieldLabel[i] = "LL %MaxHR";
+            	fieldFormat[i] = "0decimal";
+	        } else if (metric[i] == 86) {
+    	        fieldValue[i] = (maxHR != 0) ? AverageHeartrate*100/maxHR : 0;
+        	    fieldLabel[i] = "A %MaxHR";
+            	fieldFormat[i] = "0decimal";  
+			} else if (metric[i] == 88) {   
+            	if (mLastLapSpeed == null or info.currentSpeed==0) {
+            		fieldValue[i] = 0;
+            	} else {
+            		fieldValue[i] = (mLastLapSpeed > 0.001) ? 100/mLastLapSpeed : 0;
+            	}
+            	fieldLabel[i] = "LL s/100m";
+        	    fieldFormat[i] = "1decimal";
+	        } else if (metric[i] == 87) {
+    	        fieldValue[i] = (info.calories != null) ? info.calories : 0;
+        	    fieldLabel[i] = "kCal";
+            	fieldFormat[i] = "0decimal";
 			} 
 		}
 
@@ -344,6 +374,10 @@ class ExtramemView extends DatarunpremiumView {
            		CFMValue = (unitD == 1609.344) ? AverageVertspeedinmper5sec*3.2808 : AverageVertspeedinmper5sec;
             	CFMLabel = "V speed";
             	CFMFormat = "2decimal";  
+	        } else if (metric[i] == 87) {
+    	        fieldValue[i] = (info.calories != null) ? info.calories : 0;
+        	    fieldLabel[i] = "kCal";
+            	fieldFormat[i] = "0decimal";
 			}
 			 
 

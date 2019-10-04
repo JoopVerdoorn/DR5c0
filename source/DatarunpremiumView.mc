@@ -99,6 +99,7 @@ class DatarunpremiumView extends Ui.DataField {
     hidden var mLapTimerTimeHR				= 0;    
 	hidden var mLastLapTimeHRMarker			= 0;
 	hidden var mLastLapTimerTimeHR			= 0;
+	hidden var currentHR					= 0;
 	hidden var LapHeartrate					= 0;
 	hidden var LastLapHeartrate				= 0;
 	hidden var AverageHeartrate 			= 0; 
@@ -270,6 +271,7 @@ class DatarunpremiumView extends Ui.DataField {
         }
 
 		//!Fill field metrics
+		currentHR = (info.currentHeartRate != null) ? info.currentHeartRate : 0;
 		var i = 0; 
 	    for (i = 1; i < 6; ++i) {	    
         	if (metric[i] == 0) {
@@ -391,7 +393,7 @@ class DatarunpremiumView extends Ui.DataField {
 		       	fieldLabel[i] = "Altitude";
 		       	fieldFormat[i] = "0decimal";        		
         	} else if (metric[i] == 45) {
-    	        fieldValue[i] = (info.currentHeartRate != null) ? info.currentHeartRate : 0;
+    	        fieldValue[i] = currentHR;
         	    fieldLabel[i] = "HR";
             	fieldFormat[i] = "0decimal";
 			}

@@ -109,6 +109,7 @@ class PowerView extends CiqView {
     					if (uAlertbeep == true) {
     						Attention.playTone(Attention.TONE_LOW_BATTERY);
     					}
+    					Toybox.Attention.vibrate(vibrateData);
     					vibrateseconds = 0;
     				}
     			} else if (runalertPower<mPowerWarningunder){
