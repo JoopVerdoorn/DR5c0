@@ -172,23 +172,7 @@ class ExtramemView extends DatarunpremiumView {
         	}  else if (metric[i] == 62) {
            		fieldValue[i] = (info.currentSpeed != null) ? 3.6*((Pace1+Pace2+Pace3)/3)*1000/unitP : 0;
             	fieldLabel[i] = "Spd 3s";
-            	fieldFormat[i] = "2decimal";           	
-        	}  else if (metric[i] == 63) {
-           		fieldValue[i] = 3.6*Averagespeedinmpersec*1000/unitP ;
-            	fieldLabel[i] = "Spd ..s";
-            	fieldFormat[i] = "2decimal";           	
-        	}  else if (metric[i] == 67) {
-           		fieldValue[i] = (unitD == 1609.344) ? AverageVertspeedinmper5sec*3.2808 : AverageVertspeedinmper5sec;
-            	fieldLabel[i] = "V speed";
-            	fieldFormat[i] = "1decimal";
-//!        	}  else if (metric[i] == 63) {
-//!           		fieldValue[i] = 3.6*Averagespeedinmpersec*1000/unitP ;
-//!            	fieldLabel[i] = "Spd ..s";
-//!            	fieldFormat[i] = "2decimal";           	
-//!        	}  else if (metric[i] == 67) {
-//!           		fieldValue[i] = (unitD == 1609.344) ? AverageVertspeedinmper5sec*3.2808 : AverageVertspeedinmper5sec;
-//!            	fieldLabel[i] = "V speed";
-//!            	fieldFormat[i] = "1decimal";
+            	fieldFormat[i] = "2decimal";           	          	
         	} else if (metric[i] == 83) {
             	fieldValue[i] = (maxHR != 0) ? currentHR*100/maxHR : 0;
             	fieldLabel[i] = "%MaxHR";

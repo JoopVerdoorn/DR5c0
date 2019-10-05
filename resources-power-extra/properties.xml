@@ -8,7 +8,7 @@
     	<font id="Garmin6" filename="fonts/Roadway62-alleencijfers.fnt" antialias="true"/>  
 	</fonts>
   <properties>
-    <property id="pAppversion" type="string">2.20</property>
+    <property id="pAppversion" type="string">2.20b</property>
     <property id="pUpperLeftMetric" type="number">0</property>
     <property id="pUpperRightMetric" type="number">4</property>
     <property id="pMiddleLeftMetric" type="number">45</property>    
@@ -51,8 +51,8 @@
     <!-- Beta name:
     <string id="AppName">Datarun premium with 5 metrics, main version</string>
     -->
-    <string id="AppVersion">2.20</string>
-    <string id="lDummysetting4version">Version 2.20 of Datarun premium with 5 metrics, main version (dummy setting)</string>
+    <string id="AppVersion">2.20b</string>
+    <string id="lDummysetting4version">Version 2.20b of Datarun premium with 5 metrics, main version (dummy setting)</string>
 	<string id="lTimeMenu">___Time items___</string>
 	<string id="lDistanceMenu">___Distance items___</string>
 	<string id="lPaceMenu">___Pace items___</string>
@@ -196,6 +196,7 @@
     <string id="lLLpercMaxHR">Last lap HR in percentage of MaxHR</string>
     <string id="lApercMaxHR">Average HR in percentage of MaxHR</string>
     <string id="lkCalories">Used kilocalories</string>
+    <string id="lLLPaceper100m">Pace of last lap in seconds per 100 meter (for track running)</string>
  </strings>
 
   <settings>
@@ -286,6 +287,7 @@
         <listEntry value="992">@Strings.lPaceMenu</listEntry>
         <listEntry value="8">@Strings.lCurrentPace</listEntry>
         <listEntry value="55">@Strings.lPaceper100m</listEntry>
+        <listEntry value="88">@Strings.lLLPaceper100m</listEntry>
         <listEntry value="16">@Strings.lPaceper3km</listEntry>        
         <listEntry value="9">@Strings.lPaceper5km</listEntry>
         <listEntry value="17">@Strings.lPaceper300km</listEntry>
@@ -385,6 +387,7 @@
         <listEntry value="992">@Strings.lPaceMenu</listEntry>
         <listEntry value="8">@Strings.lCurrentPace</listEntry>
         <listEntry value="55">@Strings.lPaceper100m</listEntry>
+        <listEntry value="88">@Strings.lLLPaceper100m</listEntry>
         <listEntry value="16">@Strings.lPaceper3km</listEntry>        
         <listEntry value="9">@Strings.lPaceper5km</listEntry>
         <listEntry value="17">@Strings.lPaceper300km</listEntry>
@@ -479,6 +482,7 @@
         <listEntry value="992">@Strings.lPaceMenu</listEntry>
         <listEntry value="8">@Strings.lCurrentPace</listEntry>
         <listEntry value="55">@Strings.lPaceper100m</listEntry>
+        <listEntry value="88">@Strings.lLLPaceper100m</listEntry>
         <listEntry value="16">@Strings.lPaceper3km</listEntry>        
         <listEntry value="9">@Strings.lPaceper5km</listEntry>
         <listEntry value="17">@Strings.lPaceper300km</listEntry>
@@ -570,6 +574,7 @@
         <listEntry value="992">@Strings.lPaceMenu</listEntry>
         <listEntry value="8">@Strings.lCurrentPace</listEntry>
         <listEntry value="55">@Strings.lPaceper100m</listEntry>
+        <listEntry value="88">@Strings.lLLPaceper100m</listEntry>
         <listEntry value="16">@Strings.lPaceper3km</listEntry>        
         <listEntry value="9">@Strings.lPaceper5km</listEntry>
         <listEntry value="17">@Strings.lPaceper300km</listEntry>
@@ -669,6 +674,7 @@
         <listEntry value="992">@Strings.lPaceMenu</listEntry>
         <listEntry value="8">@Strings.lCurrentPace</listEntry>
         <listEntry value="55">@Strings.lPaceper100m</listEntry>
+        <listEntry value="88">@Strings.lLLPaceper100m</listEntry>
         <listEntry value="16">@Strings.lPaceper3km</listEntry>        
         <listEntry value="9">@Strings.lPaceper5km</listEntry>
         <listEntry value="17">@Strings.lPaceper300km</listEntry>
@@ -762,7 +768,8 @@
         
         <listEntry value="992">@Strings.lPaceMenu</listEntry>
         <listEntry value="8">@Strings.lCurrentPace</listEntry>
-        <listEntry value="55">@Strings.lPaceper100m</listEntry>        
+        <listEntry value="55">@Strings.lPaceper100m</listEntry>      
+        <listEntry value="88">@Strings.lLLPaceper100m</listEntry>  
         <listEntry value="16">@Strings.lPaceper3km</listEntry>
         <listEntry value="9">@Strings.lPaceper5km</listEntry>
         <listEntry value="17">@Strings.lPaceper300km</listEntry>

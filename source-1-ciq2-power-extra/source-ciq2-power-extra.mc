@@ -316,8 +316,9 @@ class CiqView extends ExtramemView {
     	        fieldLabel[i] = "RSS";
         	    fieldFormat[i] = "0decimal";
         	} 
-        	//!einde invullen field metrics
 		}
+		
+		
 		//! Conditions for showing the demoscreen       
         if (uShowDemo == false) {
         	if (licenseOK == false && jTimertime > 900)  {
