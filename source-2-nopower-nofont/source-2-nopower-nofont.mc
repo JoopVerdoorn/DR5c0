@@ -95,18 +95,20 @@ class PowerView extends CiqView {
         }
 
 
-		//! Display colored labels on screen
-		for (var i = 1; i < 6; ++i) {
-		   	if ( i == 1 ) {			//!upper row, left    	
-	    		Coloring2(dc,i,fieldValue[i],"018,029,100,019");
-		   	} else if ( i == 2 ) {	//!upper row, right
-		   		Coloring2(dc,i,fieldValue[i],"120,029,100,019");
-	       	} else if ( i == 3 ) {  //!lower row, left
-	    		Coloring2(dc,i,fieldValue[i],"000,093,119,019");
-	      	} else if ( i == 4 ) {  //!middle row, right
-	    		Coloring2(dc,i,fieldValue[i],"120,093,120,019");
-		   	} else if ( i == 5 ) {	//!lower row, middle
-		 		Coloring2(dc,i,fieldValue[i],"010,175,100,043");		 		
+		//! Display colored labels on screen for FR645
+		if (ID0 == 3397 or ID0 == 3514) {
+			for (var i = 1; i < 6; ++i) {
+			   	if ( i == 1 ) {			//!upper row, left    	
+	    			Coloring2(dc,i,fieldValue[i],"018,029,100,019");
+		   		} else if ( i == 2 ) {	//!upper row, right
+			   		Coloring2(dc,i,fieldValue[i],"120,029,100,019");
+		       	} else if ( i == 3 ) {  //!lower row, left
+	    			Coloring2(dc,i,fieldValue[i],"000,093,119,019");
+	      		} else if ( i == 4 ) {  //!middle row, right
+		    		Coloring2(dc,i,fieldValue[i],"120,093,120,019");
+			   	} else if ( i == 5 ) {	//!lower row, middle
+			 		Coloring2(dc,i,fieldValue[i],"010,175,100,043");		 		
+	    		}
 	    	}       	
 		} 
 	   
