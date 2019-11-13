@@ -8,7 +8,7 @@
     	<font id="Garmin6" filename="fonts/Roadway62-alleencijfers.fnt" antialias="true"/>  
 	</fonts>
   <properties>
-    <property id="pAppversion" type="string">2.20e</property>
+    <property id="pAppversion" type="string">2.20f</property>
     <property id="pUpperLeftMetric" type="number">0</property>
     <property id="pUpperRightMetric" type="number">4</property>
     <property id="pMiddleLeftMetric" type="number">45</property>    
@@ -51,8 +51,8 @@
     <!-- Beta name:
     <string id="AppName">Datarun premium with 5 metrics, main version</string>
     -->
-    <string id="AppVersion">2.20e</string>
-    <string id="lDummysetting4version">Version 2.20e of Datarun premium with 5 metrics, main version (dummy setting)</string>
+    <string id="AppVersion">2.20f</string>
+    <string id="lDummysetting4version">Version 2.20f of Datarun premium with 5 metrics, main version (dummy setting)</string>
 	<string id="lTimeMenu">___Time items___</string>
 	<string id="lDistanceMenu">___Distance items___</string>
 	<string id="lPaceMenu">___Pace items___</string>
@@ -169,8 +169,8 @@
     <string id="lWorkoutzones">BETA FUNTIONALITY Distances/times and powerzones for a workout with max 18 steps, a format required like 0300t100-190 ; 0800d240-260 ; 0100d100-190 ; 0800d260-280 ; 0100d100-190 ; 0800d280-300 ; 0100d100-190 ; 0800d300-320 ; 0800d320-340 ; 0100d100-190 ; 0800d300-320 ; 0100d100-190 ; 0800d280-300 ; 0100d100-190 ; 0800d260-280 ; 0300t100-190</string>
     <string id="l10Powerzones">Use 10 power zones  instead of 5</string>
     <string id="lPPPowerZones">Power zones for 10 zone system, a format required like Power zones, a format required like 180:Z1:210:Z2:240:Z3:270:Z4:300:Z5:330:Z6:360:Z7:390:Z8:420:Z9:450:Z10:480</string>
-	<string id="lCEFactor">Current efficiency Index</string>
-	<string id="lCEIndex">Current lap efficiency factor </string>
+	<string id="lCEFactor">Current efficiency factor</string>
+	<string id="lCEIndex">Current efficiency index </string>
     <string id="lCP2HRratio">Current power to heartrate ratio</string>
     <string id="lLP2HRratio">Lap power to heartrate ratio</string>
     <string id="lLLP2HRratio">Last lap power to heartrate ratio</string>
@@ -345,10 +345,11 @@
         <listEntry value="78">@Strings.lpercFTPsec</listEntry>
    
         <listEntry value="997">@Strings.lPIMenu</listEntry>
-        <listEntry value="32">@Strings.lCEFactor</listEntry>
+        <listEntry value="31">@Strings.lCEIndex</listEntry>
         <listEntry value="25">@Strings.lLEIndex</listEntry>
         <listEntry value="26">@Strings.lLLEIndex</listEntry>
         <listEntry value="27">@Strings.lAEIndex</listEntry>
+        <listEntry value="32">@Strings.lCEFactor</listEntry>
         <listEntry value="28">@Strings.lLEFactor</listEntry>
         <listEntry value="29">@Strings.lLLEFactor</listEntry>
         <listEntry value="30">@Strings.lAEFactor</listEntry>
@@ -446,10 +447,11 @@
         <listEntry value="78">@Strings.lpercFTPsec</listEntry>
         
         <listEntry value="997">@Strings.lPIMenu</listEntry>
-        <listEntry value="32">@Strings.lCEFactor</listEntry>
+        <listEntry value="31">@Strings.lCEIndex</listEntry>
         <listEntry value="25">@Strings.lLEIndex</listEntry>
         <listEntry value="26">@Strings.lLLEIndex</listEntry>
-        <listEntry value="27">@Strings.lAEIndex</listEntry>        
+        <listEntry value="27">@Strings.lAEIndex</listEntry> 
+        <listEntry value="32">@Strings.lCEFactor</listEntry>       
         <listEntry value="28">@Strings.lLEFactor</listEntry>
         <listEntry value="29">@Strings.lLLEFactor</listEntry>
         <listEntry value="30">@Strings.lAEFactor</listEntry>
@@ -538,10 +540,11 @@
         <listEntry value="78">@Strings.lpercFTPsec</listEntry>
 
         <listEntry value="997">@Strings.lPIMenu</listEntry>
-        <listEntry value="32">@Strings.lCEFactor</listEntry>
+        <listEntry value="31">@Strings.lCEIndex</listEntry>
         <listEntry value="25">@Strings.lLEIndex</listEntry>
         <listEntry value="26">@Strings.lLLEIndex</listEntry>
-        <listEntry value="27">@Strings.lAEIndex</listEntry>        
+        <listEntry value="27">@Strings.lAEIndex</listEntry>  
+        <listEntry value="32">@Strings.lCEFactor</listEntry>      
         <listEntry value="28">@Strings.lLEFactor</listEntry>
         <listEntry value="29">@Strings.lLLEFactor</listEntry>
         <listEntry value="30">@Strings.lAEFactor</listEntry>
@@ -631,10 +634,11 @@
         <listEntry value="78">@Strings.lpercFTPsec</listEntry>
 
         <listEntry value="997">@Strings.lPIMenu</listEntry>
-        <listEntry value="32">@Strings.lCEFactor</listEntry>
+        <listEntry value="31">@Strings.lCEIndex</listEntry>
         <listEntry value="25">@Strings.lLEIndex</listEntry>
         <listEntry value="26">@Strings.lLLEIndex</listEntry>
-        <listEntry value="27">@Strings.lAEIndex</listEntry>        
+        <listEntry value="27">@Strings.lAEIndex</listEntry> 
+        <listEntry value="32">@Strings.lCEFactor</listEntry>       
         <listEntry value="28">@Strings.lLEFactor</listEntry>
         <listEntry value="29">@Strings.lLLEFactor</listEntry>
         <listEntry value="30">@Strings.lAEFactor</listEntry>
@@ -733,10 +737,11 @@
         <listEntry value="78">@Strings.lpercFTPsec</listEntry>
 
         <listEntry value="997">@Strings.lPIMenu</listEntry>
-        <listEntry value="32">@Strings.lCEFactor</listEntry>
+        <listEntry value="31">@Strings.lCEIndex</listEntry>
         <listEntry value="25">@Strings.lLEIndex</listEntry>
         <listEntry value="26">@Strings.lLLEIndex</listEntry>
-        <listEntry value="27">@Strings.lAEIndex</listEntry>        
+        <listEntry value="27">@Strings.lAEIndex</listEntry>   
+        <listEntry value="32">@Strings.lCEFactor</listEntry>     
         <listEntry value="28">@Strings.lLEFactor</listEntry>
         <listEntry value="29">@Strings.lLLEFactor</listEntry>
         <listEntry value="30">@Strings.lAEFactor</listEntry>
@@ -807,8 +812,7 @@
         <listEntry value="53">@Strings.lElevationLoss</listEntry>
         
         <listEntry value="997">@Strings.lPIMenu</listEntry>
-        <listEntry value="31">@Strings.lCEFactor</listEntry>
-        <listEntry value="32">@Strings.lAEFactor</listEntry>
+        <listEntry value="32">@Strings.lCEFactor</listEntry>
         <listEntry value="28">@Strings.lLEFactor</listEntry>
         <listEntry value="29">@Strings.lLLEFactor</listEntry>
         <listEntry value="30">@Strings.lAEFactor</listEntry>
