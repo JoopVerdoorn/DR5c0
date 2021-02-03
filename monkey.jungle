@@ -13,12 +13,12 @@ fr645m.sourcePath		=source;source-0-mem-extra;	source-1-ciq2-nopower-extra;	sour
 
 fr935.sourcePath		=source-32kB;					source-1-ciq2-power;			source-2-power;				source-3-round-240x240
 fr735xt.sourcePath		=source-32kB;					source-1-ciq2-power;			source-2-power;				source-3-semiround-215x180
-fr745.sourcePath		=source-32kB;					source-1-ciq2-power;			source-2-power;				source-3-round-240x240
 fenix5.sourcePath		=source-32kB;					source-1-ciq2-power;			source-2-power;				source-3-round-240x240
 fenix5s.sourcePath		=source-32kB;					source-1-ciq2-power;			source-2-power;				source-3-round-218x218
 fenixchronos.sourcePath	=source-32kB;					source-1-ciq2-power;			source-2-power;				source-3-round-218x218
 fenix6s.sourcePath		=source-32kB;					source-1-ciq2-power;			source-2-power;				source-3-round-240x240
 fenix6.sourcePath		=source-32kB;					source-1-ciq2-power;			source-2-power;				source-3-round-260x260
+fr745.sourcePath		=source;source-0-mem-limitedextra;	source-1-ciq2-power-limitedextra;		source-2-power;				source-3-round-240x240
 
 
 fenix5x.sourcePath		=source;source-0-mem-extra;	source-1-ciq2-power-extra;		source-2-power;				source-3-round-240x240
@@ -49,12 +49,13 @@ fr645m.resourcePath 		= resources-mem-extra
 
 fr935.resourcePath 			= resources-power
 fr735xt.resourcePath 		= resources-power
-fr745.resourcePath			= resources-power
 fenix5.resourcePath 		= resources-power
 fenix5s.resourcePath 		= resources-power
 fenixchronos.resourcePath 	= resources-power
 fenix6s.resourcePath 	= resources-power
 fenix6.resourcePath 	= resources-power
+
+fr745.resourcePath 		= resources-power-limitedextra
 
 fenix5x.resourcePath 		= resources-power-extra 
 fenix5plus.resourcePath 	= resources-power-extra

@@ -4,7 +4,7 @@
     	<font id="Garmin2" filename="fonts/Roadway73-alleencijfers.fnt" antialias="true"/>
 	</fonts>
   <properties>
-    <property id="pAppversion" type="string">2.29b</property>
+    <property id="pAppversion" type="string">2.30</property>
     <property id="pUpperLeftMetric" type="number">0</property>
     <property id="pUpperRightMetric" type="number">4</property>
     <property id="pMiddleLeftMetric" type="number">45</property>    
@@ -30,13 +30,14 @@
     <property id="pdisablelabel5" type="boolean">false</property>
 	<property id="pGarminColors" type="boolean">false</property>	
 	<property id="ptempunits" type="boolean">false</property>
+	<property id="pTempeCalibration" type="number">0</property>
   </properties>
 
 	
   <strings>
     <string id="AppName">Datarun premium with 5 metrics, main version</string>
-    <string id="AppVersion">2.29b</string>
-    <string id="lDummysetting4version">Version 2.29b of Datarun premium with 5 metrics, main version (dummy setting)</string>
+    <string id="AppVersion">2.30</string>
+    <string id="lDummysetting4version">Version 2.30 of Datarun premium with 5 metrics, main version (dummy setting)</string>
 	<string id="lTimeMenu">___Time items___</string>
 	<string id="lDistanceMenu">___Distance items___</string>
 	<string id="lPaceMenu">___Pace items___</string>
@@ -140,6 +141,7 @@
     <string id="lLLPaceper100m">Pace of last lap in seconds per 100 meter (for track running)</string>
     <string id="lTemp">Current watch temperature</string>
 	<string id="lTempeTemp">Current Tempe temperature (requires Tempe!)</string>
+	<string id="lTempeCalibration">Calibration factor for Tempe temperature in tenths of degrees (3 means 0.3 added, -4 means 0.4 subtracted)</string>
 	<string id="ltempunits">Use Fahrenheit instead of Celsius for temperature metrics (Celsius is default)</string>
 	<string id="lGarminColors">Use Garmin color scheme for label colors (not applicable for Palladino 10 powerzones)</string>
  </strings>
@@ -168,6 +170,9 @@
     </setting>
     <setting propertyKey="@Properties.ptempunits" title="@Strings.ltempunits">
       <settingConfig type="boolean" required="true" />
+    </setting>
+    <setting propertyKey="@Properties.pTempeCalibration" title="@Strings.lTempeCalibration">
+      <settingConfig type="numeric"  required="true"/>
     </setting>
     <setting propertyKey="@Properties.pMilClockAltern" title="@Strings.lMilClockAltern">
       <settingConfig type="list" required="true">

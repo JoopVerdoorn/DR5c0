@@ -2,25 +2,14 @@ using Toybox.Math;
 using Toybox.WatchUi as Ui;
 class CiqView extends ExtramemView {  
 	var mfillColour 						= Graphics.COLOR_LT_GRAY;
-	var counterPower 						= 0;
-	var rollingPwrValue 					= new [303];
-	var totalRPw 							= 0;
-	var rolavPowmaxsecs 					= 30;
 	var Averagepowerpersec 					= 0;
 	var uBlackBackground 					= false;
-	var uFTP								= 250;    
-	var uCP									= 250;
-	var RSS									= 0;
-	var sum4thPowers						= 0;
-	var fourthPowercounter 					= 0;
-	var mIntensityFactor					= 0;
-	var mTTS								= 0;
+	var uFTP								= 250;   
 	var i 									= 0;
 	var setPowerWarning 					= 0;
-	var Garminfont = Ui.loadResource(Rez.Fonts.Garmin1);
-	var Garminfontklein = Ui.loadResource(Rez.Fonts.Garmin2);	
+	var Garminfont = Ui.loadResource(Rez.Fonts.Garmin4);
+	var Garminfontklein = Ui.loadResource(Rez.Fonts.Garmin1);
 	var Power 								= [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-    var uWeight								= 70;
     var uPowerTarget						= 225;
     var uOnlyPwrCorrFactor					= false;
     var uPwrTempcorrect 					= 0;
@@ -39,17 +28,15 @@ class CiqView extends ExtramemView {
     hidden var WorkoutStepHighBoundary		= 999;
     hidden var is32kBdevice					= false;
     var AveragePower						= 0;
-		
+
+            		            				
     function initialize() {
         ExtramemView.initialize();
 		var mApp 		 = Application.getApp();
-		rolavPowmaxsecs	 = mApp.getProperty("prolavPowmaxsecs");	
 		uPowerZones		 = mApp.getProperty("pPowerZones");	
 		PalPowerzones 	 = mApp.getProperty("p10Powerzones");
 		uPower10Zones	 = mApp.getProperty("pPPPowerZones");
 		uFTP		 	 = mApp.getProperty("pFTP");
-		uCP		 	 	 = mApp.getProperty("pCP");
-		uWeight			 = mApp.getProperty("pWeight");
 		uPowerTarget	 = mApp.getProperty("pPowerTarget");
 		uOnlyPwrCorrFactor= mApp.getProperty("pOnlyPwrCorrFactor");
 		uPwrTempcorrect	 = mApp.getProperty("pPwrTempcorrect");
@@ -61,37 +48,13 @@ class CiqView extends ExtramemView {
     	uPwrAlticorrect  = mApp.getProperty("pPwrAlticorrect");
     	uRealAltitude 	 = mApp.getProperty("pRealAltitude");
     	uFTPAltitude	 = mApp.getProperty("pFTPAltitude");
-	
-		uRealHumid = (uRealHumid != 0 ) ? uRealHumid : 1;
-		uFTPHumid = (uFTPHumid != 0 ) ? uFTPHumid : 1;
 		
-		if (utempunits == true ) {
-			uFTPTemp = (uFTPTemp-32)/1.8;
-			uManTemp = (uManTemp-32)/1.8;
-		}
-		
-		i = 0; 
-	    for (i = 1; i < 6; ++i) {		
-			if (metric[i] == 57 or metric[i] == 58 or metric[i] == 59) {
-				rolavPowmaxsecs = (rolavPowmaxsecs < 30) ? 30 : rolavPowmaxsecs;
-			}
-		}	
 		i = 0;	
 		for (i = 1; i < 11; ++i) {
 			Power[i] = 0;
-		}
-		
-		if (ID0 == 3801 or ID0 == 4026 ) {
-			Garminfont = Ui.loadResource(Rez.Fonts.Garmin3);
-			Garminfontklein = Ui.loadResource(Rez.Fonts.Garmin5);
-		} else if (ID0 == 3802 or ID0 == 4027 ) {
-			Garminfont = Ui.loadResource(Rez.Fonts.Garmin4);
-			Garminfontklein = Ui.loadResource(Rez.Fonts.Garmin6);
-		} else {
-			Garminfont = Ui.loadResource(Rez.Fonts.Garmin2);
-			Garminfontklein = Ui.loadResource(Rez.Fonts.Garmin1);		
-		}	
+		}		
     }
+
 
     //! Calculations we need to do every second even when the data field is not visible
     function compute(info) {
@@ -106,10 +69,6 @@ class CiqView extends ExtramemView {
             mHeartrateTime	 = (info.currentHeartRate != null) ? mHeartrateTime+1 : mHeartrateTime;				
            	mElapsedHeartrate= (info.currentHeartRate != null) ? mElapsedHeartrate + info.currentHeartRate : mElapsedHeartrate;
            	
-           	//!Calculate lapCadence
-            mCadenceTime	 = (info.currentCadence != null) ? mCadenceTime+1 : mCadenceTime;
-            mElapsedCadence= (info.currentCadence != null) ? mElapsedCadence + info.currentCadence : mElapsedCadence;
-            
             //! Calculate temperature compensation, B-variables reference cell number from cells of conversion excelsheet  		
             var B6 = 22; 			//! is cell B6
             if (uPwrTempcorrect == 0 and uPwrHumidcorrect == 0 and uPwrAlticorrect == 0) {
@@ -149,29 +108,29 @@ class CiqView extends ExtramemView {
             			uFTPTemp = 18;
             			B6 = 18;  
             		} else if (uPwrTempcorrect == 1 and uPwrHumidcorrect == 0 and uPwrAlticorrect == 0) {
-            			B6 = (utempunits == false) ? tempeTemp : tempeTemp + utempcalibration/1.8;
+            			B6 = (utempunits == false) ? tempeTemp : tempeTemp + utempcalibration/1.8 ;  
 	            		uFTPHumid = 70;
     	        		uRealHumid = 70;
         	    		uFTPAltitude = 200;
             			uRealAltitude =	200;
             		} else if (uPwrTempcorrect == 1 and uPwrHumidcorrect == 0 and uPwrAlticorrect == 1) {
-            			B6 = (utempunits == false) ? tempeTemp : tempeTemp + utempcalibration/1.8;
+            			B6 = (utempunits == false) ? tempeTemp : tempeTemp + utempcalibration/1.8 ;  
 	            		uFTPHumid = 70;
     	        		uRealHumid = 70;
     	        		uRealAltitude =	(info.altitude != null) ? info.altitude : 0;
             		} else if (uPwrTempcorrect == 1 and uPwrHumidcorrect == 0 and uPwrAlticorrect == 2) {
-            			B6 = (utempunits == false) ? tempeTemp : tempeTemp + utempcalibration/1.8; 
+            			B6 = (utempunits == false) ? tempeTemp : tempeTemp + utempcalibration/1.8 ;  
 	            		uFTPHumid = 70;
     	        		uRealHumid = 70;
             		} else if (uPwrTempcorrect == 1 and uPwrHumidcorrect == 2 and uPwrAlticorrect == 0) {
-            			B6 = (utempunits == false) ? tempeTemp : tempeTemp + utempcalibration/1.8;
+            			B6 = (utempunits == false) ? tempeTemp : tempeTemp + utempcalibration/1.8 ;  
         	    		uFTPAltitude = 200;
             			uRealAltitude =	200;
             		} else if (uPwrTempcorrect == 1 and uPwrHumidcorrect == 2 and uPwrAlticorrect == 1) {
-            			B6 = (utempunits == false) ? tempeTemp : tempeTemp + utempcalibration/1.8;
+            			B6 = (utempunits == false) ? tempeTemp : tempeTemp + utempcalibration/1.8 ;
             			uRealAltitude =	(info.altitude != null) ? info.altitude : 0;  
             		} else if (uPwrTempcorrect == 1 and uPwrHumidcorrect == 2 and uPwrAlticorrect == 2) {
-            			B6 = (utempunits == false) ? tempeTemp : tempeTemp + utempcalibration/1.8;
+            			B6 = (utempunits == false) ? tempeTemp : tempeTemp + utempcalibration/1.8 ;  
             		} else if (uPwrTempcorrect == 2 and uPwrHumidcorrect == 0 and uPwrAlticorrect == 0) {
             			B6 = uManTemp;  
 	            		uFTPHumid = 70;
@@ -223,23 +182,14 @@ class CiqView extends ExtramemView {
 			}
            	
             //!Calculate lappower
-            mPowerTime		 = (info.currentPower != null and mTimerRunning) ? mPowerTime+1 : mPowerTime; 		
+            mPowerTime		 = (info.currentPower != null) ? mPowerTime+1 : mPowerTime;
             if (uOnlyPwrCorrFactor == false) {
             	runPower 		 = (info.currentPower != null) ? (info.currentPower+0.001)*PwrCorrFactor : 0;
             } else {
             	runPower 		 = (info.currentPower != null) ? info.currentPower : 0;
             }
-			mElapsedPower    = (mTimerRunning) ? mElapsedPower + runPower : mElapsedPower;
-			
-			if (uCP != 0) {
-				if ((runPower+0.001)/uCP < 0.5 ) {
-					RSS = RSS + 0.0026516504294491;
-				} else if ((runPower+0.001)/uCP > 1.5 ) {
-					RSS = RSS + 0.1240054182283927;
-				} else {
-					RSS = RSS + + 0.03 * Math.pow(((runPower+0.001)/uCP),3.5);
-				}
-			} 			             
+			mElapsedPower    = mElapsedPower + runPower;
+				 			             
         }
 	}
 
@@ -256,11 +206,9 @@ class CiqView extends ExtramemView {
 	function onUpdate(dc) {
 		//! call the parent onUpdate to do the base logic
 		ExtramemView.onUpdate(dc);
-        		
-		//!Calculate HR-metrics
-		var info = Activity.getActivityInfo();
-				
-		//!Calculate 5 and 10sec averaged power
+		var info = Activity.getActivityInfo();		
+		
+		//!Calculate 10sec averaged power
         var AveragePower5sec  	 			= 0;
         var AveragePower10sec  	 			= 0;
         var currentPowertest				= 0;
@@ -278,67 +226,16 @@ class CiqView extends ExtramemView {
         		Power[4] 								= Power[3];
         		Power[3] 								= Power[2];
         		Power[2] 								= Power[1];
-        		if (info.currentPower != null) {
+				if (info.currentPower != null) {
         			Power[1]								= runPower; 
         		} else {
         			Power[1]								= 0;
-				}
+				}        		
 				AveragePower10sec	= (Power1+Power[2]+Power[3]+Power[4]+Power[5]+Power[6]+Power[7]+Power[8]+Power[9]+Power[10])/10;
 				AveragePower5sec	= (Power[1]+Power[2]+Power[3]+Power[4]+Power[5])/5;
 				AveragePower3sec	= (Power[1]+Power[2]+Power[3])/3;
 			}
  		}
-
-		//! Calculation of rolling average of power 
-		var zeroValueSecs = 0;
-		if (counterPower < 1) {
-			for (var i = 1; i < rolavPowmaxsecs+2; ++i) {
-				rollingPwrValue [i] = 0; 
-			}
-		}
-		counterPower = counterPower + 1;
-		rollingPwrValue [rolavPowmaxsecs+1] = runPower; 
-		for (var i = 1; i < rolavPowmaxsecs+1; ++i) {
-			rollingPwrValue[i] = rollingPwrValue[i+1];
-		}
-		for (var i = 1; i < rolavPowmaxsecs+1; ++i) {
-			totalRPw = rollingPwrValue[i] + totalRPw;
-		
-			if (mPowerTime < rolavPowmaxsecs) {
-				zeroValueSecs = (rollingPwrValue[i] != 0) ? zeroValueSecs : zeroValueSecs + 1;
-			}
-		}
-		if (rolavPowmaxsecs-zeroValueSecs == 0) {
-			Averagepowerpersec = 0;
-		} else {
-			Averagepowerpersec = (mPowerTime < rolavPowmaxsecs) ? totalRPw/(rolavPowmaxsecs-zeroValueSecs) : totalRPw/rolavPowmaxsecs;
-		}
-		totalRPw = 0;       
-
-		//!Calculate normalized power
-		var mNormalizedPow = 0;
-		var rollingPwr30s = 0;
-		var j = 0; 		
-	    for (j = 1; j < 6; ++j) {
-			if (metric[j] == 57 or metric[j] == 58 or metric[j] == 59) {
-				if (jTimertime > 30) {
-					for (var i = 1; i < 31; ++i) {
-						rollingPwr30s = rollingPwr30s + rollingPwrValue [rolavPowmaxsecs+2-i];
-					}
-					rollingPwr30s = rollingPwr30s/30;
-					if (mTimerRunning == true) {
-						sum4thPowers = sum4thPowers + Math.pow(rollingPwr30s,4);
-						fourthPowercounter = fourthPowercounter + 1; 
-					}
-				mNormalizedPow = Math.round(Math.pow(sum4thPowers/fourthPowercounter,0.25));				
-				}
-			}
-		}		
-
-
-		//! Calculate IF and TTS
-		mIntensityFactor = (uFTP != 0) ? mNormalizedPow / uFTP : 0;
-		mTTS = (uFTP != 0) ? (jTimertime * mNormalizedPow * mIntensityFactor)/(uFTP * 3600) * 100 : 999;
 
 		if (Activity has :getCurrentWorkoutStep) {
 			workoutTarget = Toybox.Activity.getCurrentWorkoutStep();
@@ -355,8 +252,10 @@ class CiqView extends ExtramemView {
 		
 		dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
 		
+		AveragePower = (info.averagePower != null) ? info.averagePower : 0;
+		
 		i = 0; 
-	    for (i = 1; i < 6; ++i) {
+	    for (var i = 1; i < 6; ++i) {
 	        if (metric[i] == 38) {
     	        fieldValue[i] =  runPower;     	        
         	    fieldLabel[i] = "Cur Pzone";
@@ -382,13 +281,9 @@ class CiqView extends ExtramemView {
         	    fieldLabel[i] = "LL Pzone";
             	fieldFormat[i] = "1decimal";
             } else if (metric[i] == 104) {
-    	        fieldValue[i] =  AveragePower;     	        
+    	        fieldValue[i] =  (info.averagePower != null) ? info.averagePower : 0;     	        
         	    fieldLabel[i] = "Av Pzone";
-            	fieldFormat[i] = "1decimal";          	
-			} else if (metric[i] == 17) {
-	            fieldValue[i] = Averagespeedinmpersec;
-    	        fieldLabel[i] = "Pc ..sec";
-        	    fieldFormat[i] = "pace";            	
+            	fieldFormat[i] = "1decimal";           	          	
 			} else if (metric[i] == 55) {   
             	if (info.currentSpeed == null or info.currentSpeed==0) {
             		fieldValue[i] = 0;
@@ -406,44 +301,12 @@ class CiqView extends ExtramemView {
         	    fieldLabel[i] = "LL EI";
             	fieldFormat[i] = "2decimal";
 			} else if (metric[i] == 27) {
-	            fieldValue[i] = (info.averageSpeed != null && AveragePower != 0) ? info.averageSpeed*60/AveragePower : 0;
+	            fieldValue[i] = (info.averageSpeed != null and info.averagePower != null and info.averagePower != 0) ? info.averageSpeed*60/info.averagePower : 0;
     	        fieldLabel[i] = "Avg EI";
         	    fieldFormat[i] = "2decimal";
 			} else if (metric[i] == 31) {
 	            fieldValue[i] = (runPower != 0) ? Averagespeedinmper3sec*60/runPower : 0;
     	        fieldLabel[i] = "Cur EI";
-        	    fieldFormat[i] = "2decimal";
-	        } else if (metric[i] == 33) {
-    	        if (LapHeartrate != 0) {
-					fieldValue[i] = (0.00001 + LapPower) / LapHeartrate;
-				} else {
-					fieldValue[i] = 0;
-				}
-        	    fieldLabel[i] = "L P2HR";
-            	fieldFormat[i] = "2decimal";
-			} else if (metric[i] == 34) {
-    	        if (LastLapHeartrate != 0) {
-					fieldValue[i] = (0.00001 + LastLapPower) / LastLapHeartrate;
-				} else {
-					fieldValue[i] = 0;
-				}   	        
-        	    fieldLabel[i] = "LL P2HR";
-            	fieldFormat[i] = "2decimal";
-			} else if (metric[i] == 35) {
-	            if (AverageHeartrate != 0) {
-					fieldValue[i] = (AveragePower+0.00001)/AverageHeartrate;
-				} else {
-					fieldValue[i]= 0;
-				}
-    	        fieldLabel[i] = "A  P2HR";
-        	    fieldFormat[i] = "2decimal";
-			} else if (metric[i] == 36) {
-	            if (info.currentHeartRate != null && info.currentHeartRate != 0) {
-					fieldValue[i] = (0.00001 + runPower)/info.currentHeartRate;
-				} else {
-					fieldValue[i] = 0;
-				}
-    	        fieldLabel[i] = "C P2HR";
         	    fieldFormat[i] = "2decimal";
         	} else if (metric[i] == 70) {
     	        fieldValue[i] = AveragePower5sec;
@@ -453,26 +316,18 @@ class CiqView extends ExtramemView {
     	        fieldValue[i] = AveragePower10sec;
         	    fieldLabel[i] = "Pwr 10s";
             	fieldFormat[i] = "power";
-			} else if (metric[i] == 37) {
-	            fieldValue[i] = Averagepowerpersec;
-    	        fieldLabel[i] = "Pw ..sec";
-        	    fieldFormat[i] = "power";
-			} else if (metric[i] == 57) {
-	            fieldValue[i] = mNormalizedPow;
-    	        fieldLabel[i] = "N Power";
-        	    fieldFormat[i] = "0decimal";
-        	} else if (metric[i] == 80) {
+	        } else if (metric[i] == 80) {
     	        fieldValue[i] = (info.maxPower != null) ? info.maxPower : 0;
         	    fieldLabel[i] = "Max Pwr";
-            	fieldFormat[i] = "power";
-        	} else if (metric[i] == 71) {
+            	fieldFormat[i] = "power";  
+			} else if (metric[i] == 71) {
             	fieldValue[i] = (uFTP != 0) ? runPower*100/uFTP : 0;
             	fieldLabel[i] = "%FTP";
             	fieldFormat[i] = "power";   
 	        } else if (metric[i] == 72) {
     	        fieldValue[i] = (uFTP != 0) ? AveragePower3sec*100/uFTP : 0;
         	    fieldLabel[i] = "%FTP 3s";
-            	fieldFormat[i] = "power";
+            	fieldFormat[i] = "power";     	
 			} else if (metric[i] == 73) {
     	        fieldValue[i] = (uFTP != 0) ? LapPower*100/uFTP : 0;
         	    fieldLabel[i] = "L %FTP";
@@ -493,74 +348,14 @@ class CiqView extends ExtramemView {
     	        fieldValue[i] = (uFTP != 0) ? AveragePower10sec*100/uFTP : 0;
         	    fieldLabel[i] = "%FTP 10s";
             	fieldFormat[i] = "power";
-			} else if (metric[i] == 78) {
-	            fieldValue[i] = (uFTP != 0) ? Averagepowerpersec*100/uFTP : 0;
-    	        fieldLabel[i] = "%FTP ..sec";
-        	    fieldFormat[i] = "power";
-			} else if (metric[i] == 58) {
-	            fieldValue[i] = mIntensityFactor;
-    	        fieldLabel[i] = "IF";
-        	    fieldFormat[i] = "2decimal";
-			} else if (metric[i] == 59) {
-	            fieldValue[i] = mTTS;
-    	        fieldLabel[i] = "TTS";
-        	    fieldFormat[i] = "0decimal";
-			} else if (metric[i] == 60) {
-	            fieldValue[i] = RSS;
-    	        fieldLabel[i] = "RSS";
-        	    fieldFormat[i] = "0decimal";
-        	} else if (metric[i] == 93) {
-				if (runPower != 0) {
-            		fieldValue[i] = CurrentSpeedinmpersec*uWeight/runPower;
-            	} else {
-            		fieldValue[i] = 0;
-            	}
-            	fieldLabel[i] = "RE cur";
-            	fieldFormat[i] = "2decimal";   
-			} else if (metric[i] == 94) {
-				if (AveragePower3sec != 0) {
-            		fieldValue[i] = Averagespeedinmper3sec*uWeight/AveragePower3sec;
-            	} else {
-            		fieldValue[i] = 0;
-            	}
-            	fieldLabel[i] = "RE 3sec";
-            	fieldFormat[i] = "2decimal";
-			} else if (metric[i] == 95) {
-				if (AveragePower5sec != 0) {
-            		fieldValue[i] = Averagespeedinmper5sec*uWeight/AveragePower5sec;
-            	} else {
-            		fieldValue[i] = 0;
-            	}
-            	fieldLabel[i] = "RE 5sec";
-            	fieldFormat[i] = "2decimal";
-			} else if (metric[i] == 96) {
-				if (LapPower != 0) {
-            		fieldValue[i] = mLapSpeed*uWeight/LapPower;
-            	} else {
-            		fieldValue[i] = 0;
-            	}
-            	fieldLabel[i] = "RE lap";
-            	fieldFormat[i] = "2decimal";
-			} else if (metric[i] == 98) {
-				if (AveragePower != 0) {
-            		fieldValue[i] = info.averageSpeed*uWeight/AveragePower;
-            	} else {
-            		fieldValue[i] = 0;
-            	}
-            	fieldLabel[i] = "RE Aver";
-            	fieldFormat[i] = "2decimal";
-        	} else if (metric[i] == 106) {
-	            fieldValue[i] = (PwrCorrFactor-1)*100;
-    	        fieldLabel[i] = "Pw cor%";
-        	    fieldFormat[i] = "2decimal";
-        	} else if (metric[i] == 107) {
+            } else if (metric[i] == 107) {
 	            if (hasWorkoutStep == true) {
         			fieldValue[i] = (mPowerWarningunder + mPowerWarningupper)/2;
         		} else {
 	            	fieldValue[i] = (uOnlyPwrCorrFactor == false) ? uPowerTarget : uPowerTarget/PwrCorrFactor;
 	            }
     	        fieldLabel[i] = "Ptarget";
-        	    fieldFormat[i] = "power";  
+        	    fieldFormat[i] = "power";
         	} else if (metric[i] == 117) {
 	            fieldValue[i] = WorkoutStepLowBoundary;
     		    fieldLabel[i] = "Ltarget";
@@ -584,11 +379,10 @@ class CiqView extends ExtramemView {
         			fieldValue[i] = 100;
         		}
         		fieldLabel[i] = "H%target";
-        	    fieldFormat[i] = "power";    	    
+        	    fieldFormat[i] = "power";
         	} 
+        	//!einde invullen field metrics
 		}
-		
-		
 		//! Conditions for showing the demoscreen       
         if (uShowDemo == false) {
         	if (licenseOK == false && jTimertime > 900)  {
@@ -599,8 +393,7 @@ class CiqView extends ExtramemView {
 	   //! Check whether demoscreen is showed or the metrics 
 	   if (uShowDemo == false ) {
 
-	   } 
-	   
+	   }   
 	}
 
     function Formatting(dc,counter,fieldvalue,fieldformat,fieldlabel,CorString) {     
@@ -714,12 +507,7 @@ class CiqView extends ExtramemView {
         mLastLapElapsedHeartrate 	= (info.currentHeartRate != null) ? mElapsedHeartrate - mLastLapHeartrateMarker : 0;
         mLastLapHeartrateMarker     = mElapsedHeartrate;
         mLastLapTimeHRMarker        = mHeartrateTime;
-        
-        mLastLapTimerTimeCadence	= mHeartrateTime - mLastLapTimeCadenceMarker;
-        mLastLapElapsedCadence 		= (info.currentCadence != null) ? mElapsedCadence - mLastLapCadenceMarker : 0;
-        mLastLapCadenceMarker     	= mElapsedCadence;
-        mLastLapTimeCadenceMarker   = mCadenceTime;
-
+  
         mLastLapTimerTimePwr		= mPowerTime - mLastLapTimePwrMarker;
         mLastLapElapsedPower  		= (info.currentPower != null) ? mElapsedPower - mLastLapPowerMarker : 0;
         mLastLapPowerMarker         = mElapsedPower;
