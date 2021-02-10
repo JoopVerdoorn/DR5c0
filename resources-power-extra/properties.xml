@@ -58,6 +58,7 @@
     <property id="pFTPAltitude" type="number">200</property>
     <property id="pTempeCalibration" type="number">0</property>
     <property id="poverruleWourkout" type="boolean">false</property>
+    <property id="pCCnumber" type="number">9999999</property>
   </properties>
 
 	
@@ -65,6 +66,7 @@
     <string id="AppName">Datarun premium with 5 metrics, main version</string>
     <string id="AppVersion">2.30b</string>
     <string id="lDummysetting4version">Version 2.30b of Datarun premium with 5 metrics, main version (dummy setting)</string>
+    <string id="lCCnumber">C-Code generated on the watch by the corresponding main Datarun premium datafield</string>
 	<string id="lTimeMenu">___Time items___</string>
 	<string id="lDistanceMenu">___Distance items___</string>
 	<string id="lPaceMenu">___Pace items___</string>
