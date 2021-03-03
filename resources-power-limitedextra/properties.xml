@@ -133,7 +133,6 @@
 	<string id="lCurrentSpeed">Speed in km/mile per hour</string>
 	<string id="lAverage3secSpeed">Speed averaged over the last 3 seconds in km/mile per hour </string>
 	<string id="lAverage5secSpeed">Speed averaged over the last 5 seconds in km/mile per hour </string>
-	<string id="lAverage30secSpeed">Speed averaged over the last .. seconds in km/mile per hour (max is 300 seconds)</string>
 	<string id="lLapSpeed">Lap speed in km/mile per hour</string>
 	<string id="lLLSpeed">Last lap speed in km/mile per hour</string>
 	<string id="lAverageSpeed">Average speed in km/mile per hour</string>
@@ -147,10 +146,7 @@
     <string id="lSPower">Current running power</string>
     <string id="lAsecPower">Power averaged over the last 3 seconds</string>
     <string id="lPowper5sec">Power averaged over the last 5 seconds</string>
-    <string id="lPowper10sec">Power averaged over the last 10 seconds</string>
-    <string id="lrolavPowmaxsecs">Power averaged over the last ... seconds (max is 300 seconds)</string>
-    <string id="lrolavPowmaxsecsError">This needs to be a number from 2 too 300</string>
-    <string id="lAPower">Average running power</string>
+    <string id="lPowper10sec">Power averaged over the last 10 seconds</string>    <string id="lAPower">Average running power</string>
 	<string id="lLPower">Current lap running power</string>
 	<string id="lLLPower">Last lap running power</string>
 	<string id="lMaxPwr">Maximum produced power during activity</string>
@@ -180,10 +176,6 @@
 	<string id="ldisablelabel5">Disable colored label for bottom metric</string>
 	<string id="ldistanceToNextPoint">Distance to next point</string>
 	<string id="ldistanceToDestination">Distance to destination</string>
-	<string id="lpercMaxHR">Current HR in percentage of MaxHR</string>
-    <string id="lLpercMaxHR">Lap HR in percentage of MaxHR</string>
-    <string id="lLLpercMaxHR">Last lap HR in percentage of MaxHR</string>
-    <string id="lApercMaxHR">Average HR in percentage of MaxHR</string>	
     <string id="lkCalories">Used kilocalories</string>
     <string id="lLLPaceper100m">Pace of last lap in seconds per 100 meter (for track running)</string>
     <string id="lTemp">Current watch temperature</string>

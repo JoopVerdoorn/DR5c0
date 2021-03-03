@@ -21,7 +21,6 @@ class ExtramemView extends DatarunpremiumView {
 	var Z5color = Graphics.COLOR_RED;
 	var Z6color = Graphics.COLOR_PURPLE;
 	var disablelabel 						= [1, 2, 3, 4, 5, 6];
-	var maxHR								= 999;
 	var kCalories							= 0;
 	hidden var tempeTemp 					= 20;
 	var utempunits							= false;
@@ -82,14 +81,13 @@ class ExtramemView extends DatarunpremiumView {
         mRacesec = mRacesec.toNumber();
         mRacetime = mRacehour*3600 + mRacemin*60 + mRacesec;
 	
-		//! Calculate vertical speed
+		//! Calculate ascent and descent
 		var valueDesc = (info.totalDescent != null) ? info.totalDescent : 0;
         valueDesc = (unitD == 1609.344) ? valueDesc*3.2808 : valueDesc;
 		var valueAsc = (info.totalAscent != null) ? info.totalAscent : 0;
         valueAsc = (unitD == 1609.344) ? valueAsc*3.2808 : valueAsc;
         
 		var sensorIter = getIterator();
-		maxHR = uHrZones[5];
 		var i = 0; 
 	    for (i = 1; i < 6; ++i) {
 	        if (metric[i] == 46) {
@@ -127,10 +125,6 @@ class ExtramemView extends DatarunpremiumView {
         	}  else if (metric[i] == 62) {
            		fieldValue[i] = (info.currentSpeed != null) ? 3.6*((Pace1+Pace2+Pace3)/3)*1000/unitP : 0;
             	fieldLabel[i] = "Spd 3s";
-            	fieldFormat[i] = "2decimal";           	
-        	}  else if (metric[i] == 63) {
-           		fieldValue[i] = 3.6*Averagespeedinmpersec*1000/unitP ;
-            	fieldLabel[i] = "Spd ..s";
             	fieldFormat[i] = "2decimal";           	
 			} else if (metric[i] == 88) {   
             	if (mLastLapSpeed == null or info.currentSpeed==0) {

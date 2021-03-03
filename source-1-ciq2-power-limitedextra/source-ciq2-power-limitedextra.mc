@@ -55,6 +55,14 @@ class CiqView extends ExtramemView {
     	uPwrAlticorrect  = mApp.getProperty("pPwrAlticorrect");
     	uRealAltitude 	 = mApp.getProperty("pRealAltitude");
     	uFTPAltitude	 = mApp.getProperty("pFTPAltitude");
+    	
+    	uRealHumid = (uRealHumid != 0 ) ? uRealHumid : 1;
+		uFTPHumid = (uFTPHumid != 0 ) ? uFTPHumid : 1;
+    	
+    	if (utempunits == true ) {
+			uFTPTemp = (uFTPTemp-32)/1.8;
+			uManTemp = (uManTemp-32)/1.8;
+		}
 		
 		i = 0;	
 		for (i = 1; i < 11; ++i) {
