@@ -8,7 +8,7 @@
     	<font id="Garmin6" filename="fonts/Roadway62-alleencijfers.fnt" antialias="true"/>  
 	</fonts>
   <properties>
-    <property id="pAppversion" type="string">2.31b</property>
+    <property id="pAppversion" type="string">2.31c</property>
     <property id="pUpperLeftMetric" type="number">0</property>
     <property id="pUpperRightMetric" type="number">4</property>
     <property id="pMiddleLeftMetric" type="number">45</property>    
@@ -33,7 +33,7 @@
     <property id="prolavPowmaxsecs" type="number">30</property>
     <property id="pClockFieldMetric" type="number">38</property>
     <property id="p10Powerzones" type="boolean">false</property>
-    <property id="pPPPowerZones" type="string">180:Z1:210:Z2.31b0:Z3:270:Z4:300:Z5:330:Z6:360:Z7:390:Z8:420:Z9:450:Z10:480</property>
+    <property id="pPPPowerZones" type="string">180:Z1:210:Z2.31c0:Z3:270:Z4:300:Z5:330:Z6:360:Z7:390:Z8:420:Z9:450:Z10:480</property>
     <property id="pClockFieldMetric" type="number">46</property>
     <property id="pFTP" type="number">250</property>
     <property id="pCP" type="number">250</property>
@@ -64,8 +64,8 @@
 	
   <strings>
     <string id="AppName">Datarun premium with 5 metrics, main version</string>
-    <string id="AppVersion">2.31b</string>
-    <string id="lDummysetting4version">Version 2.31b of Datarun premium with 5 metrics, main version (dummy setting)</string>
+    <string id="AppVersion">2.31c</string>
+    <string id="lDummysetting4version">Version 2.31c of Datarun premium with 5 metrics, main version (dummy setting)</string>
     <string id="lCCnumber">C-Code generated on the watch by the corresponding main Datarun premium datafield</string>
 	<string id="lTimeMenu">___Time items___</string>
 	<string id="lDistanceMenu">___Distance items___</string>
