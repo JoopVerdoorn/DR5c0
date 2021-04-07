@@ -21,7 +21,7 @@
     <property id="pRequiredPower" type="string">000:999</property>
     <property id="pWarningFreq" type="number">5</property>
     <property id="pAlertbeep" type="boolean">false</property>
-    <property id="pLapPwr4alerts" type="boolean">false</property>
+    <property id="pLapPwr4alerts" type="number">1</property>
     <property id="pPowerZones" type="string">184:Z1:227:Z2:255:Z3:284:Z4:326:Z5:369</property>
     <property id="pMilClockAltern" type="number">0</property>
     <property id="p10Powerzones" type="boolean">false</property>
@@ -50,13 +50,14 @@
     <property id="pTempeCalibration" type="number">0</property>
     <property id="pCCnumber" type="number">9999999</property>
     <property id="poverruleWourkout" type="boolean">false</property>
+    <property id="pShowRedClock" type="boolean">false</property>
   </properties>
 
 	
   <strings>
     <string id="AppName">Datarun premium with 5 metrics, main version</string>
-    <string id="AppVersion">2.31c</string>
-    <string id="lDummysetting4version">Version 2.31c of Datarun premium with 5 metrics, main version (dummy setting)</string>
+    <string id="AppVersion">2.33</string>
+    <string id="lDummysetting4version">Version 2.33 of Datarun premium with 5 metrics, main version (dummy setting)</string>
     <string id="lCCnumber">C-Code generated on the watch by the corresponding main Datarun premium datafield</string>
 	<string id="lTimeMenu">___Time items___</string>
 	<string id="lDistanceMenu">___Distance items___</string>
@@ -125,14 +126,19 @@
     <string id="lRequiredPower">Boundaries of a static powerzone for warning signal, a format required like (227:284)</string> 
     <string id="lWarningFreq">Frequency for the warning signal for operating out of powerzone</string>
     <string id="lAlertbeep">Play sound as warning signal for operating out of powerzone</string> 
-    <string id="lLapPwr4alerts">Use lap power for alerts instead of current power</string>  
-	<string id="lPacefield">Pace field on middle row</string>
-	<string id="lPaceper3km">Pace averaged over the last 3 seconds</string>
+<string id="lLapPwr4alerts">Use lap power for alerts instead of current power</string>
+    <string id="lCurrentPoweralert">Current running power</string>
+    <string id="l3secPoweralert">Power averaged over the last 3 seconds</string>
+    <string id="l5secPoweralert">Power averaged over the last 5 seconds</string>
+    <string id="l10secPoweralert">>Power averaged over the last 10 seconds</string>
+    <string id="lLapPoweralert">Lap power</string>
+    <string id="lAveragePoweralert">Average power</string>	<string id="lPaceper3km">Pace averaged over the last 3 seconds</string>
 	<string id="lPaceper5km">Pace averaged over the last 5 seconds</string>
 	<string id="lPaceper100m">Pace in seconds per 100 meter (for track running)</string>
 	<string id="lCurrentSpeed">Speed in km/mile per hour</string>
 	<string id="lAverage3secSpeed">Speed averaged over the last 3 seconds in km/mile per hour </string>
 	<string id="lAverage5secSpeed">Speed averaged over the last 5 seconds in km/mile per hour </string>
+	<string id="lAverage30secSpeed">Speed averaged over the last .. seconds in km/mile per hour (max is 300 seconds)</string>
 	<string id="lLapSpeed">Lap speed in km/mile per hour</string>
 	<string id="lLLSpeed">Last lap speed in km/mile per hour</string>
 	<string id="lAverageSpeed">Average speed in km/mile per hour</string>
@@ -184,7 +190,7 @@
 	<string id="ltempunits">Use Fahrenheit instead of Celsius for temperature metrics (Celsius is default)</string>
 	<string id="lGarminColors">Use Garmin color scheme for label colors (not applicable for Palladino 10 powerzones)</string>
     <string id="lPowerTarget">Powertarget in Watt, useful when power correction is set only to influence powertarget</string>
-    <string id="lPtargetcorrect">Powertarget in Watt as set in settings, corrected by temperature/humidity/altitude if set in settings</string>
+    <string id="lPtargetcorrect">Powertarget in Watt as set in settings or defined by a workout, corrected by temperature/humidity/altitude if set in settings</string>
     <string id="lOnlyPwrCorrFactor">Use correction factors for running power only to change powertarget</string>
     <string id="lPwrTempcorrect">Power correction based on temperature</string>
     <string id="lNoPwrTempcorrect">No correction</string>
@@ -211,7 +217,8 @@
     <string id="lHperctarget">Upper power boundary of a workout step in % van FTP, from Training peaks etc, corrected by temperature/humidity/altitude if set in settings</string>   
     <string id="lStepnumber">Current step number of a workout</string>
     <string id="lReamingTimeOfStep">Remaining time or distance of the current step of a workout</string>
-    <string id="loverruleWourkout">Use a static powerzone for alerts, not powerzones from workout steps</string> 
+    <string id="loverruleWourkout">Use a static powerzone for alerts, not powerzones from workout steps</string>
+    <string id="lShowRedClock">Show red clock over all metrics before the start of an activity (useful for a race when the normal clock isn't visible)</string> 
     <string id="lCCnumber">C-Code generated on the watch by the corresponding main Datarun premium datafield</string>  
 </strings>
 
@@ -312,13 +319,23 @@
       <settingConfig type="boolean" required="true" />
     </setting>
     <setting propertyKey="@Properties.pLapPwr4alerts" title="@Strings.lLapPwr4alerts">
-      <settingConfig type="boolean" required="true" />
+      <settingConfig type="list" required="true">
+        <listEntry value="0">@Strings.lCurrentPoweralert</listEntry>
+        <listEntry value="1">@Strings.l3secPoweralert</listEntry>
+        <listEntry value="2">@Strings.l5secPoweralert</listEntry>
+        <listEntry value="3">@Strings.l10secPoweralert</listEntry>
+        <listEntry value="5">@Strings.lLapPoweralert</listEntry>
+        <listEntry value="6">@Strings.lAveragePoweralert</listEntry>
+      </settingConfig>
     </setting>
     <setting propertyKey="@Properties.pRacedistance" title="@Strings.lRacedistanceTitle">
       <settingConfig type="numeric" errorMessage="@Strings.lRacedistanceError" />
     </setting>
     <setting propertyKey="@Properties.pRacetime" title="@Strings.lRacetimeTitle">
       <settingConfig type="alphaNumeric"  required="true"/>
+    </setting>
+    <setting propertyKey="@Properties.pShowRedClock" title="@Strings.lShowRedClock">
+      <settingConfig type="boolean" required="false" />
     </setting>
     <setting propertyKey="@Properties.pMilClockAltern" title="@Strings.lMilClockAltern">
       <settingConfig type="list" required="true">
