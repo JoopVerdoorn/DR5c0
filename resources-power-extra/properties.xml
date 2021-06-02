@@ -33,7 +33,7 @@
     <property id="prolavPowmaxsecs" type="number">30</property>
     <property id="pClockFieldMetric" type="number">38</property>
     <property id="p10Powerzones" type="boolean">false</property>
-    <property id="pPPPowerZones" type="string">180:Z1:210:Z2.330:Z3:270:Z4:300:Z5:330:Z6:360:Z7:390:Z8:420:Z9:450:Z10:480</property>
+    <property id="pPPPowerZones" type="string">180:Z1:210:Z2:240:Z3:270:Z4:300:Z5:330:Z6:360:Z7:390:Z8:420:Z9:450:Z10:480</property>
     <property id="pClockFieldMetric" type="number">46</property>
     <property id="pFTP" type="number">250</property>
     <property id="pCP" type="number">250</property>
