@@ -1,6 +1,6 @@
 using Toybox.SensorHistory;
 using Toybox.Lang;
-using Toybox.System;
+using Toybox.System as Sys;
 using Toybox.Application.Storage;
 
 class ExtramemView extends DatarunpremiumView {   
@@ -18,14 +18,17 @@ class ExtramemView extends DatarunpremiumView {
 	var uClockFieldMetric 					= 38; //! Powerzone is default
 	var HRzone								= 0;
 	hidden var Powerzone					= 0;
-	var VertPace							= [1, 2, 3, 4, 5, 6];
+	var totalVertPace 						= 0;
+	hidden var VertPace						= new [33];
+	var AverageVertspeedinmper30sec			= 0;
+	var CurrentVertSpeedinmpersec 			= 0;
 	var uGarminColors 						= false;
-	var Z1color = Graphics.COLOR_LT_GRAY;
-	var Z2color = Graphics.COLOR_YELLOW;
-	var Z3color = Graphics.COLOR_BLUE;
-	var Z4color = Graphics.COLOR_GREEN;
-	var Z5color = Graphics.COLOR_RED;
-	var Z6color = Graphics.COLOR_PURPLE;
+	var Z1color 							= Graphics.COLOR_LT_GRAY;
+	var Z2color 							= Graphics.COLOR_YELLOW;
+	var Z3color 							= Graphics.COLOR_BLUE;
+	var Z4color 							= Graphics.COLOR_GREEN;
+	var Z5color 							= Graphics.COLOR_RED;
+	var Z6color 							= Graphics.COLOR_PURPLE;
 	var disablelabel1 						= false;
 	var disablelabel2 						= false;
 	var disablelabel3 						= false;
@@ -47,17 +50,46 @@ class ExtramemView extends DatarunpremiumView {
 	var AverageCadence 						= 0;
 	hidden var tempeTemp 					= 0;
 	var utempunits							= false;
-	var valueAsclast						= 0;
-	var valueDesclast						= 0;
-	var Diff1 								= 0;
-	var Diff2 								= 0;
+	hidden var valueDesc 					= 0;
+	hidden var valueAsc 					= 0; 
+	hidden var valueAsclast					= 0;
+	hidden var valueDesclast				= 0;
+	hidden var Diff1 						= 0;
+	hidden var Diff2						= 0;
 	var utempcalibration					= 0;
-	var hrRest;
-	var HelpVar;
+	var hrRest								   ;
+	var HelpVar								   ;
 	hidden var RealPowerTarget 				= 0;
 	hidden var RealWorkoutStepNr 			= 0;
 	hidden var RealRemainingWorkoutTime		= 0;
 	hidden var DistinClockfield				= false;
+	hidden var dynamics						   ;
+	hidden var groundContactBalance			= 0;
+	hidden var rollgroundContactBalance		= [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+	hidden var AveragerollgroundContactBalance10sec= 0;
+	hidden var groundContactTime			= 0;
+	hidden var rollgroundContactTime		= [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+	hidden var AveragerollgroundContactTime10sec= 0;
+	hidden var stanceTime					= 0;
+	hidden var rollstanceTime				= [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+	hidden var AveragerollstanceTime10sec	= 0;
+	hidden var stepCount					= 0;
+	hidden var stepLength					= 0;
+	hidden var rollstepLength				= [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+	hidden var AveragerollstepLength10sec	= 0;
+	hidden var verticalOscillation			= 0;
+	hidden var rollverticalOscillation		= [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+	hidden var AveragerollverticalOscillation10sec= 0;
+	hidden var verticalRatio				= 0;
+	hidden var rollverticalRatio			= [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+	hidden var AveragerollverticalRatio10sec= 0;
+	hidden var startTime					   ;
+	var HR1									= 0; 
+    var HR2									= 0;
+    var HR3									= 0;
+    var mGPScolor							= mColourBackGround;
+    var GPSAccuracy 						= "null";
+    var screenWidth 						= mySettings.screenWidth;
 	
     function initialize() {
         DatarunpremiumView.initialize();
@@ -75,8 +107,21 @@ class ExtramemView extends DatarunpremiumView {
 		disablelabel5 						= mApp.getProperty("pdisablelabel5");
 		utempcalibration 			= mApp.getProperty("pTempeCalibration");
 
+		if(Toybox.AntPlus has :RunningDynamics) {
+			dynamics = new Toybox.AntPlus.RunningDynamics(null);
+		}
+
+		for (i = 1; i < 11; ++i) {
+			rollgroundContactBalance[i] = 0;
+			rollgroundContactTime[i] = 0;
+			rollstanceTime[i] = 0;
+			rollstepLength[i] = 0;
+			rollverticalOscillation[i] = 0;
+			rollverticalRatio[i] = 0;
+		}
+		
 		var i; 
-		for (i = 1; i < 6; ++i) {
+		for (i = 1; i < 33; ++i) {
 			VertPace[i] = 0;
 		} 
 
@@ -154,23 +199,11 @@ class ExtramemView extends DatarunpremiumView {
         mRacesec = mRacesec.toNumber();
         mRacetime = mRacehour*3600 + mRacemin*60 + mRacesec;
 	
-        
-		//! Calculate vertical speed
-		var valueDesc = (info.totalDescent != null) ? info.totalDescent : 0;
-        valueDesc = (unitD == 1609.344) ? valueDesc*3.2808 : valueDesc;
-        Diff1 = valueDesc - valueDesclast;
-		var valueAsc = (info.totalAscent != null) ? info.totalAscent : 0;
-        valueAsc = (unitD == 1609.344) ? valueAsc*3.2808 : valueAsc;
-        Diff2 = valueAsc - valueAsclast;
-        valueDesclast = valueDesc;
-        valueAsclast = valueAsc;
-        var CurrentVertSpeedinmpersec = Diff2-Diff1;
-		VertPace[5] 							= VertPace[4];
-		VertPace[4]								= VertPace[3];
-		VertPace[3] 							= VertPace[2];
-        VertPace[2] 							= VertPace[1];
-        VertPace[1]								= CurrentVertSpeedinmpersec; 
-		var AverageVertspeedinmper5sec= (VertPace[1]+VertPace[2]+VertPace[3]+VertPace[4]+VertPace[5])/5;
+		//!Calculate 3 sec rolling HR
+        		HR3 					= HR2;
+        		HR2 					= HR1;
+				HR1						= currentHR; 
+		var	AverageHR3sec= (HR1+HR2+HR3)/3;
 		
 		var sensorIter = getIterator();
 		maxHR = uHrZones[5]; 
@@ -178,7 +211,7 @@ class ExtramemView extends DatarunpremiumView {
 	    for (i = 1; i < 6; ++i) {
 	        if (metric[i] == 17) {
 	            fieldValue[i] = Averagespeedinmpersec;
-    	        fieldLabel[i] = "Pc ..sec";
+    	        fieldLabel[i] = "Sp " + rolavPacmaxsecs + "s";
         	    fieldFormat[i] = "pace";  
 	        } else if (metric[i] == 81) {
 	        	if (Toybox.Activity.Info has :distanceToNextPoint) {
@@ -215,7 +248,7 @@ class ExtramemView extends DatarunpremiumView {
         	} else if (metric[i] == 54) {
     	        fieldValue[i] = (info.trainingEffect != null) ? info.trainingEffect : 0;
         	    fieldLabel[i] = "T effect";
-            	fieldFormat[i] = "2decimal";           	
+            	fieldFormat[i] = "1decimal";           	
 			} else if (metric[i] == 52) {
            		fieldValue[i] = valueAsc;
             	fieldLabel[i] = "EL gain";
@@ -226,13 +259,22 @@ class ExtramemView extends DatarunpremiumView {
             	fieldFormat[i] = "0decimal";           	
         	}  else if (metric[i] == 61) {
            		fieldValue[i] = (info.currentCadence != null) ? Math.round(info.currentCadence/2) : 0;
+           		fieldValue[i] = (ucadenceWorkaround == true) ? fieldValue[i]*2 : fieldValue[i]; //! workaround multiply by two for FR945LTE and Fenix 6 series
             	fieldLabel[i] = "RCadence";
             	fieldFormat[i] = "0decimal";           	
         	}  else if (metric[i] == 62) {
            		fieldValue[i] = (info.currentSpeed != null) ? 3.6*((Pace1+Pace2+Pace3)/3)*1000/unitP : 0;
             	fieldLabel[i] = "Spd 3s";
             	fieldFormat[i] = "1decimal";           	          	
-        	} else if (metric[i] == 83) {
+        	} else if (metric[i] == 63) {
+           		fieldValue[i] = 3.6*Averagespeedinmpersec*1000/unitP ;
+            	fieldLabel[i] = "Sp " + rolavPacmaxsecs + "s";
+            	fieldFormat[i] = "1decimal";           	
+        	}  else if (metric[i] == 67) {
+           		fieldValue[i] = (unitD == 1609.344) ? AverageVertspeedinmper30sec*3.2808 : AverageVertspeedinmper30sec;
+            	fieldLabel[i] = "V speed";
+				fieldFormat[i] = "1decimal";
+			}  else if (metric[i] == 83) {
             	fieldValue[i] = (maxHR != 0) ? currentHR*100/maxHR : 0;
             	fieldLabel[i] = "%MaxHR";
             	fieldFormat[i] = "0decimal";   
@@ -282,8 +324,94 @@ class ExtramemView extends DatarunpremiumView {
 	            fieldValue[i] = (utempunits == false) ? fieldValue[i]+utempcalibration : fieldValue[i]*1.8+32+utempcalibration;
     	        fieldLabel[i] = "Tempe T";
     	        fieldFormat[i] = "0decimal";
-			} 
+			} else if (metric[i] == 123) {			
+				var stats = Sys.getSystemStats();
+				fieldValue[i] = stats.battery;
+				fieldLabel[i] = "Battery";
+            	fieldFormat[i] = "0decimal";
+            } else if (metric[i] == 108) {
+           		fieldValue[i] = (unitD == 1609.344) ? AverageVertspeedinmper30sec*3.2808*3600 : AverageVertspeedinmper30sec*3600;
+            	fieldLabel[i] = "VAM-hour";
+            	fieldFormat[i] = "1decimal";
+			} else if (metric[i] == 109) {			
+				fieldValue[i] = AveragerollgroundContactBalance10sec;
+				fieldLabel[i] = "GBalance";
+            	fieldFormat[i] = "1decimal"; 
+            } else if (metric[i] == 110) {			
+				fieldValue[i] = AveragerollgroundContactTime10sec;
+				fieldLabel[i] = "GCTime";
+            	fieldFormat[i] = "0decimal";
+            } else if (metric[i] == 111) {			
+				fieldValue[i] = AveragerollstanceTime10sec;
+				fieldLabel[i] = "StanceT%";
+            	fieldFormat[i] = "1decimal";
+            } else if (metric[i] == 113) {			
+				fieldValue[i] = AveragerollstepLength10sec;
+				fieldValue[i] = (unitD == 1609.344) ? fieldValue[i]*3.2808/1000 : fieldValue[i]/1000;
+				fieldLabel[i] = "StepL";
+            	fieldFormat[i] = "2decimal";
+            } else if (metric[i] == 114) {			
+				fieldValue[i] = AveragerollverticalOscillation10sec;
+				fieldLabel[i] = "VertOsc";
+            	fieldFormat[i] = "1decimal";
+            } else if (metric[i] == 115) {			
+				fieldValue[i] = AveragerollverticalRatio10sec;
+				fieldLabel[i] = "VertRat";
+            	fieldFormat[i] = "1decimal";
+            } else if (metric[i] == 116) {			
+				var myTime = Toybox.System.getClockTime();
+				fieldValue[i] = (jTimertime == 0) ? 0 : (1+myTime.hour.toNumber()*3600 + myTime.min.toNumber()*60 + myTime.sec.toNumber()) - (startTime.hour.toNumber()*3600 + startTime.min.toNumber()*60 + startTime.sec.toNumber());
+				fieldLabel[i] = "ElapsT";
+            	fieldFormat[i] = "time";
+			} else if (metric[i] == 125) {
+            	if (jTimertime > 0) {
+           			fieldValue[i] = (info.totalAscent != null) ? info.totalAscent*60/jTimertime : 0;
+           			fieldValue[i] = (unitD == 1609.344) ? fieldValue[i]*3.2808 : fieldValue[i];
+           		} else {
+           			fieldValue[i] = 0;
+           		}
+            	fieldLabel[i] = "T-Asc-m";
+            	fieldFormat[i] = "0decimal";
+            } else if (metric[i] == 126) {
+            	if (jTimertime > 0) {
+           			fieldValue[i] = (info.totalAscent != null) ? info.totalAscent*3600/jTimertime : 0;
+           			fieldValue[i] = (unitD == 1609.344) ? fieldValue[i]*3.2808 : fieldValue[i];
+           		} else {
+           			fieldValue[i] = 0;
+           		}
+            	fieldLabel[i] = "T-Asc-h";
+            	fieldFormat[i] = "0decimal";
+			} else if (metric[i] == 130) {
+           		fieldValue[i] = AverageHR3sec;
+            	fieldLabel[i] = "HR 3s";
+            	fieldFormat[i] = "0decimal";
+			}
 		}
+		
+		//! Show GPS accuracy
+        GPSAccuracy=info.currentLocationAccuracy;
+        if (GPSAccuracy == null or GPSAccuracy == 1) {
+        	mGPScolor = Graphics.COLOR_LT_GRAY;
+        } else if (GPSAccuracy == 2) {
+        	mGPScolor = Graphics.COLOR_RED;
+        } else if (GPSAccuracy == 3) {
+        	mGPScolor = Graphics.COLOR_PURPLE;
+        } else if (GPSAccuracy == 4) {
+			mGPScolor = mColourBackGround;
+		}
+		dc.setColor(mGPScolor, Graphics.COLOR_TRANSPARENT);
+		
+		if (screenWidth == 240) {
+			dc.fillRectangle(10, 5, 64, 22); 
+			dc.fillRectangle(164, 5, 55, 22);
+		} else if (screenWidth == 260) { 
+			dc.fillRectangle(11, 5, 69, 24); 
+			dc.fillRectangle(178, 5, 60, 24);
+		} else if (screenWidth == 280) {
+			dc.fillRectangle(12, 6, 77, 26); 
+			dc.fillRectangle(191, 6, 64, 26);
+		}
+		dc.setColor(mColourLine, Graphics.COLOR_TRANSPARENT);
 
  		var CFMValue = 0;
         var CFMLabel = "error";
@@ -394,6 +522,7 @@ class ExtramemView extends DatarunpremiumView {
             	CFMFormat = "0decimal";           	
         	}  else if (uClockFieldMetric == 61) {
            		CFMValue = (info.currentCadence != null) ? Math.round(info.currentCadence/2) : 0;
+           		CFMValue = (ucadenceWorkaround == true) ? CFMValue*2 : CFMValue; //! workaround multiply by two for FR945LTE and Fenix 6 series
             	CFMFormat = "0decimal";           	
         	}  else if (uClockFieldMetric == 62) {
            		CFMValue = (info.currentSpeed != null) ? 3.6*((Pace1+Pace2+Pace3)/3)*1000/unitP : 0;
@@ -402,7 +531,7 @@ class ExtramemView extends DatarunpremiumView {
            		CFMValue = 3.6*Averagespeedinmpersec*1000/unitP ;
             	CFMFormat = "1decimal";           	
         	}  else if (uClockFieldMetric == 67) {
-           		CFMValue = (unitD == 1609.344) ? AverageVertspeedinmper5sec*3.2808 : AverageVertspeedinmper5sec;
+           		CFMValue = (unitD == 1609.344) ? AverageVertspeedinmper30sec*3.2808 : AverageVertspeedinmper30sec;
             	CFMFormat = "2decimal"; 
             } else if (uClockFieldMetric == 81) {
 	        	if (Toybox.Activity.Info has :distanceToNextPoint) {
@@ -466,7 +595,54 @@ class ExtramemView extends DatarunpremiumView {
    	    		} else {
    	    			CFMFormat = "2decimal";
    	    		}
-			}
+			} else if (uClockFieldMetric == 124) {
+           		CFMValue = (unitD == 1609.344) ? AverageVertspeedinmper30sec*3.2808*60 : AverageVertspeedinmper30sec*60;
+            	CFMFormat = "0decimal";
+   	    	}  else if (uClockFieldMetric == 108) {
+           		CFMValue = (unitD == 1609.344) ? AverageVertspeedinmper30sec*3.2808*3600 : AverageVertspeedinmper30sec*3600;
+            	CFMFormat = "0decimal";
+            } else if (uClockFieldMetric == 125) {
+	        	if (jTimertime > 0) {
+    	       			CFMValue = (info.totalAscent != null) ? info.totalAscent*60/jTimertime : 0;
+    	       			CFMValue = (unitD == 1609.344) ? CFMValue*3.2808 : CFMValue;
+        	   		} else {
+           				CFMValue = 0;
+           			}
+           		CFMFormat = "0decimal";
+           	} else if (uClockFieldMetric == 126) {
+	        	if (jTimertime > 0) {
+    	       			CFMValue = (info.totalAscent != null) ? info.totalAscent*3600/jTimertime : 0;
+    	       			CFMValue = (unitD == 1609.344) ? CFMValue*3.2808 : CFMValue;
+        	   		} else {
+           				CFMValue = 0;
+           			}
+           		CFMFormat = "0decimal";
+            } else if (uClockFieldMetric == 109) {			
+				CFMValue = AveragerollgroundContactBalance10sec;
+            	CFMFormat = "1decimal"; 
+            } else if (uClockFieldMetric == 110) {			
+				CFMValue = AveragerollgroundContactTime10sec;
+            	CFMFormat = "0decimal";
+            } else if (uClockFieldMetric == 111) {			
+				CFMValue = AveragerollstanceTime10sec;
+            	CFMFormat = "1decimal"; 	
+            } else if (uClockFieldMetric == 112) {			
+				CFMValue = stepCount;
+            	CFMFormat = "1decimal";
+            } else if (uClockFieldMetric == 113) {			
+				CFMValue = AveragerollstepLength10sec;
+				CFMValue = (unitD == 1609.344) ? CFMValue*3.2808/1000 : CFMValue/1000;
+            	CFMFormat = "2decimal";
+            } else if (uClockFieldMetric == 114) {			
+				CFMValue = AveragerollverticalOscillation10sec;
+            	CFMFormat = "1decimal";
+            } else if (uClockFieldMetric == 115) {			
+				CFMValue = AveragerollverticalRatio10sec;
+            	CFMFormat = "1decimal";
+			} else if (uClockFieldMetric == 130) {
+	        	CFMValue = AverageHR3sec;
+    	       	CFMFormat = "0decimal";
+           	}
 
 		//! Determine HR-zone for clockfield
         if (uClockFieldMetric==46) {
@@ -500,7 +676,7 @@ class ExtramemView extends DatarunpremiumView {
 
 		//! Display colored labels on screen	
 		if (mySettings.screenWidth == 260 and mySettings.screenHeight == 260) {  //! Fenix 6 pro labels
-			for (var i = 1; i < 6; ++i) {
+			for (i = 1; i < 6; ++i) {
 			   	if ( i == 1 ) {			//!upper row, left    	
 	    			if (disablelabel1 == false) {
 	    				Coloring(dc,i,fieldValue[i],"020,031,108,021");
@@ -524,7 +700,7 @@ class ExtramemView extends DatarunpremiumView {
 	    		}       	
 			} 
 		} else if (mySettings.screenWidth == 280 and mySettings.screenHeight == 280) {     //! Fenix 6x pro labels
-			for (var i = 1; i < 6; ++i) {
+			for (i = 1; i < 6; ++i) {
 			   	if ( i == 1 ) {			//!upper row, left    	
 	    			if (disablelabel1 == false) {
 	    				Coloring(dc,i,fieldValue[i],"020,034,118,022");
@@ -548,7 +724,7 @@ class ExtramemView extends DatarunpremiumView {
 	    		}       	
 			} 
 		} else {
-			for (var i = 1; i < 6; ++i) {
+			for (i = 1; i < 6; ++i) {
 			   	if ( i == 1 ) {			//!upper row, left    	
 	    			if (disablelabel1 == false) {
 	    				Coloring(dc,i,fieldValue[i],"018,029,100,019");

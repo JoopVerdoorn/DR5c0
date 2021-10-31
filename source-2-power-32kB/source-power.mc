@@ -1,3 +1,5 @@
+using Toybox.Attention;
+
 class PowerView extends CiqView { 
     hidden var mElapsedPower	   				= 0;
     hidden var mLastLapElapsedPower				= 0;
@@ -100,7 +102,7 @@ class PowerView extends CiqView {
 		PowerWarning = 0;
 		if (jTimertime != 0) {
 		  if (runalertPower>mPowerWarningupper or runalertPower<mPowerWarningunder) {	 
-			 if (Toybox.Attention has :vibrate && uNoAlerts == false) {
+			 if (uNoAlerts == false) {
 			 	vibrateseconds = vibrateseconds + 1;	 		  			
     			if (runalertPower>mPowerWarningupper) {
     				PowerWarning = 1;
@@ -125,7 +127,8 @@ class PowerView extends CiqView {
     			} 
 			 }
 		  }	 
-		}		
+		}
+				
 		var i = 0; 
 	    for (i = 1; i < 6; ++i) {	    
         	if (metric[i] == 20) {

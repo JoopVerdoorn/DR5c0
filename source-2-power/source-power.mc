@@ -1,3 +1,5 @@
+using Toybox.Attention;
+
 class PowerView extends CiqView { 
     hidden var mElapsedPower	   				= 0;
     hidden var mLastLapElapsedPower				= 0;
@@ -21,7 +23,8 @@ class PowerView extends CiqView {
 	hidden var overruleWourkout					= false;
     hidden var mPowerWarningunder				= 0;
     hidden var mPowerWarningupper 				= 999;
-
+	hidden var VibrateLowRequired 				= false;
+    hidden var VibrateHighRequired 				= false;
     
     function initialize() {
         CiqView.initialize();
@@ -102,7 +105,7 @@ class PowerView extends CiqView {
 		} else if ( uLapPwr4alerts == 5 ) {
 	    	runalertPower 	 = LapPower;
 		} else if ( uLapPwr4alerts == 6 ) {
-	    	runalertPower 	 = AveragePower;
+	    	runalertPower 	 = Math.round((mPowerTime != 0) ? mElapsedPower/mPowerTime : 0);
 		}
 		PowerWarning = 0;
 		if (jTimertime != 0) {
@@ -151,7 +154,7 @@ class PowerView extends CiqView {
             	fieldLabel[i] = "LL Pwr";
             	fieldFormat[i] = "power";
 	        } else if (metric[i] == 24) {
-    	        fieldValue[i] = AveragePower;
+    	        fieldValue[i] = Math.round((mPowerTime != 0) ? mElapsedPower/mPowerTime : 0);
         	    fieldLabel[i] = "A Power";
             	fieldFormat[i] = "power";   
 	        } else if (metric[i] == 80) {
