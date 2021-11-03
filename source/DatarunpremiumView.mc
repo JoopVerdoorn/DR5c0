@@ -95,7 +95,7 @@ class DatarunpremiumView extends Ui.DataField {
     hidden var mLapSpeed 					= 0;
     hidden var mLastLapSpeed 				= 0;
 	hidden var mLaps                        = 1;           
-	hidden var metric 						= [1, 2, 3, 4, 5, 6, 7,8];
+	hidden var metric 						= [1, 2, 3, 4, 5, 6];
     hidden var mElapsedHeartrate   			= 0;
 	hidden var mLastLapHeartrateMarker      = 0;    
     hidden var mCurrentHeartrate    		= 0; 
