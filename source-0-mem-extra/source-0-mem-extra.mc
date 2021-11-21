@@ -509,10 +509,7 @@ class ExtramemView extends DatarunpremiumView {
     	        CFMFormat = "2decimal";
 			} else if (uClockFieldMetric == 32) {
 	            CFMValue = (info.currentHeartRate != null && info.currentHeartRate != 0) ? mLapSpeed*60/info.currentHeartRate : 0;
-    	        CFMFormat = "2decimal";
-	        } else if (uClockFieldMetric == 17) {
-	            CFMValue = Averagespeedinmpersec;
-    	        CFMFormat = "pace";  
+    	        CFMFormat = "2decimal";  
         	} else if (uClockFieldMetric == 54) {
     	        CFMValue = (info.trainingEffect != null) ? info.trainingEffect : 0;
         	    CFMFormat = "2decimal";           	
