@@ -33,7 +33,6 @@ class CiqView extends ExtramemView {
     var uFTPHumid 							= 70;
     var uRealAltitude 						= 2;
     var uFTPAltitude 						= 200;
-    var workoutTarget 						;
     hidden var hasWorkoutStep 				= false;
     hidden var WorkoutStepLowBoundary		= 0;
     hidden var WorkoutStepHighBoundary		= 999;
@@ -41,11 +40,7 @@ class CiqView extends ExtramemView {
     var AveragePower						= 0;
     var WorkoutStepNr						= 0;
     var WorkoutStepDuration 				= 0; 
-    var StartTimeNewStep					= 0;
     var StartDistanceNewStep				= 0;
-    var RemainingWorkoutTime  				= 0;
-    var RemainingWorkoutDistance			= 0;
-    var WorkoutStepDurationType  			= 9;
     hidden var AveragePower5sec  	 		= 0;
     hidden var AveragePower10sec  	 		= 0;
     hidden var mFontalertColorLow			= Graphics.COLOR_RED;
@@ -60,7 +55,8 @@ class CiqView extends ExtramemView {
 	var stopiteration                       = false;
 	var uVertgradeDist                      = 0.1;
 	var Vertgradsmooth  	        		= new[6]; 
-    
+    var uLabelfontbig 						= true;
+	var Labelfont							= Graphics.FONT_TINY;
 
 		
     function initialize() {
@@ -74,7 +70,7 @@ class CiqView extends ExtramemView {
 		uCP		 	 	 = mApp.getProperty("pCP");
 		uWeight			 = mApp.getProperty("pWeight");
 		uPowerTarget	 = mApp.getProperty("pPowerTarget");
-		uOnlyPwrCorrFactor= mApp.getProperty("pOnlyPwrCorrFactor");
+		uOnlyPwrCorrFactor = mApp.getProperty("pOnlyPwrCorrFactor");
 		uPwrTempcorrect	 = mApp.getProperty("pPwrTempcorrect");
 		uFTPTemp	 	 = mApp.getProperty("pFTPTemp");
 		uManTemp	 	 = mApp.getProperty("pManTemp");
@@ -87,11 +83,18 @@ class CiqView extends ExtramemView {
     	uFontalertColorLow = mApp.getProperty("pFontalertColorLow");
     	uFontalertColorHigh = mApp.getProperty("pFontalertColorHigh");
     	uVertgradeDist   = mApp.getProperty("pVertgradeDist");
+    	uLabelfontbig    = mApp.getProperty("pLabelfontbig");
 
         uVertgradeDist = (uVertgradeDist<50) ? 0.050 : uVertgradeDist;
 	
 		uRealHumid = (uRealHumid != 0 ) ? uRealHumid : 1;
 		uFTPHumid = (uFTPHumid != 0 ) ? uFTPHumid : 1;
+		
+		if (uLabelfontbig == true) {
+			Labelfont = Graphics.FONT_TINY;
+		} else {
+			Labelfont = Graphics.FONT_XTINY;
+		}
 		
 		//! Choose fontcolor for alert when power value is under or above powerzone
         if ( uFontalertColorLow == 0 ) {
@@ -161,12 +164,15 @@ class CiqView extends ExtramemView {
 			}
 		}
 		
-		if (ID0 == 3801 or ID0 == 4026 ) {
+		if (mySettings.screenWidth == 260 ) {
 			Garminfont = Ui.loadResource(Rez.Fonts.Garmin3);
 			Garminfontklein = Ui.loadResource(Rez.Fonts.Garmin5);
-		} else if (ID0 == 3802 or ID0 == 4027 ) {
+		} else if (mySettings.screenWidth == 280 ) {
 			Garminfont = Ui.loadResource(Rez.Fonts.Garmin4);
 			Garminfontklein = Ui.loadResource(Rez.Fonts.Garmin6);
+		} else if (mySettings.screenWidth == 416 ) {
+			Garminfont = Ui.loadResource(Rez.Fonts.Garmin8);
+			Garminfontklein = Ui.loadResource(Rez.Fonts.Garmin7);
 		} else {
 			Garminfont = Ui.loadResource(Rez.Fonts.Garmin2);
 			Garminfontklein = Ui.loadResource(Rez.Fonts.Garmin1);		
@@ -1054,7 +1060,7 @@ class CiqView extends ExtramemView {
         }         
        	mColourFont = originalFontcolor;
 		dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
-		dc.drawText(xl, yl, Graphics.FONT_XTINY,  fieldlabel, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+		dc.drawText(xl, yl, Labelfont,  fieldlabel, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
     }
 
 	function hashfunction(string) {

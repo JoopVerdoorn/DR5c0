@@ -6,6 +6,8 @@
     	<font id="Garmin4" filename="fonts/Roadway85-alleencijfers.fnt" antialias="true"/>
     	<font id="Garmin5" filename="fonts/Roadway57-alleencijfers.fnt" antialias="true"/>
     	<font id="Garmin6" filename="fonts/Roadway62-alleencijfers.fnt" antialias="true"/>  
+    	<font id="Garmin7" filename="fonts/Roadway92-alleencijfers.fnt" antialias="true"/>
+    	<font id="Garmin8" filename="fonts/Roadway126-alleencijfers.fnt" antialias="true"/> 
 	</fonts>
   <properties>
     <property id="pUpperLeftMetric" type="number">0</property>
@@ -64,6 +66,7 @@
     <property id="pCCnumber" type="number">9999999</property>
     <property id="pcadenceWorkaround" type="boolean">false</property>
     <property id="pVertgradeDist" type="number">100</property>
+    <property id="pLabelfontbig" type="boolean">true</property>
   </properties>
 
 	
@@ -304,6 +307,7 @@
     <string id="lVertgrade">Vertical grade in percentages over a certain distance (any distance is allowed, see elsewhere in the settings, but maximum time observed is 5 minutes)</string>
     <string id="lVertgradeDist">Distance in kilometers for the calculation of vertical grade (any distance is allowed, but maximum time observed is 5 minutes)</string>
     <string id="lVertgradeDisterror">Invalid value</string>
+    <string id="lLabelfontbig">Use large label font on FR745, FR945(LTE), Marq and Fenix 6 watches (default is on)</string>
  </strings>
 
   <settings>
@@ -477,6 +481,9 @@
         <listEntry value="2">@Strings.lShowlaps</listEntry>
         <listEntry value="3">@Strings.lShowmetric</listEntry>
       </settingConfig>
+    </setting>
+    <setting propertyKey="@Properties.pLabelfontbig" title="@Strings.lLabelfontbig">
+      <settingConfig type="boolean" required="true" />
     </setting>
     <setting propertyKey="@Properties.pUpperLeftMetric" title="@Strings.lUpperLeftMetric">
       <settingConfig type="list" required="true">
