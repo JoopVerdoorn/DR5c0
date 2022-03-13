@@ -113,6 +113,10 @@ class CiqView extends ExtramemView {
 	    	mFontalertColorLow 	 = Graphics.COLOR_BLACK;
 	   	} else if ( uFontalertColorLow == 7 ) {
 	    	mFontalertColorLow 	 = Graphics.COLOR_DK_BLUE;
+		} else if ( uFontalertColorLow == 8 ) {
+	    	mFontalertColorLow 	 = Graphics.COLOR_YELLOW;
+		} else if ( uFontalertColorLow == 9 ) {
+	    	mFontalertColorLow 	 = Graphics.COLOR_ORANGE;
 		}
 
 		if ( uFontalertColorHigh == 0 ) {
@@ -131,6 +135,10 @@ class CiqView extends ExtramemView {
 	    	mFontalertColorHigh 	 = Graphics.COLOR_BLACK;
 	    } else if ( uFontalertColorLow == 7 ) {
 	    	mFontalertColorLow 	 = Graphics.COLOR_DK_BLUE;
+		} else if ( uFontalertColorLow == 8 ) {
+	    	mFontalertColorLow 	 = Graphics.COLOR_YELLOW;
+		} else if ( uFontalertColorLow == 9 ) {
+	    	mFontalertColorLow 	 = Graphics.COLOR_ORANGE;
 		}
 		
 		if (utempunits == true ) {
@@ -370,7 +378,7 @@ class CiqView extends ExtramemView {
 					PwrCorrFactor = 1- (B24 - B25) - (B39-B38)/100;
 				}
 
-								if (dynamics != null) {
+				if (dynamics != null) {
 		 		    var data = dynamics.getRunningDynamics(); 
 		 		    if (data != null) {
 		    			groundContactBalance = data.groundContactBalance;
@@ -477,10 +485,15 @@ class CiqView extends ExtramemView {
 					}
 				}
 			}
-           	
+         	
             var vibrateData = [
 				new Attention.VibeProfile( 100, 200 )
 			];
+//!Test voor Thomas Riemer
+if (uRequiredPower.substring(0, 9).equals("000:999TR" ) == true ) {
+System.println("ja");
+     Toybox.Attention.vibrate(vibrateData);
+}
 
 			if (VibrateHighRequired == true) {
     			Toybox.Attention.vibrate(vibrateData);
