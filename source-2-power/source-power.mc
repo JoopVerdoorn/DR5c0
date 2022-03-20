@@ -74,6 +74,7 @@ class PowerView extends CiqView {
         mPowerWarningupper = uRequiredPower.substring(4, 7);
         mPowerWarningunder = mPowerWarningunder.toNumber();
         mPowerWarningupper = mPowerWarningupper.toNumber(); 
+
         if (Activity has :getCurrentWorkoutStep and overruleWourkout == false) {
         	if (is32kBdevice == false) {
 	        	if (WorkoutStepHighBoundary > 0) {
@@ -85,7 +86,7 @@ class PowerView extends CiqView {
         		}
         	}
         }
-        
+     
 		var vibrateData = [
 			new Attention.VibeProfile( 100, 100 )
 		];
