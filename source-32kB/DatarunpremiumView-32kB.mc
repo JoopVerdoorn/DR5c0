@@ -23,7 +23,6 @@ class DatarunpremiumView extends Ui.DataField {
 	hidden var watchType 					= mySettings.partNumber;
 	hidden var licenseOK 					= false;
 	hidden var CCode 						= 12345678;	
-	hidden var uMilClockAltern 				= 0;
 	hidden var uShowDemo 					= false;
 	hidden var umyNumber 					= 26429769;
 	var uBlackBackground 					= false;
@@ -107,7 +106,6 @@ class DatarunpremiumView extends Ui.DataField {
          uBacklight          = mApp.getProperty("pBacklight");
          umyNumber			 = mApp.getProperty("myNumber");
          uShowDemo			 = mApp.getProperty("pShowDemo");
-         uMilClockAltern	 = mApp.getProperty("pMilClockAltern");
          uRacedistance		 = mApp.getProperty("pRacedistance");
          uRacetime			 = mApp.getProperty("pRacetime");
          appversion 		 = mApp.getProperty("pAppversion");

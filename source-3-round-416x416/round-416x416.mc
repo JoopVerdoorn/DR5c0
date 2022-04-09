@@ -42,6 +42,14 @@ class DeviceView extends PowerView {
         
         //! Bottom horizontal divider
 		dc.drawLine(92, 380, 324, 380); 
+		
+		//! Display GPS accuracy
+		dc.fillRectangle(18, 9, 114, 40); 
+		if (uMilClockAltern == 1) {
+		   dc.fillRectangle(313, 9, 95, 40);
+		} else {
+		   dc.fillRectangle(284, 9, 95, 40);
+		}
 
 		//! Display metrics
         dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
