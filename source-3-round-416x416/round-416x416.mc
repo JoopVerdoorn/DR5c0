@@ -44,6 +44,7 @@ class DeviceView extends PowerView {
 		dc.drawLine(92, 380, 324, 380); 
 		
 		//! Display GPS accuracy
+		dc.setColor(mGPScolor, Graphics.COLOR_TRANSPARENT);
 		dc.fillRectangle(18, 9, 114, 40); 
 		if (uMilClockAltern == 1) {
 		   dc.fillRectangle(313, 9, 95, 40);

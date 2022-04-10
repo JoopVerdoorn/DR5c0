@@ -43,15 +43,13 @@ class DeviceView extends PowerView {
         //! Bottom horizontal divider
 		dc.drawLine(53, 219, 187, 219); 
 
-		//! Display metrics
         dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
-
 		//! Show military clock with current time in top
 		myTime = Toybox.System.getClockTime(); 
     	strTime = myTime.hour.format("%02d") + ":" + myTime.min.format("%02d");
 		dc.drawText(120, -4, Graphics.FONT_MEDIUM, strTime, Graphics.TEXT_JUSTIFY_CENTER);
 
-
+		//! Display metrics
 		for (var i = 1; i < 6; ++i) {
 	    	if ( i == 1 ) {			//!upper row, left
 	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"069,068,073,013,073,073,037");

@@ -14,5 +14,4 @@ class PowerView extends CiqView {
 		//! call the parent function in order to execute the logic of the parent
 		CiqView.onUpdate(dc);
 	}
-
 }
