@@ -42,36 +42,26 @@ class DeviceView extends PowerView {
         //! Centre vertical divider
         dc.drawLine(109, 84,  109, 160);
         
-       //! Display GPS accuracy
-        dc.setColor(mGPScolor, Graphics.COLOR_TRANSPARENT);
-        dc.fillRectangle(9, 5, 60, 21); 
-		if (uMilClockAltern == 1) {
-		   dc.fillRectangle(160, 5, 50, 21);
-		} else {
-		   dc.fillRectangle(149, 5, 50, 21);
-		}
-
+        
+		//! Display metrics
         dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
 
 		//! Show clock with current time in top
 		myTime = Toybox.System.getClockTime(); 
     	strTime = myTime.hour.format("%02d") + ":" + myTime.min.format("%02d"); 		
-		if (uMilClockAltern == 0) {
-		    dc.drawText(108, -4, Graphics.FONT_MEDIUM, strTime, Graphics.TEXT_JUSTIFY_CENTER);
-		}
+		dc.drawText(108, -4, Graphics.FONT_MEDIUM, strTime, Graphics.TEXT_JUSTIFY_CENTER);
 	
-		//! Display metrics
 		for (var i = 1; i < 6; ++i) {
 	    	if ( i == 1 ) {			//!upper row, left
-	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"062,061,065,015,067,062,034");
+	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"062,063,065,015,067,062,036");
 	       	} else if ( i == 2 ) {	//!upper row, right
-	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"154,061,163,114,067,152,034");
+	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"154,063,163,114,067,152,036");
 	       	} else if ( i == 3 ) {  //!middle row, left
-	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"058,129,000,000,000,052,092");
+	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"058,130,000,000,000,052,094");
 	       	} else if ( i == 4 ) {  //!middle row, right
-	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"163,129,000,000,000,163,092");
+	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"163,130,000,000,000,163,094");
 	       	} else if ( i == 5 ) {	//!lower row, left
-	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"140,179,140,089,185,065,190");
+	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"140,181,140,089,185,065,190");
        		}       	
 		}
 
