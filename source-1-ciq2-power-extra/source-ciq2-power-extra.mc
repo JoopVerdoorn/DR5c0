@@ -1181,7 +1181,7 @@ class CiqView extends ExtramemView {
         		var fTimer = (fieldvalue / 60).format("%d") + ":" + fTimerSecs;  //! Format time as m:ss
 	    		var xx = x;
 	    		//! (Re-)format time as h:mm(ss) if more than an hour
-	    		if (fieldvalue > 3599) {
+	    		if (fieldvalue > 3599) {   		
             		var fTimerHours = (fieldvalue / 3600).format("%d");
             		xx = xms;
             		dc.drawText(xh, yh, Graphics.FONT_LARGE, fTimerHours, Graphics.TEXT_JUSTIFY_LEFT|Graphics.TEXT_JUSTIFY_VCENTER);
