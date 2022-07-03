@@ -922,7 +922,7 @@ class ExtramemView extends DatarunpremiumView {
 	       	} else if (mySettings.screenWidth == 218 and mySettings.screenHeight == 218) {
 	    	   	dc.drawText(109, 13, Graphics.FONT_MEDIUM, CFMValue, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
 	       	} else {
-	       		dc.drawText(63, 7, Graphics.FONT_MEDIUM, CFMValue, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+	       		dc.drawText(120, 14, Graphics.FONT_MEDIUM, CFMValue, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
 	       	}
     	    mColourFont = originalFontcolor;	        
 	    	dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
