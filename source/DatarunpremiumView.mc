@@ -126,7 +126,7 @@ class DatarunpremiumView extends Ui.DataField {
          uBacklight          = mApp.getProperty("pBacklight");
          umyNumber			 = mApp.getProperty("myNumber");
          uShowDemo			 = mApp.getProperty("pShowDemo");
-         uMilClockAltern	 = 3;
+         uMilClockAltern	 = mApp.getProperty("pMilClockAltern");
          uRacedistance		 = mApp.getProperty("pRacedistance");
          uRacetime			 = mApp.getProperty("pRacetime");
          appversion 		 = mApp.getProperty("pAppversion");
