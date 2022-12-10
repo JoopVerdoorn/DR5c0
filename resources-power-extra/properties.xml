@@ -72,7 +72,7 @@
 
 	
   <strings>
-    <string id="lDummysetting4version">Version 2.48h of Datarun premium with 5 metrics, main version (dummy setting)</string>
+    <string id="lDummysetting4version">Version 2.49 of Datarun premium with 5 metrics, main version (dummy setting)</string>
     <string id="lCCnumber">C-Code generated on the watch by the corresponding main Datarun premium datafield</string>
 	<string id="lTimeMenu">___Time items___</string>
 	<string id="lDistanceMenu">___Distance items___</string>
@@ -127,7 +127,6 @@
     <string id="lShowAMPM">Show clock with AM or PM instead of military time </string>
     <string id="lShowmetric">Show metric </string>
     <string id="MyNumberTitle">Enter license key</string>
-    <string id="MyNumberError">Not valid, only numbers allowed!</string>
     <string id="l">C-Code generated on the watch by the corresponding main Datarun premium datafield</string> 
     <string id="lRacedistanceTitle">Enter race distance in meters or thousands of a mile (imperial/statute watch settings) for estimated finish time</string>
     <string id="lRacedistanceError">Not valid, only numbers allowed!</string>
@@ -306,7 +305,6 @@
     <string id="lTotalAscentinmpermin">Vertical ascent averaged over the whole activity (in meters/minute or feet/minute depending on watch settings)</string>
     <string id="lTotalAscentinmperhour">Vertical ascent averaged over the whole activity (in meters/hour or feet/hour depending on watch settings)</string>
     <string id="lElapsed">Elapsed time (actual time minus start of timer moment)</string>
-    <string id="lcadenceWorkaround">Apply workaround for bug in cadance metrics being halved (currently for Fenix 6 and FR945 LTE)</string>
     <string id="lVertgrade">Vertical grade in percentages over a certain distance (any distance is allowed, see elsewhere in the settings, but maximum time observed is 5 minutes)</string>
     <string id="lVertgradeDist">Distance in kilometers for the calculation of vertical grade (any distance is allowed, but maximum time observed is 5 minutes)</string>
     <string id="lVertgradeDisterror">Invalid value</string>
@@ -322,6 +320,10 @@
     <string id="lLinecolorYellow">Yellow</string>
     <string id="lLinecolorOrange">Orange</string>
     <string id="lLinecolor">Color of the lines that separate the metrics (blue is default)</string>
+    <string id="lLastLapMaxHR">Maximum/highest heartrate during last lap</string>
+    <string id="lLastLapMinHR">Minimum/lowest heartrate during last lap</string>
+    <string id="lLastLapMaxPwr">Maximum/highest power during last lap</string>
+    <string id="lLastLapMinPwr">Minimum/lowest power during last lap</string>
  </strings>
 
   <settings>
@@ -352,7 +354,7 @@
       <settingConfig type="boolean" required="true" />
     </setting>
     <setting propertyKey="@Properties.myNumber" title="@Strings.MyNumberTitle">
-        <settingConfig type="numeric" errorMessage="@Strings.MyNumberError" />
+        <settingConfig type="numeric" />
     </setting>
     <setting propertyKey="@Properties.pRoundedPace" title="@Strings.lRoundedPace">
       <settingConfig type="boolean" required="true" />
@@ -503,9 +505,6 @@
     <setting propertyKey="@Properties.pShowRedClock" title="@Strings.lShowRedClock">
       <settingConfig type="boolean" required="false" />
     </setting>
-    <setting propertyKey="@Properties.pcadenceWorkaround" title="@Strings.lcadenceWorkaround">
-      <settingConfig type="boolean" required="true" />
-    </setting>
     <setting propertyKey="@Properties.pMilClockAltern" title="@Strings.lMilClockAltern">
       <settingConfig type="list" required="true">
         <listEntry value="0">@Strings.lShowMilClock</listEntry>
@@ -579,6 +578,8 @@
         <listEntry value="47">@Strings.lLapHeartrate</listEntry>
         <listEntry value="48">@Strings.lLLHeartrate</listEntry>
         <listEntry value="49">@Strings.lAveraHeartrate</listEntry>
+        <listEntry value="132">@Strings.lLastLapMaxHR</listEntry>
+        <listEntry value="133">@Strings.lLastLapMinHR</listEntry>
         <listEntry value="83">@Strings.lpercMaxHR</listEntry>
         <listEntry value="84">@Strings.lLpercMaxHR</listEntry>
         <listEntry value="85">@Strings.lLLpercMaxHR</listEntry>
@@ -603,6 +604,8 @@
         <listEntry value="24">@Strings.lAPower</listEntry>
         <listEntry value="104">@Strings.lAverPowerzone</listEntry>
         <listEntry value="80">@Strings.lMaxPwr</listEntry>
+        <listEntry value="134">@Strings.lLastLapMaxPwr</listEntry>
+        <listEntry value="135">@Strings.lLastLapMinPwr</listEntry>
         <listEntry value="71">@Strings.lpercFTP</listEntry>
         <listEntry value="73">@Strings.lLpercFTP</listEntry>
         <listEntry value="74">@Strings.lLLpercFTP</listEntry>
@@ -724,6 +727,8 @@
         <listEntry value="47">@Strings.lLapHeartrate</listEntry>
         <listEntry value="48">@Strings.lLLHeartrate</listEntry>
         <listEntry value="49">@Strings.lAveraHeartrate</listEntry>
+        <listEntry value="132">@Strings.lLastLapMaxHR</listEntry>
+        <listEntry value="133">@Strings.lLastLapMinHR</listEntry>
         <listEntry value="83">@Strings.lpercMaxHR</listEntry>
         <listEntry value="84">@Strings.lLpercMaxHR</listEntry>
         <listEntry value="85">@Strings.lLLpercMaxHR</listEntry>
@@ -748,6 +753,8 @@
         <listEntry value="24">@Strings.lAPower</listEntry>
         <listEntry value="104">@Strings.lAverPowerzone</listEntry>
         <listEntry value="80">@Strings.lMaxPwr</listEntry>
+        <listEntry value="134">@Strings.lLastLapMaxPwr</listEntry>
+        <listEntry value="135">@Strings.lLastLapMinPwr</listEntry>
         <listEntry value="71">@Strings.lpercFTP</listEntry>
         <listEntry value="73">@Strings.lLpercFTP</listEntry>
         <listEntry value="74">@Strings.lLLpercFTP</listEntry>
@@ -861,6 +868,8 @@
         <listEntry value="47">@Strings.lLapHeartrate</listEntry>
         <listEntry value="48">@Strings.lLLHeartrate</listEntry>
         <listEntry value="49">@Strings.lAveraHeartrate</listEntry>
+        <listEntry value="132">@Strings.lLastLapMaxHR</listEntry>
+        <listEntry value="133">@Strings.lLastLapMinHR</listEntry>
         <listEntry value="83">@Strings.lpercMaxHR</listEntry>
         <listEntry value="84">@Strings.lLpercMaxHR</listEntry>
         <listEntry value="85">@Strings.lLLpercMaxHR</listEntry>
@@ -885,6 +894,8 @@
         <listEntry value="24">@Strings.lAPower</listEntry>
         <listEntry value="104">@Strings.lAverPowerzone</listEntry>
         <listEntry value="80">@Strings.lMaxPwr</listEntry>
+        <listEntry value="134">@Strings.lLastLapMaxPwr</listEntry>
+        <listEntry value="135">@Strings.lLastLapMinPwr</listEntry>
         <listEntry value="71">@Strings.lpercFTP</listEntry>
         <listEntry value="73">@Strings.lLpercFTP</listEntry>
         <listEntry value="74">@Strings.lLLpercFTP</listEntry>
@@ -991,6 +1002,8 @@
         <listEntry value="47">@Strings.lLapHeartrate</listEntry>
         <listEntry value="48">@Strings.lLLHeartrate</listEntry>
         <listEntry value="49">@Strings.lAveraHeartrate</listEntry>
+        <listEntry value="132">@Strings.lLastLapMaxHR</listEntry>
+        <listEntry value="133">@Strings.lLastLapMinHR</listEntry>
         <listEntry value="83">@Strings.lpercMaxHR</listEntry>
         <listEntry value="84">@Strings.lLpercMaxHR</listEntry>
         <listEntry value="85">@Strings.lLLpercMaxHR</listEntry>
@@ -1020,6 +1033,8 @@
         <listEntry value="24">@Strings.lAPower</listEntry>
         <listEntry value="104">@Strings.lAverPowerzone</listEntry>
         <listEntry value="80">@Strings.lMaxPwr</listEntry>
+        <listEntry value="134">@Strings.lLastLapMaxPwr</listEntry>
+        <listEntry value="135">@Strings.lLastLapMinPwr</listEntry>
         <listEntry value="71">@Strings.lpercFTP</listEntry>
         <listEntry value="73">@Strings.lLpercFTP</listEntry>
         <listEntry value="74">@Strings.lLLpercFTP</listEntry>
@@ -1124,6 +1139,8 @@
         <listEntry value="47">@Strings.lLapHeartrate</listEntry>
         <listEntry value="48">@Strings.lLLHeartrate</listEntry>
         <listEntry value="49">@Strings.lAveraHeartrate</listEntry>
+        <listEntry value="132">@Strings.lLastLapMaxHR</listEntry>
+        <listEntry value="133">@Strings.lLastLapMinHR</listEntry>
         <listEntry value="83">@Strings.lpercMaxHR</listEntry>
         <listEntry value="84">@Strings.lLpercMaxHR</listEntry>
         <listEntry value="85">@Strings.lLLpercMaxHR</listEntry>
@@ -1148,6 +1165,8 @@
         <listEntry value="24">@Strings.lAPower</listEntry>
         <listEntry value="104">@Strings.lAverPowerzone</listEntry>
         <listEntry value="80">@Strings.lMaxPwr</listEntry>
+        <listEntry value="134">@Strings.lLastLapMaxPwr</listEntry>
+        <listEntry value="135">@Strings.lLastLapMinPwr</listEntry>
         <listEntry value="71">@Strings.lpercFTP</listEntry>
         <listEntry value="73">@Strings.lLpercFTP</listEntry>
         <listEntry value="74">@Strings.lLLpercFTP</listEntry>
@@ -1258,6 +1277,8 @@
         <listEntry value="47">@Strings.lLapHeartrate</listEntry>
         <listEntry value="48">@Strings.lLLHeartrate</listEntry>
         <listEntry value="49">@Strings.lAveraHeartrate</listEntry>
+        <listEntry value="132">@Strings.lLastLapMaxHR</listEntry>
+        <listEntry value="133">@Strings.lLastLapMinHR</listEntry>
         <listEntry value="83">@Strings.lpercMaxHR</listEntry>
         <listEntry value="84">@Strings.lLpercMaxHR</listEntry>
         <listEntry value="85">@Strings.lLLpercMaxHR</listEntry>

@@ -97,6 +97,8 @@ class ExtramemView extends DatarunpremiumView {
     var screenWidth 						= mySettings.screenWidth;
     var Vertgradsmoothed                    = 0;
     var uLinecolor                          = 1;
+	var mLastLapMaxHR							= 0;
+	var mLastLapMinHR							= 0;
 	
     function initialize() {
         DatarunpremiumView.initialize();
@@ -306,8 +308,7 @@ class ExtramemView extends DatarunpremiumView {
             	fieldFormat[i] = "0decimal";           	
         	}  else if (metric[i] == 61) {
            		fieldValue[i] = (info.currentCadence != null) ? Math.round(info.currentCadence/2) : 0;
-           		fieldValue[i] = (ucadenceWorkaround == true) ? fieldValue[i]*2 : fieldValue[i]; //! workaround multiply by two for FR945LTE and Fenix 6 series
-            	fieldLabel[i] = "RCadence";
+           		fieldLabel[i] = "RCadence";
             	fieldFormat[i] = "0decimal";           	
         	}  else if (metric[i] == 62) {
            		fieldValue[i] = (info.currentSpeed != null) ? 3.6*((Pace1+Pace2+Pace3)/3)*1000/unitP : 0;
@@ -556,8 +557,7 @@ class ExtramemView extends DatarunpremiumView {
             	CFMFormat = "0decimal";           	
         	}  else if (uClockFieldMetric == 61) {
            		CFMValue = (info.currentCadence != null) ? Math.round(info.currentCadence/2) : 0;
-           		CFMValue = (ucadenceWorkaround == true) ? CFMValue*2 : CFMValue; //! workaround multiply by two for FR945LTE and Fenix 6 series
-            	CFMFormat = "0decimal";           	
+           		CFMFormat = "0decimal";           	
         	}  else if (uClockFieldMetric == 62) {
            		CFMValue = (info.currentSpeed != null) ? 3.6*((Pace1+Pace2+Pace3)/3)*1000/unitP : 0;
             	CFMFormat = "1decimal";           	
@@ -685,6 +685,12 @@ class ExtramemView extends DatarunpremiumView {
            	} else if (uClockFieldMetric == 131) {
            		CFMValue = Vertgradsmoothed;
             	CFMFormat = "1decimal";
+            } else if (uClockFieldMetric == 132) {
+    	        CFMValue = mLastLapMaxHR;
+            	CFMFormat = "0decimal";   
+			} else if (uClockFieldMetric == 133) {
+    	        CFMValue = mLastLapMinHR;
+            	CFMFormat = "0decimal";   
 			}
 
 		//! Determine HR-zone for clockfield
