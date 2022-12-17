@@ -14,16 +14,6 @@ class DeviceView extends PowerView {
 	function onUpdate(dc) {
 		//! call the parent function in order to execute the logic of the parent
 		PowerView.onUpdate(dc);
-                
-		//! Conditions for showing the demoscreen       
-        if (uShowDemo == false) {
-        	if (licenseOK == false && jTimertime > 900)  {
-        		uShowDemo = true;        		
-        	}
-        }
-
-	   //! Check whether demoscreen is showed or the metrics 
-	   if (uShowDemo == false ) {
 
 		//! Draw separator lines
         dc.setColor(mColourLine, Graphics.COLOR_TRANSPARENT);
@@ -74,13 +64,7 @@ class DeviceView extends PowerView {
 	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"175,228,192,130,235,080,242");
 	       	}     	
 		}
-		
-//!		if (jTimertime == 0) {
-//!	    	if (ID0 != 3624 and ID0 != 3588 and ID0 != 3762 and ID0 != 3761 and ID0 != 3757 and ID0 != 3758 and ID0 != 3759) {
-//!		    	dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_TRANSPARENT);
-//!				dc.drawText(120, 160, Graphics.FONT_MEDIUM, strTime, Graphics.TEXT_JUSTIFY_CENTER);
-//!		    }
-//!		}
+
 		
 		//! Bottom battery indicator
 	 	var stats = Sys.getSystemStats();
@@ -94,30 +78,6 @@ class DeviceView extends PowerView {
 		var Startstatuspwrbr = 110 + Math.round(pwr*0.58)  ;
 		var Endstatuspwrbr = 58 - Math.round(pwr*0.58) ;
 		dc.fillRectangle(Startstatuspwrbr, 261, Endstatuspwrbr, 14);		
-
-	   } else {
-	   //! Display demo screen
-		dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
-	
-		if (licenseOK == true) {
-			dc.drawText(140, 120, Graphics.FONT_TINY, "Registered !!", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
-			dc.drawText(81, 160, Graphics.FONT_XTINY, "License code: ", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
-			dc.drawText(180, 160, Graphics.FONT_MEDIUM, mtest, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
-			if (c0Version == true) {
-				dc.drawText(81, 190, Graphics.FONT_XTINY, "C-Code: ", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
-				dc.drawText(170, 190, Graphics.FONT_MEDIUM, CCode, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
-			}
-		} else {
-      		dc.drawText(140, 33, Graphics.FONT_XTINY, "License needed !!", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
-      		dc.drawText(140, 63, Graphics.FONT_XTINY, "Run is recorded though", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
-			dc.drawText(60, 105, Graphics.FONT_MEDIUM, "ID 0: ", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
-			dc.drawText(161, 99, Graphics.FONT_NUMBER_MEDIUM, ID0, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
-			dc.drawText(60, 155, Graphics.FONT_MEDIUM, "ID 1: " , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
-			dc.drawText(161, 149, Graphics.FONT_NUMBER_MEDIUM, ID1, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
-			dc.drawText(60, 205, Graphics.FONT_MEDIUM, "ID 2: " , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
-			dc.drawText(161, 199, Graphics.FONT_NUMBER_MEDIUM, ID2, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
-      	}
-	   }
 	   
 	}
 

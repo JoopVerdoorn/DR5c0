@@ -1187,20 +1187,7 @@ class CiqView extends ExtramemView {
        			RealRemainingWorkoutTime = 0;
        			DistinClockfield = false;
        		}
-		}
-		
-		//! Conditions for showing the demoscreen       
-        if (uShowDemo == false) {
-        	if (licenseOK == false && jTimertime > 900)  {
-        		uShowDemo = true;        		
-        	}
-        }
-
-	   //! Check whether demoscreen is showed or the metrics 
-	   if (uShowDemo == false ) {
-
-	   } 
-	   
+		}	   
 	}
 
     function Formatting(dc,counter,fieldvalue,fieldformat,fieldlabel,CorString) {     

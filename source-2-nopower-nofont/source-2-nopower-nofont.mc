@@ -4,6 +4,8 @@ using Toybox.Graphics as Gfx;
 //! inherit from the view that contains the commonlogic
 class PowerView extends CiqView {
     var mfillColour = Graphics.COLOR_LT_GRAY;
+    hidden var Watchtype = 1111;
+//!    hidden var watchType = mySettings.partNumber;
 		
 	//! it's good practice to always have an initialize, make sure to call your parent class here!
     function initialize() {
@@ -81,7 +83,7 @@ class PowerView extends CiqView {
 
 
 		//! Display colored labels on screen for FR645
-		if (ID0 == 3397 or ID0 == 3514) {
+		if (Watchtype == 2886 or Watchtype == 3003) {
 			for (i = 1; i < 6; ++i) {
 			   	if ( i == 1 ) {			//!upper row, left    	
 	    			Coloring2(dc,i,fieldValue[i],"018,029,100,019");
